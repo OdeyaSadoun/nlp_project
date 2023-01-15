@@ -12,5 +12,10 @@ public class LogistConstants {
     public static final List<String> CONSTANT_LIST_TIME_EXPRESSION = Arrays.asList("חודש", "חודשים", "שנה", "שנים", "ימים", "יום");
     public static final List<String> CONSTANT_LIST_SEVERITY_DEGREE = Arrays.asList("בינוני", "בינונית", "חמור", "חמורה", "קלה", "קל");
     public static final List<String> CONSTANT_LIST_TYPE = Arrays.asList("תקינות", "אחזקה", "טיוב", "בסיסי", "מכירה", "מלאי", "רכש");
-
+    public static final List<String> ENGLISH_STOPWORDS = Arrays.asList("a", "an", "the", "and", "or", "but", "because",
+            "as", "until", "while", "of", "at", "by", "for", "with", "about", "against", "between", "into", "through",
+            "during", "before", "after", "above", "below", "to", "from", "up", "down", "in", "out", "on", "off", "over",
+            "under", "again", "further", "then", "once", "here", "there", "when", "where", "why", "how", "all", "any",
+            "both", "each", "few", "more", "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same",
+            "so", "than", "too", "very", "s", "t", "can", "will", "just", "don", "should", "now");
 }
