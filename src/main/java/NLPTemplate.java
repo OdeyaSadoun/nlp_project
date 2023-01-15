@@ -101,7 +101,8 @@ public class NLPTemplate {
                     wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_DATE_OPERATOR, word) ||
                     wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_TIME_EXPRESSION, word) ||
                     wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_SEVERITY_DEGREE, word) ||
-                    wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_TYPE, word))
+                    wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_TYPE, word) ||
+                    wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_BUILT_IN_TEMPLATE_WORDS, word))
 
                 sentence = sentence.replace(word, word + "_IGNORE");
         }
