@@ -3,34 +3,14 @@ import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.Pair;
 import java.util.List;
-import edu.stanford.nlp.ie.util.RelationTriple;
-import edu.stanford.nlp.ling.CoreAnnotations;
-import edu.stanford.nlp.pipeline.Annotation;
-import edu.stanford.nlp.util.CoreMap;
-import edu.stanford.nlp.ling.CoreLabel;
 import java.util.Properties;
-
-import org.apache.commons.lang3.StringEscapeUtils;
-
-
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-
-
-import java.io.IOException;
-//import java.io.StringReader;
-//import org.apache.lucene.analysis.CharArraySet;
-//import org.apache.lucene.analysis.StopFilter;
-//import org.apache.lucene.analysis.TokenStream;
-//import org.apache.lucene.analysis.standard.StandardTokenizer;
-//import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-//import org.apache.lucene.util.Version;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 
 public class NLPTemplate {
