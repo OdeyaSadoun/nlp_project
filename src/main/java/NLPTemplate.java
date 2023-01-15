@@ -19,7 +19,7 @@ public class NLPTemplate {
     String field;
     String fieldType;
 
-    public NLPTemplate(String sen) throws IOException {
+    public NLPTemplate(String sen) {
         sentence = sen;
         subject = "";
         field = "";
@@ -29,17 +29,21 @@ public class NLPTemplate {
     private boolean containsUnderscore(String word) {
         return word.matches(".*_.*");
     }
-    private boolean findSubjectsAndFields(List<CoreLabel> tokens) {
+    private List<Pair<String, String>> findSubjectsAndFields(List<CoreLabel> tokens) {
 
         List<Pair<String, String>> subjectsAndFields = new ArrayList<Pair<String, String>>();
         for (int i = 0; i < tokens.size(); i++) {
 
             CoreLabel token = tokens.get(i);
 
-            if(!token.word().contains("IGNORE")) {
+            if (!token.word().contains("IGNORE")) {
                 // If the token is a noun and is followed by a possessive case marker, it is a subject
                 //שדה של נושא
-                if (token.tag().startsWith("N") && i < tokens.size() - 2 && tokens.get(i + 1).tag().equals("POS")) {
+                if (containsUnderscore(token.word())) {
+                    field = "";
+                    subject = "";
+                    break;
+                } else if (token.tag().startsWith("N") && i < tokens.size() - 2 && tokens.get(i + 1).tag().equals("POS")) {
                     subject = token.word();
                     field = tokens.get(i + 2).word();
                     i += 2; // to over the current field
@@ -50,9 +54,6 @@ public class NLPTemplate {
                     subject = token.word();
                     subjectsAndFields.add(new Pair<>(subject, null));
 
-                } else if (containsUnderscore(token.word())) {
-                    field = "";
-                    subject = "";
 
                 } else if (token.tag().startsWith("JJ")) {
                     field = token.word();
@@ -64,7 +65,7 @@ public class NLPTemplate {
                 }
             }
         }
-        return false;
+        return subjectsAndFields;
     }
     private List<Integer> getCharsIndexes(String sentence, char ch) {
         List<Integer> charsIndexes = new ArrayList<>();
@@ -83,7 +84,7 @@ public class NLPTemplate {
         //find the indexes of " in order to add underscore between the words that in "":
         List<Integer> charsIndexes = getCharsIndexes(sentenceToTranslate, '"');
         //replace the space between the words that in "" with underscore:
-        replaceBetweenTwoCharsFromTwoIndexesInSentence(sentenceToTranslate, charsIndexes, ' ', '_');
+        sentenceToTranslate = replaceBetweenTwoCharsFromTwoIndexesInSentence(sentenceToTranslate, charsIndexes, ' ', '_');
         //remove the stop words from the sentence:
         sentenceToTranslate = removeStopWords(sentenceToTranslate);
         return sentenceToTranslate;
@@ -111,13 +112,13 @@ public class NLPTemplate {
         List<String> allLines = Files.readAllLines(path, StandardCharsets.UTF_8);
         return allLines;
     }
-    private void readNLPTemplate(String sentence) throws IOException {
+    public List<Pair<String, String>> readNLPTemplate() throws IOException {
         // Set up the Stanford CoreNLP pipeline
         Properties props = new Properties();
         props.setProperty("annotators", "tokenize, pos");
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
-        String sentenceToNLP = getCleanSentenceForAnalysis(sentence);
+        String sentenceToNLP = getCleanSentenceForAnalysis(this.sentence);
 
         System.out.println(sentenceToNLP);
 
@@ -125,13 +126,16 @@ public class NLPTemplate {
         pipeline.annotate(doc);
 
         //NLP
-        findSubjectsAndFields(doc.tokens());
+        List<Pair<String, String>> subjectsAndFields = findSubjectsAndFields(doc.tokens());
 
-        if (subject != "") {
-            // Print the subject and field
-            System.out.println("Subject: " + subject);
-            System.out.println("Field: " + field);
-        }
+//        if (subject != "") {
+//            // Print the subject and field
+//            System.out.println("Subject: " + subject);
+//            System.out.println("Field: " + field);
+//        }
+
+        return subjectsAndFields;
+
     }
     private String removeStopWords(String sentence) throws IOException {
         String[] words = sentence.split(" ");
@@ -143,7 +147,7 @@ public class NLPTemplate {
         }
         return result.toString().trim();
     }
-    private void replaceBetweenTwoCharsFromTwoIndexesInSentence(String sentence, List<Integer> charsIndexes, char oldCh, char newCh){
+    private String replaceBetweenTwoCharsFromTwoIndexesInSentence(String sentence, List<Integer> charsIndexes, char oldCh, char newCh){
         String substring;
         String newSubstring;
         for (int i = 0; i < charsIndexes.size(); i += 2) {
@@ -153,6 +157,7 @@ public class NLPTemplate {
             newSubstring = substring.replace(oldCh, newCh);
             sentence = sentence.substring(0, start) + newSubstring + sentence.substring(end);
         }
+        return sentence;
     }
     private String translateSentenceFromHebrewToEnglish(String sentence) throws IOException {
         Translator translate = new Translator(sentence);
@@ -179,7 +184,7 @@ public class NLPTemplate {
             try {
                 t = new NLPTemplate(data.get(i));
                 System.out.println(data.get(i));
-                 t.readNLPTemplate(data.get(i));
+                 t.readNLPTemplate();
             } catch (IOException e) {
                 e.printStackTrace();
             }

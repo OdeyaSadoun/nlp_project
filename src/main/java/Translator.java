@@ -7,12 +7,6 @@ import java.net.URLEncoder;
 
 public class Translator {
 
-//    public static void main(String[] args) throws IOException {
-//        Translator text = new Translator( "שלום עולם");
-//        //Translated text: Hallo Welt!
-//        System.out.println("Translated text: " + text.translate("he", "en", text.wordToTranslate));
-//    }
-
     private String wordToTranslate;
 
     public Translator(String word){
