@@ -29,6 +29,7 @@ public class NLPTemplate {
     private boolean containsUnderscore(String word) {
         return word.matches(".*_.*");
     }
+
     private List<Pair<String, String>> findSubjectsAndFields(List<CoreLabel> tokens) {
 
         List<Pair<String, String>> subjectsAndFields = new ArrayList<Pair<String, String>>();
@@ -67,6 +68,7 @@ public class NLPTemplate {
         }
         return subjectsAndFields;
     }
+
     private List<Integer> getCharsIndexes(String sentence, char ch) {
         List<Integer> charsIndexes = new ArrayList<>();
         for (int i = 0; i < sentence.length(); i++) {
@@ -76,6 +78,7 @@ public class NLPTemplate {
         }
         return charsIndexes;
     }
+
     private String getCleanSentenceForAnalysis(String sentence) throws IOException {
         //remove some words that belongs to the template:
         String sentenceAfterClean = markNotNecessaryTemplatesWords(sentence);
@@ -89,7 +92,8 @@ public class NLPTemplate {
         sentenceToTranslate = removeStopWords(sentenceToTranslate);
         return sentenceToTranslate;
     }
-    private String markNotNecessaryTemplatesWords(String sentence){
+
+    private String markNotNecessaryTemplatesWords(String sentence) {
 
         for (String word : sentence.split(" ")) {
             if (wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_VALUE_OPERATOR, word) ||
@@ -108,11 +112,13 @@ public class NLPTemplate {
         }
         return sentence;
     }
+
     private static List<String> readFileAsListString(String fileName) throws Exception {
         Path path = Paths.get(fileName);
         List<String> allLines = Files.readAllLines(path, StandardCharsets.UTF_8);
         return allLines;
     }
+
     public List<Pair<String, String>> readNLPTemplate() throws IOException {
         // Set up the Stanford CoreNLP pipeline
         Properties props = new Properties();
@@ -138,6 +144,7 @@ public class NLPTemplate {
         return subjectsAndFields;
 
     }
+
     private String removeStopWords(String sentence) throws IOException {
         String[] words = sentence.split(" ");
         StringBuilder result = new StringBuilder();
@@ -148,7 +155,8 @@ public class NLPTemplate {
         }
         return result.toString().trim();
     }
-    private String replaceBetweenTwoCharsFromTwoIndexesInSentence(String sentence, List<Integer> charsIndexes, char oldCh, char newCh){
+
+    private String replaceBetweenTwoCharsFromTwoIndexesInSentence(String sentence, List<Integer> charsIndexes, char oldCh, char newCh) {
         String substring;
         String newSubstring;
         for (int i = 0; i < charsIndexes.size(); i += 2) {
@@ -160,6 +168,7 @@ public class NLPTemplate {
         }
         return sentence;
     }
+
     private String translateSentenceFromHebrewToEnglish(String sentence) throws IOException {
         Translator translate = new Translator(sentence);
         String englishTranslation = translate.translate("he", "en", sentence);
@@ -167,6 +176,7 @@ public class NLPTemplate {
         String sentenceToNLP = StringEscapeUtils.unescapeHtml4(englishTranslation);
         return sentenceToNLP;
     }
+
     private boolean wordExistsInConstantsList(List<String> list, String str) {
         return list.contains(str);
     }
@@ -181,11 +191,13 @@ public class NLPTemplate {
             e.printStackTrace();
         }
         NLPTemplate t;
+//        t = new NLPTemplate("אם חולצה היא כתומה");
+//        t.readNLPTemplate();
         for (int i = 0; i < data.size(); i++) {
             try {
                 t = new NLPTemplate(data.get(i));
                 System.out.println(data.get(i));
-                 t.readNLPTemplate();
+                t.readNLPTemplate();
             } catch (IOException e) {
                 e.printStackTrace();
             }
