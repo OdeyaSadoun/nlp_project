@@ -43,14 +43,45 @@ public class NLPTemplate {
                 if (containsUnderscore(token.word())) {
                     field = "";
                     subject = "";
-                    break;
-                } else if (token.tag().startsWith("N") && i < tokens.size() - 2 && tokens.get(i + 1).tag().equals("POS")) {
-                    subject = token.word();
-                    field = tokens.get(i + 2).word();
-                    i += 2; // to over the current field
-                    subjectsAndFields.add(new Pair<>(subject, field));
-                    System.out.println(subjectsAndFields.toString());
+                }else if(token.word().equals("of") && tokens.get(i - 1).tag().startsWith("N")){
+                    if(tokens.get(i + 1).word().equals("a") || tokens.get(i + 1).word().equals("an") || tokens.get(i + 1).word().equals("the")){
+                        subject = tokens.get(i + 2).word();
+                        field = tokens.get(i - 1).word();
+                        i = i+2;
+                        if(subjectsAndFields.get(subjectsAndFields.size() - 1).first.equals(field)){
+                            subjectsAndFields.get(subjectsAndFields.size() - 1).setFirst(subject);
+                            subjectsAndFields.get(subjectsAndFields.size() - 1).setSecond(field);
+                        }
+                        else
+                        subjectsAndFields.add(new Pair<>(subject, field));
+                    }
+                    else {
+                        subject = tokens.get(i + 1).word();
+                        field = tokens.get(i - 1).word();
+                        i = i + 1;
 
+                        if (subjectsAndFields.get(subjectsAndFields.size() - 1).first == field) {
+                            subjectsAndFields.get(subjectsAndFields.size() - 1).setFirst(subject);
+                            subjectsAndFields.get(subjectsAndFields.size() - 1).setSecond(field);
+                        } else
+                            subjectsAndFields.add(new Pair<>(subject, field));
+
+                    }
+                } else if (token.tag().startsWith("N") && i < tokens.size() - 2 && tokens.get(i + 1).tag().equals("POS")) {
+                    if(tokens.get(i + 2).tag().equals("POS")){
+                        subject = token.word();
+                        field = tokens.get(i + 3).word();
+                        i += 3; // to over the current field
+                        subjectsAndFields.add(new Pair<>(subject, field));
+                        System.out.println(subjectsAndFields.toString());
+                    }
+                    else {
+                        subject = token.word();
+                        field = tokens.get(i + 2).word();
+                        i += 2; // to over the current field
+                        subjectsAndFields.add(new Pair<>(subject, field));
+                        System.out.println(subjectsAndFields.toString());
+                    }
                 } else if (token.tag().startsWith("N")) {
                     subject = token.word();
                     subjectsAndFields.add(new Pair<>(subject, null));
@@ -122,7 +153,7 @@ public class NLPTemplate {
     public List<Pair<String, String>> readNLPTemplate() throws IOException {
         // Set up the Stanford CoreNLP pipeline
         Properties props = new Properties();
-        props.setProperty("annotators", "tokenize, pos");
+        props.setProperty("annotators", "tokenize,ssplit,pos,lemma,ner");
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
         String sentenceToNLP = getCleanSentenceForAnalysis(this.sentence);
