@@ -7,7 +7,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 public class template5Test {
 
-    //אזי <נושא> הוא <לוואי>
+    //אזי הצג "מלל", ברר <שדה> של <נושא> במטרה "מלל"
     @Test
     public void templateTest() {
         NLPTemplate nlpTemplate1 = new NLPTemplate("אזי הצג \"סרט באורך אורך\", ברר משמעת של עובד במטרה \"לסנן מועמדים\"");

@@ -7,7 +7,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 public class template2Test {
 
-    //אזי <נושא> הוא <לוואי>
+    //אזי בטל ל-<נושא> ש-"מלל מסקנה"
     @Test
     public void templateTest() {
         NLPTemplate nlpTemplate1 = new NLPTemplate("אזי בטל ל-עובד ש-\"התפטר מהעבודה\"");
