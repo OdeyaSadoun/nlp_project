@@ -26,12 +26,25 @@ public class NLPTemplate {
         fieldType = "";
     }
 
-    private boolean containsUnderscore(String word) {
+    /**
+     * Checks if there is an underscore in the word.
+     *
+     * @param word the word being tested.
+     * @return true if there is underscore in the word and else if not.
+     */
+    boolean containsUnderscore(String word) {
         return word.matches(".*_.*");
     }
 
+    /**
+     * Find all the subjects and fields in the sentence.
+     *
+     * @param tokens list of tokens from the sentence.
+     * @return List of Pairs that have in every pair subject and field.
+     */
     private List<Pair<String, String>> findSubjectsAndFields(List<CoreLabel> tokens) {
 
+        /*מוצא שדה ונושא*/
         List<Pair<String, String>> subjectsAndFields = new ArrayList<Pair<String, String>>();
         for (int i = 0; i < tokens.size(); i++) {
 
@@ -100,7 +113,15 @@ public class NLPTemplate {
         return subjectsAndFields;
     }
 
-    private List<Integer> getCharsIndexes(String sentence, char ch) {
+    /**
+     * Checks for a desired character ch at which indexes it is found in the given sentence.
+     *
+     * @param sentence sentence.
+     * @param ch the desired character to test.
+     * @return The function returns a list of indexes where the desired character is found,
+     * and if there is no desired character, an empty list will be returned.
+     */
+    List<Integer> getCharsIndexes(String sentence, char ch) {
         List<Integer> charsIndexes = new ArrayList<>();
         for (int i = 0; i < sentence.length(); i++) {
             if (sentence.charAt(i) == ch) {
@@ -150,10 +171,11 @@ public class NLPTemplate {
         return allLines;
     }
 
-    public List<Pair<String, String>> readNLPTemplate() throws IOException {
+    public List<Pair<String, String>> readNLPTemplate() throws IOException{
         // Set up the Stanford CoreNLP pipeline
+
         Properties props = new Properties();
-        props.setProperty("annotators", "tokenize,ssplit,pos,lemma,ner");
+        props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner");
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
         String sentenceToNLP = getCleanSentenceForAnalysis(this.sentence);
@@ -166,14 +188,23 @@ public class NLPTemplate {
         //NLP
         List<Pair<String, String>> subjectsAndFields = findSubjectsAndFields(doc.tokens());
 
-//        if (subject != "") {
-//            // Print the subject and field
-//            System.out.println("Subject: " + subject);
-//            System.out.println("Field: " + field);
-//        }
-
         return subjectsAndFields;
+    }
 
+    public void analysisNLPTemplate() throws IOException {
+        List<Pair<String, String>> subjectsAndFields = readNLPTemplate();
+        if (!isSubjectsAndFieldsInDB(subjectsAndFields)){
+            addSubjectsAndFieldsToDB(subjectsAndFields);
+        }
+    }
+
+    private void addSubjectsAndFieldsToDB(List<Pair<String, String>> subjectsAndFields) {
+        /*query to insert to db*/
+    }
+
+    private boolean isSubjectsAndFieldsInDB(List<Pair<String, String>> subjectsAndFields) {
+        /*query to search in db*/
+        return false;
     }
 
     private String removeStopWords(String sentence) throws IOException {
@@ -228,7 +259,7 @@ public class NLPTemplate {
             try {
                 t = new NLPTemplate(data.get(i));
                 System.out.println(data.get(i));
-                t.readNLPTemplate();
+                t.analysisNLPTemplate();
             } catch (IOException e) {
                 e.printStackTrace();
             }
