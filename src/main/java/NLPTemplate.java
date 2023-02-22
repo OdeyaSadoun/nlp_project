@@ -131,6 +131,13 @@ public class NLPTemplate {
         return charsIndexes;
     }
 
+    /**
+     * A function that returns the sentence after removing unnecessary words from it that interfere with the parsing of the sentence.
+     *
+     * @param sentence the sentence.
+     * @return the sentence after clean.
+     * @throws IOException
+     */
     private String getCleanSentenceForAnalysis(String sentence) throws IOException {
         //remove some words that belongs to the template:
         String sentenceAfterClean = markNotNecessaryTemplatesWords(sentence);
@@ -145,6 +152,12 @@ public class NLPTemplate {
         return sentenceToTranslate;
     }
 
+    /**
+     * Mark the words that belong to the template basic.
+     *
+     * @param sentence sentence.
+     * @return the sentence after add _IGNORE to the templates words
+     */
     private String markNotNecessaryTemplatesWords(String sentence) {
 
         for (String word : sentence.split(" ")) {
