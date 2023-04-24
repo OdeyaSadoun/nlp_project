@@ -35,6 +35,12 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.ivdnt</groupId>
+      <artifactId>openconvert</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+
   </dependencies>
   <build>
     <plugins>

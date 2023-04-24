@@ -252,6 +252,8 @@ public class NLPTemplate {
         return sentenceToNLP;
     }
 
+
+
     private boolean wordExistsInConstantsList(List<String> list, String str) {
         return list.contains(str);
     }
