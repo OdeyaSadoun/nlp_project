@@ -13,7 +13,7 @@ public class template8Test {
         NLPTemplate nlpTemplate1 = new NLPTemplate("אזי עדכן כמות של חולצה ל- 100 + מספר ה-חולצות");
         List<Pair<String, String>> subjectsAndFieldsList = new ArrayList<>(){};
 
-        subjectsAndFieldsList.add(new Pair<>("shirt", "amount"));
+        subjectsAndFieldsList.add(new Pair<>("shirt", "quantity"));
         subjectsAndFieldsList.add(new Pair<>("shirt", null));
         try {
             assertEquals(subjectsAndFieldsList, nlpTemplate1.readNLPTemplate());
