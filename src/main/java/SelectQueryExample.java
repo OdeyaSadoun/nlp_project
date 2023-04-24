@@ -1,10 +1,22 @@
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class SelectQueryExample {
 
     public static void main(String[] args) {
-        addSubjectToDatabase("צהוב" , "yellow", "כדור", "ball");
 
+       addSubjectToDatabase("ורוד" , "pink", "רצפה", "floor");
+
+    }
+
+
+
+    public static String getDateWithMS() {
+        String date = LocalDateTime.now().format(  DateTimeFormatter.ISO_LOCAL_DATE_TIME )
+                .replace( "T" , " " );
+        return date.substring(0, date.length() - 4);
     }
 
         public static void addSubjectToDatabase(String hebrewField, String englishField, String hebrewSubject, String englishSubject)
@@ -18,6 +30,9 @@ public class SelectQueryExample {
             ResultSet rs = null;
             Connection conn = null;
             Statement stmt = null;
+            String current_date = getDateWithMS();
+            String type_name="null";
+            String logist="לוגיסט";
             try {
                 // Step 1: Connect to the database
                 Class.forName(jdbcDriver);
@@ -30,7 +45,9 @@ public class SelectQueryExample {
 
                 // If the subject is not found, add it to the KTCLASS table
                 if (!rs.next()) {
-                    String insertSubjectQuery = "INSERT INTO KTCLASS (CLASS_CODE_NAME, NAME) VALUES ('" + englishSubject + "','" +hebrewSubject+ "')";
+
+
+                    String insertSubjectQuery = "INSERT INTO KTCLASS (CLASS_CODE_NAME, NAME, OWNER, UPDATE_DATE, CREATION_DATE) VALUES ('" + englishSubject + "','" +hebrewSubject+ "','" + logist + "','" + current_date + "', '" + current_date + "')";
                     stmt.executeUpdate(insertSubjectQuery);
                 }
 
@@ -38,7 +55,7 @@ public class SelectQueryExample {
                 String getClassIdQuery = "SELECT ATTR_CODE_NAME FROM KTATTRIBUTE WHERE CLASS_CODE_NAME = '" + englishSubject + "' AND ATTR_CODE_NAME = '" + englishField + "'";
                 rs = stmt.executeQuery(getClassIdQuery);
                 if (!rs.next()) {
-                    String insertSubjectQuery = "INSERT INTO KTATTRIBUTE (CLASS_CODE_NAME,ATTR_CODE_NAME, NAME) VALUES ('" + englishSubject+ "','" + englishField+ "', '" + hebrewField+ "')";
+                    String insertSubjectQuery = "INSERT INTO KTATTRIBUTE (CLASS_CODE_NAME,ATTR_CODE_NAME, NAME, TYPE_NAME,UPDATE_DATE, CREATION_DATE ) VALUES ('" + englishSubject+ "','" + englishField+ "', '" + hebrewField+ "', '" + type_name+ "', '" + current_date + "', '" + current_date + "')";
                     stmt.executeUpdate(insertSubjectQuery);
                 }
 // Step 4: Close the database resources
