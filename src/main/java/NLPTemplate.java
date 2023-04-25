@@ -142,14 +142,14 @@ public class NLPTemplate {
         //remove some words that belongs to the template:
         String sentenceAfterClean = markNotNecessaryTemplatesWords(sentence);
         //translate the sentence:
-        String sentenceToTranslate = translateSentenceFromHebrewToEnglish(sentenceAfterClean);
+        String sentenceAfterTranslate = translateSentenceFromHebrewToEnglish(sentenceAfterClean);
         //find the indexes of " in order to add underscore between the words that in "":
-        List<Integer> charsIndexes = getCharsIndexes(sentenceToTranslate, '"');
+        List<Integer> charsIndexes = getCharsIndexes(sentenceAfterTranslate, '"');
         //replace the space between the words that in "" with underscore:
-        sentenceToTranslate = replaceBetweenTwoCharsFromTwoIndexesInSentence(sentenceToTranslate, charsIndexes, ' ', '_');
+        String sentenceToAnalysis = replaceBetweenTwoCharsFromTwoIndexesInSentence(sentenceAfterTranslate, charsIndexes, ' ', '_');
         //remove the stop words from the sentence:
-        sentenceToTranslate = removeStopWords(sentenceToTranslate);
-        return sentenceToTranslate;
+        String sentenceToAnalysisWithoutStopWords = removeStopWords(sentenceToAnalysis);
+        return sentenceToAnalysisWithoutStopWords;
     }
 
     /**
