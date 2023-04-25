@@ -244,12 +244,12 @@ public class NLPTemplate {
         return sentence;
     }
 
-    private String translateSentenceFromHebrewToEnglish(String sentence) throws IOException {
-        Translator translate = new Translator(sentence);
-        String englishTranslation = translate.translate("he", "en", sentence);
+    private String translateSentenceFromHebrewToEnglish(String sentenceBeforeTranslation) throws IOException {
+        Translator translate = new Translator(sentenceBeforeTranslation);
+        String englishTranslation = translate.translate("he", "en", sentenceBeforeTranslation);
         //fix the html's signs:
-        String sentenceToNLP = StringEscapeUtils.unescapeHtml4(englishTranslation);
-        return sentenceToNLP;
+        String sentenceAfterTranslation = StringEscapeUtils.unescapeHtml4(englishTranslation);
+        return sentenceAfterTranslation;
     }
 
     private boolean wordExistsInConstantsList(List<String> list, String word) {
