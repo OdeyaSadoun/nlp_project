@@ -162,16 +162,16 @@ public class NLPTemplate {
 
         for (String word : sentence.split(" ")) {
             if (wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_VALUE_OPERATOR, word) ||
-                    wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_COMPARISON_OPERATOR, word) ||
-                    wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_NUMERIC_OPERATOR, word) ||
-                    wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_SUM_OPERATOR, word) ||
-                    wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_EDGE_OPERATOR, word) ||
-                    wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_EXISTENCE_OPERATOR, word) ||
-                    wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_DATE_OPERATOR, word) ||
-                    wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_TIME_EXPRESSION, word) ||
-                    wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_SEVERITY_DEGREE, word) ||
-                    wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_TYPE, word) ||
-                    wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_BUILT_IN_TEMPLATE_WORDS, word))
+                wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_COMPARISON_OPERATOR, word) ||
+                wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_NUMERIC_OPERATOR, word) ||
+                wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_SUM_OPERATOR, word) ||
+                wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_EDGE_OPERATOR, word) ||
+                wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_EXISTENCE_OPERATOR, word) ||
+                wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_DATE_OPERATOR, word) ||
+                wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_TIME_EXPRESSION, word) ||
+                wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_SEVERITY_DEGREE, word) ||
+                wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_TYPE, word) ||
+                wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_BUILT_IN_TEMPLATE_WORDS, word))
 
                 sentence = sentence.replace(word, word + "_IGNORE");
         }
@@ -252,10 +252,8 @@ public class NLPTemplate {
         return sentenceToNLP;
     }
 
-
-
-    private boolean wordExistsInConstantsList(List<String> list, String str) {
-        return list.contains(str);
+    private boolean wordExistsInConstantsList(List<String> list, String word) {
+        return list.contains(word);
     }
 
     public static void main(String[] args) throws IOException {
