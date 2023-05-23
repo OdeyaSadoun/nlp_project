@@ -7,7 +7,7 @@ public class SelectQueryExample {
 
     public static void main(String[] args) {
 
-       addSubjectToDatabase("כחול" , "blue", "רצפה", "floor");
+       addSubjectToDatabase("ורוד" , "pink", "ילדה", "girl");
 
     }
 
@@ -32,32 +32,61 @@ public class SelectQueryExample {
             String current_date = getDateWithMS();
             String type_name="null";
             String logist="לוגיסט";
+
+            //fields for ktclass:
+            int activationOrder = 0;
+            int classIndex = 0;
+
+            //for ktattribute:
+            int overlapPosition = 0;
+            int attributeIndex = 0;
+            int keyType = 0; //always 0 (unless it is the default attribute in a new class - then it is 1)
+            int ioMode = 0;
+            int sortNumber = 0;
+            int sortDirection = 0;
+
+
             try {
-                // Step 1: Connect to the database
+                //Connect to the database
                 Class.forName(jdbcDriver);
                 conn = DriverManager.getConnection(jdbcUrl, username, password);
 
-                // Step 2: Check if subject is in KTCLASS table
+
                 stmt = conn.createStatement();
+
+                //query to find class index to sent to insert query
+                String query_CLASS_INDEX = "SELECT MAX(CLASS_INDEX) + 1 AS next_index FROM KVCLASS";
+                rs = stmt.executeQuery(query_CLASS_INDEX);
+                if (rs.next()) {
+                    classIndex = rs.getInt("next_index");
+                    System.out.println("Next class_index: " + classIndex);
+                }
+
+                //Check if subject is in KTCLASS table
                 String checkSubjectQuery = "SELECT CLASS_CODE_NAME FROM KTCLASS WHERE CLASS_CODE_NAME = '" + englishSubject + "'";
                 rs = stmt.executeQuery(checkSubjectQuery);
-
                 // If the subject is not found, add it to the KTCLASS table
                 if (!rs.next()) {
-
-
-                    String insertSubjectQuery = "INSERT INTO KTCLASS (CLASS_CODE_NAME, NAME, OWNER, UPDATE_DATE, CREATION_DATE) VALUES ('" + englishSubject + "','" +hebrewSubject+ "','" + logist + "','" + current_date + "', '" + current_date + "')";
+                    String insertSubjectQuery = "INSERT INTO KTCLASS (CLASS_CODE_NAME, NAME, OWNER, ACTIVATION_ORDER, CLASS_INDEX, CREATION_DATE, UPDATE_DATE) VALUES ('" + englishSubject + "','" +hebrewSubject+ "','" + logist + "','" + activationOrder + "','" + classIndex+ "','" + current_date + "', '" + current_date + "')";
                     stmt.executeUpdate(insertSubjectQuery);
                 }
 
-                // Step 3: Add corresponding field to KTATTRIBUTE table
+                //query to find attribute index to sent to insert query
+                String query_ATTRIBUTE_INDEX = "SELECT COALESCE(MAX(ATTRIBUTE_INDEX), 0) + 1 AS next_index FROM KVATTRIBUTE WHERE CLASS_CODE_NAME = '" + englishSubject + "'";
+                rs = stmt.executeQuery(query_ATTRIBUTE_INDEX);
+                if (rs.next()) {
+                    attributeIndex = rs.getInt("next_index");
+                    System.out.println("Next attribute_index: " + attributeIndex);
+                }
+
+                //Add corresponding field to KTATTRIBUTE table
                 String getClassIdQuery = "SELECT ATTR_CODE_NAME FROM KTATTRIBUTE WHERE CLASS_CODE_NAME = '" + englishSubject + "' AND ATTR_CODE_NAME = '" + englishField + "'";
                 rs = stmt.executeQuery(getClassIdQuery);
                 if (!rs.next()) {
-                    String insertSubjectQuery = "INSERT INTO KTATTRIBUTE (CLASS_CODE_NAME,ATTR_CODE_NAME, NAME, TYPE_NAME,UPDATE_DATE, CREATION_DATE ) VALUES ('" + englishSubject+ "','" + englishField+ "', '" + hebrewField+ "', '" + type_name+ "', '" + current_date + "', '" + current_date + "')";
+                    String insertSubjectQuery = "INSERT INTO KTATTRIBUTE (CLASS_CODE_NAME, ATTR_CODE_NAME, NAME, TYPE_NAME, OVERLAP_POSITION,ATTRIBUTE_INDEX, CREATION_DATE, UPDATE_DATE, KEY_TYPE, IO_MODE, SORT_NUMBER, SORT_DIRECTION) VALUES ('" + englishSubject+ "','" + englishField+ "', '" + hebrewField+ "', '" + type_name+ "', '" + overlapPosition + "', '" + attributeIndex + "', '" + current_date + "', '" + current_date + "', '" + keyType + "', '" + ioMode + "', '" + sortNumber + "', '" + sortDirection + "')";
                     stmt.executeUpdate(insertSubjectQuery);
                 }
-// Step 4: Close the database resources
+                //Close the database resources
                 rs.close();
                 stmt.close();
                 conn.close();
@@ -75,7 +104,5 @@ public class SelectQueryExample {
                     e.printStackTrace();
                 }
             }
-
-
         }
     }
