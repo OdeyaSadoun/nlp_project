@@ -7,10 +7,9 @@ public class SelectQueryExample {
 
     public static void main(String[] args) {
 
-       addSubjectToDatabase("ורוד" , "pink", "רצפה", "floor");
+       addSubjectToDatabase("כחול" , "blue", "רצפה", "floor");
 
     }
-
 
 
     public static String getDateWithMS() {
@@ -79,4 +78,4 @@ public class SelectQueryExample {
 
 
         }
-}
+    }
