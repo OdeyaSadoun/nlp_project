@@ -13,7 +13,11 @@
       <artifactId>stanford-corenlp</artifactId>
       <version>4.5.1</version>
     </dependency>
-
+    <dependency>
+      <groupId>org.apache.opennlp</groupId>
+      <artifactId>opennlp-tools</artifactId>
+      <version>2.2.0</version>
+    </dependency>
     <dependency>
       <groupId>com.hankcs</groupId>
       <artifactId>hanlp</artifactId>
@@ -35,11 +39,6 @@
       <scope>test</scope>
     </dependency>
 
-    <dependency>
-      <groupId>org.ivdnt</groupId>
-      <artifactId>openconvert</artifactId>
-      <version>1.1.1</version>
-    </dependency>
 
   </dependencies>
   <build>

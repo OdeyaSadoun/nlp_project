@@ -279,18 +279,19 @@ public class Template {
         }
     }
 
-    private boolean checkIfExistSubjectAndFieldInDB(String subject, String field){
+    private void checkIfExistSubjectAndFieldInDB(String hsubject, String esubject, String hfield,  String efield){
 
-        boolean isExistSubject = checkIfExistSubjectInDB(subject,field);
-        if(!isExistSubject){
-            return false;
-        }
-        boolean isExistField = checkIfExistFieldInDB(subject,field);
-        if(!isExistField){
-            return false;
-        }
-        
-        return true;
+        SelectQueryExample.addSubjectToDatabase(hfield, efield, hsubject, esubject );
+//        boolean isExistSubject = checkIfExistSubjectInDB(subject,field);
+//        if(!isExistSubject){
+//            return false;
+//        }
+//        boolean isExistField = checkIfExistFieldInDB(subject,field);
+//        if(!isExistField){
+//            return false;
+//        }
+//
+//        return true;
     }
 
     private boolean checkIfExistSubjectInDB(String subject, String field){
@@ -366,17 +367,17 @@ public class Template {
             Translator tSubject = new Translator(subSubject);
             Translator tField;
 
-            if(iField == -1){
-                subField = "";
-                success = checkIfExistSubjectInDB(tSubject.translate("he", "en", tSubject.getWord()), subField);
-                return;
-            }
-            else{
+//            if(iField == -1){
+//                subField = "";
+//                success = checkIfExistSubjectInDB(tSubject.translate("he", "en", tSubject.getWord()), subField);
+//                return;
+//            }
+//            else{
                 field = lstTemplate.get(iField);     // field
                 subField = field.substring(field.indexOf("-") + 1).trim();
                 tField = new Translator(subField);
-                success = checkIfExistSubjectAndFieldInDB(tSubject.translate("he", "en", tSubject.getWord()), tField.translate("he", "en", tField.getWord()));
-            }
+                checkIfExistSubjectAndFieldInDB(subject, tSubject.translate("he", "en", tSubject.getWord()), field, tField.translate("he", "en", tField.getWord()));
+//            }
             return;
 
         }
