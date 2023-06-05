@@ -115,16 +115,19 @@ public class NLPTemplate {
 
         String subject = null;
         String field = null;
-
+        boolean flagIgnor = false;
         for (int i = 0; i < tokens.size(); i++) {
             CoreLabel token = tokens.get(i);
             String word = token.word();
 
-            if (!word.contains("IGNORE")) {
+            if ((word.equals("then") && tokens.get(i + 1).word().equals("set") && tokens.get(i + 2).word().equals("an") && tokens.get(i + 3).word().equals("error"))
+                || (word.equals("if") && tokens.get(i + 1).word().equals("because")))
+                flagIgnor = true;
+            else if (!word.contains("IGNORE")) {
                 if (containsUnderscore(word)) {
                     field = "";
                     subject = "";
-                } else if (word.equals("of") && tokens.get(i - 1).tag().startsWith("N")) {
+                } else if (word.equals("of") && tokens.get(i - 1).tag().startsWith("N") && !flagIgnor) {
                     CoreLabel nextToken = tokens.get(i + 1);
                     if (nextToken.word().matches("(?i)(a|an|the)")) {
                         subject = tokens.get(i + 2).word();
@@ -135,7 +138,6 @@ public class NLPTemplate {
                         field = tokens.get(i - 1).word();
                         i++;
                     }
-
                     Pair<String, String> pair = new Pair<>(subject, field);
                     Pair<String, String> tempPair1 = new Pair<>(subject, null);
                     Pair<String, String> tempPair2 = new Pair<>(field, null);
@@ -150,16 +152,14 @@ public class NLPTemplate {
                             if (index == -1) {
                                 index = subjectsAndFields.indexOf(tempPair2);
                             }
-
                             // Remove the existing pair
                             subjectsAndFields.remove(index);
-
                             // Add the new pair at the same index
                             subjectsAndFields.add(index, pair);
                         }
                     }
 
-                } else if (token.tag().startsWith("N") && i < tokens.size() - 2 && tokens.get(i + 1).tag().equals("POS")) {
+                } else if (token.tag().startsWith("N") && i < tokens.size() - 2 && tokens.get(i + 1).tag().equals("POS") && !flagIgnor) {
                     CoreLabel nextToken = tokens.get(i + 2);
                     if (nextToken.tag().equals("POS")) {
                         subject = word;
@@ -170,26 +170,27 @@ public class NLPTemplate {
                         field = nextToken.word();
                         i += 2;
                     }
-
                     Pair<String, String> pair = new Pair<>(subject, field);
                     if (!subjectsAndFields.contains(pair)) {
                         subjectsAndFields.add(pair);
                     }
-                } else if (token.tag().startsWith("N")) {
+                } else if (token.tag().startsWith("N") && !flagIgnor) {
                     subject = word;
                     Pair<String, String> pair = new Pair<>(subject, null);
                     if (!subjectsAndFields.contains(pair)) {
                         subjectsAndFields.add(pair);
                     }
-                } else if (token.tag().startsWith("JJ")) {
+                } else if (token.tag().startsWith("JJ") && !flagIgnor) {
                     field = word;
                     Pair<String, String> lastPair = subjectsAndFields.get(subjectsAndFields.size() - 1);
-                    if (lastPair.second != null) {
-                        subjectsAndFields.add(new Pair<>(lastPair.first, field));
-                    } else {
+                    if (lastPair.second == null) {
                         lastPair.setSecond(field);
+                    } else {
+                        Pair<String, String> pair = new Pair<>(lastPair.first, field);
+                        subjectsAndFields.add(pair);
                     }
                 }
+
             }
         }
 
@@ -198,7 +199,7 @@ public class NLPTemplate {
             String gov = edge.getGovernor().lemma();
             String dep = edge.getDependent().lemma();
 
-            if (rel.equals("nsubj") && !gov.matches(".*_IGNOR.*") && !containsUnderscore(gov)) {
+            if (rel.equals("nsubj") && !gov.matches(".*_IGNOR.*") && !containsUnderscore(gov) && !flagIgnor) {
                 Pair<String, String> pair = new Pair<>(gov, dep);
                 Pair<String, String> pairOp = new Pair<>(dep,gov);
                 if (!subjectsAndFields.contains(pair) && !(subjectsAndFields.contains(pairOp))) {

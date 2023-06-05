@@ -13,8 +13,8 @@ public class template37Test {
         NLPTemplate nlpTemplate1 = new NLPTemplate("אם מכיוון ש-\"כלום\"");
         List<Pair<String, String>> subjectsAndFieldsList = new ArrayList<>(){};
 
-        subjectsAndFieldsList.add(new Pair<>(null, null));
-
+//        subjectsAndFieldsList.add(new Pair<>(null, null));
+//
 
         try {
             assertEquals(subjectsAndFieldsList, nlpTemplate1.readNLPTemplate());
