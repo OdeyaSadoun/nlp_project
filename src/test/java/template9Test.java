@@ -14,7 +14,7 @@ public class template9Test {
         List<Pair<String, String>> subjectsAndFieldsList = new ArrayList<>(){};
 
         subjectsAndFieldsList.add(new Pair<>("employee", "salary"));
-        subjectsAndFieldsList.add(new Pair<>("expenditure", "amount"));
+        subjectsAndFieldsList.add(new Pair<>("expenses", "amount"));
 
 
         try {

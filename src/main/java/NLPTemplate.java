@@ -128,8 +128,9 @@ public class NLPTemplate {
                     field = "";
                     subject = "";
                 } else if (word.equals("of") && tokens.get(i - 1).tag().startsWith("N") && !flagIgnor) {
+
                     CoreLabel nextToken = tokens.get(i + 1);
-                    if (nextToken.word().matches("(?i)(a|an|the)")) {
+                    if (nextToken.word().matches("(?i)(a|an|the|all)")) {
                         subject = tokens.get(i + 2).word();
                         field = tokens.get(i - 1).word();
                         i += 2;
