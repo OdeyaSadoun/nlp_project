@@ -143,7 +143,7 @@ public class NLPTemplate {
                     Pair<String, String> tempPair1 = new Pair<>(subject, null);
                     Pair<String, String> tempPair2 = new Pair<>(field, null);
 
-                    if (!subjectsAndFields.contains(pair)) {
+                    if (!subjectsAndFields.contains(pair) && !nextToken.word().contains("IGNORE") && !tokens.get(i - 2).word().contains("IGNORE")) {
                         if(!subjectsAndFields.contains(tempPair1) && !subjectsAndFields.contains(tempPair2))
                         subjectsAndFields.add(pair);
                         else{
