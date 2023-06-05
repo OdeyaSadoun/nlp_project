@@ -1,10 +1,60 @@
+import edu.stanford.nlp.ie.crf.CRFClassifier;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSTaggerME;
 import opennlp.tools.sentdetect.SentenceDetectorME;
-
+import edu.stanford.nlp.pipeline.*;
+import edu.stanford.nlp.ling.*;
+import edu.stanford.nlp.util.*;
 import java.util.*;
 
 public class GetType {
+
+    public static void main(String[] args) {
+        GetType analyzer = new GetType();
+        String field = "The number is an INT, and allowed is a BOOLEAN.";
+        Map<String, String> wordsAndLabels = analyzer.analyzeWordLabels(field);
+
+        // Print the words and their corresponding labels
+        for (Map.Entry<String, String> entry : wordsAndLabels.entrySet()) {
+            String word = entry.getKey();
+            String label = entry.getValue();
+            System.out.println("Word: " + word + ", Label: " + label);
+        }
+    }
+
+
+    private CRFClassifier<CoreLabel> classifier;
+
+    public GetType() {
+        // Load the pre-trained classifier model
+        classifier = CRFClassifier.getDefaultClassifier();
+    }
+
+    public Map<String, String> analyzeWordLabels(String field) {
+        // Tokenize the field into words
+        List<List<CoreLabel>> sentences = classifier.classify(field);
+
+        // Store words and their corresponding labels in a map
+        Map<String, String> wordsAndLabels = new HashMap<>();
+        for (List<CoreLabel> sentence : sentences) {
+            for (CoreLabel token : sentence) {
+                // Get the word and its label
+                String word = token.word();
+                String label = token.get(CoreAnnotations.AnswerAnnotation.class);
+
+                // Store the word and its label in the map
+                wordsAndLabels.put(word, label);
+            }
+        }
+
+        return wordsAndLabels;
+    }
+
+
+
+
+
+
 
     private static final Map<String, Class<?>> wordTypes = new HashMap<>();
 
@@ -40,6 +90,8 @@ public class GetType {
         // return possibleTypes.stream().max(Comparator.comparingInt(Class::getSimpleName)).get();
         return null;
     }
+
+
 
     private static Class<?> getPossibleType(String posTag) {
         switch (posTag) {
