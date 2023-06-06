@@ -47,7 +47,7 @@ public class NLPTemplate {
             if (!token.word().contains("IGNORE")) {
                 // If the token is a noun and is followed by a possessive case marker, it is a subject
                 //שדה של נושא
-                if (containsUnderscore(token.word())) {
+                if (containsSpecialSign(token.word())) {
                     field = "";
                     subject = "";
                 }else if(token.word().equals("of") && tokens.get(i - 1).tag().startsWith("N")){
@@ -124,7 +124,7 @@ public class NLPTemplate {
                 || (word.equals("if") && tokens.get(i + 1).word().equals("because")))
                 flagIgnor = true;
             else if (!word.contains("IGNORE")) {
-                if (containsUnderscore(word)) {
+                if (containsSpecialSign(word)) {
                     field = "";
                     subject = "";
                 } else if (word.equals("of") && tokens.get(i - 1).tag().startsWith("N") && !flagIgnor) {
@@ -200,7 +200,7 @@ public class NLPTemplate {
             String gov = edge.getGovernor().lemma();
             String dep = edge.getDependent().lemma();
 
-            if (rel.equals("nsubj") && !gov.matches(".*_IGNOR.*") && !containsUnderscore(gov) && !flagIgnor) {
+            if (rel.equals("nsubj") && !gov.matches(".*@IGNOR.*") && !containsSpecialSign(gov) && !flagIgnor) {
                 Pair<String, String> pair = new Pair<>(gov, dep);
                 Pair<String, String> pairOp = new Pair<>(dep,gov);
                 if (!subjectsAndFields.contains(pair) && !(subjectsAndFields.contains(pairOp))) {
@@ -208,7 +208,7 @@ public class NLPTemplate {
                 }
             }
         }
-
+        System.out.println(subjectsAndFields.toString());
         return subjectsAndFields;
     }
 
@@ -298,10 +298,12 @@ public class NLPTemplate {
     boolean containsUnderscore(String word) {
         return word.matches(".*_.*");
     }
-
-    boolean containsIGNOR(String word) {
-        return word.matches(".*_.*");
+    boolean containsSpecialSign(String word) {
+        return word.matches(".*@.*");
     }
+//    boolean containsIGNOR(String word) {
+//        return word.matches(".*_.*");
+//    }
 
     /**
      * Mark the words that belong to the template basic.
@@ -313,7 +315,7 @@ public class NLPTemplate {
 
         for (String word : sentence.split(" ")) {
             if (wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_VALUE_OPERATOR, word) ||
-//                wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_COMPARISON_OPERATOR, word) ||
+                wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_COMPARISON_OPERATOR, word) ||
                     wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_NUMERIC_OPERATOR, word) ||
                     wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_SUM_OPERATOR, word) ||
                     wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_EDGE_OPERATOR, word) ||
@@ -324,7 +326,7 @@ public class NLPTemplate {
                     wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_TYPE, word) ||
                     wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_BUILT_IN_TEMPLATE_WORDS, word))
 
-                sentence = sentence.replace(word, word + "_IGNORE");
+                sentence = sentence.replace(word, word + "@IGNORE");
         }
         return sentence;
     }
@@ -404,15 +406,15 @@ public class NLPTemplate {
 
     public static void main(String[] args) throws IOException {
 
-        List<String> data = new ArrayList<String>();
-        try {
-            data = readFileAsListString("sentences.txt");
-            System.out.println(data);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        List<String> data = new ArrayList<String>();
+//        try {
+//            data = readFileAsListString("sentences.txt");
+//            System.out.println(data);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         NLPTemplate t;
-        t = new NLPTemplate("אם חולצה היא כתומה");
+        t = new NLPTemplate("אם יחס_ימי_אשראי_ספקים של דוח_כספי_אחרון גדול מ- 125 אזי הוסף 1 ל- מונה_תנאים_לספק_להמשך_פעילות של דוח_כספי_אחרון");
         t.readNLPTemplate();
 //        for (int i = 0; i < data.size(); i++) {
 //            try {
