@@ -21,5 +21,4 @@ public class template21Test {
             throw new RuntimeException(e);
         }
     }
-
 }

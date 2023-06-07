@@ -13,7 +13,7 @@ public class template14Test {
         NLPTemplate nlpTemplate1 = new NLPTemplate("אזי קבע שגיאה, הודע \"כלום\"");
         List<Pair<String, String>> subjectsAndFieldsList = new ArrayList<>(){};
 
-        subjectsAndFieldsList.add(new Pair<>(null, null));
+        //subjectsAndFieldsList.add(new Pair<>(null, null));
 
         try {
             assertEquals(subjectsAndFieldsList, nlpTemplate1.readNLPTemplate());
