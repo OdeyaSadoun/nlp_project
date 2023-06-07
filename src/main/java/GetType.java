@@ -1,62 +1,37 @@
-import opennlp.tools.postag.POSModel;
-import opennlp.tools.postag.POSTaggerME;
-import opennlp.tools.sentdetect.SentenceDetectorME;
-
 import java.util.*;
 
 public class GetType {
-
-    private static final Map<String, Class<?>> wordTypes = new HashMap<>();
+    private static final Map<String, String> labelingMap = new HashMap<>();
 
     static {
-        wordTypes.put("age", Integer.class);
-        wordTypes.put("date of birth", Date.class);
-        wordTypes.put("boolean", Boolean.class);
-        wordTypes.put("char", Character.class);
-        wordTypes.put("string", String.class);
+        labelingMap.put("age", "Long");
+        labelingMap.put("number", "Long");
+        labelingMap.put("amount", "Long");
+        labelingMap.put("cost", "Double");
+        labelingMap.put("price", "Double");
+        labelingMap.put("profit", "Double");
+        labelingMap.put("sum", "Double");
+        labelingMap.put("salary", "Double");
+        labelingMap.put("date", "DateTime");
+        labelingMap.put("name", "Char");
     }
 
-    //private static final POSModel posModel = new POSModel("en-pos-maxent.bin");
-    //private static final SentenceDetectorME sentenceDetector = new SentenceDetectorME(new opennlp.tools.sentdetect.SentenceModel("en-sent.bin"));
-
-    public static Class<?> getWordType(String word) {
-        List<Class<?>> possibleTypes = new ArrayList<>();
-
-        // Extract features from the word
-        /**
-         * String[] spans = sentenceDetector.sentDetect(word);
-         *         if (spans.length > 0) {
-         *             String span = spans[0];
-         *             String[] tokens = word.substring(span.getStart(), span.getEnd()).split(" ");
-         *             for (String token : tokens) {
-         *                 String posTag = POSTaggerME.getTag(posModel, token);
-         *                 possibleTypes.add(getPossibleType(posTag));
-         *             }
-         *         }
-         *
-         */
-
-        // Return the most likely type
-        // return possibleTypes.stream().max(Comparator.comparingInt(Class::getSimpleName)).get();
-        return null;
-    }
-
-    private static Class<?> getPossibleType(String posTag) {
-        switch (posTag) {
-            case "NN":
-                return Integer.class;
-            case "NNP":
-                return String.class;
-            case "NNS":
-                return List.class;
-            case "NP":
-                return Map.class;
-            case "PRP":
-                return Boolean.class;
-            case "VBD":
-                return Date.class;
-            default:
-                return Object.class;
+    public static String getLabel(String word) {
+        if (labelingMap.containsKey(word)) {
+            return labelingMap.get(word);
+        } else {
+            return "Bool";
         }
     }
+
+    public static void main(String[] args) {
+        String word1 = "age";
+        String label1 = getLabel(word1);
+        System.out.println(word1 + " : " + label1);
+
+        String word2 = "price";
+        String label2 = getLabel(word2);
+        System.out.println(word2 + " : " + label2);
+    }
+
 }
