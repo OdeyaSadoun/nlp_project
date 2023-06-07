@@ -29,86 +29,6 @@ public class NLPTemplate {
 
     /*****************************************************************************************************/
     /*Analysis*/
-
-    /**
-     * Find all the subjects and fields in the sentence.
-     *
-     * @param tokens list of tokens from the sentence.
-     * @return List of Pairs that have in every pair subject and field.
-     */
-    private List<Pair<String, String>> findSubjectsAndFields(List<CoreLabel> tokens) {
-
-        /*מוצא שדה ונושא*/
-        List<Pair<String, String>> subjectsAndFields = new ArrayList<Pair<String, String>>();
-        for (int i = 0; i < tokens.size(); i++) {
-
-            CoreLabel token = tokens.get(i);
-
-            if (!token.word().contains("IGNORE")) {
-                // If the token is a noun and is followed by a possessive case marker, it is a subject
-                //שדה של נושא
-                if (containsSpecialSign(token.word())) {
-                    field = "";
-                    subject = "";
-                }else if(token.word().equals("of") && tokens.get(i - 1).tag().startsWith("N")){
-                    if(tokens.get(i + 1).word().equals("a") || tokens.get(i + 1).word().equals("an") || tokens.get(i + 1).word().equals("the")){
-                        subject = tokens.get(i + 2).word();
-                        field = tokens.get(i - 1).word();
-                        i = i+2;
-                        if(subjectsAndFields.get(subjectsAndFields.size() - 1).first.equals(field)){
-                            subjectsAndFields.get(subjectsAndFields.size() - 1).setFirst(subject);
-                            subjectsAndFields.get(subjectsAndFields.size() - 1).setSecond(field);
-                        }
-                        else
-                        subjectsAndFields.add(new Pair<>(subject, field));
-                    }
-                    else {
-                        subject = tokens.get(i + 1).word();
-                        field = tokens.get(i - 1).word();
-                        i = i + 1;
-
-                        if (subjectsAndFields.get(subjectsAndFields.size() - 1).first == field) {
-                            subjectsAndFields.get(subjectsAndFields.size() - 1).setFirst(subject);
-                            subjectsAndFields.get(subjectsAndFields.size() - 1).setSecond(field);
-                        } else
-                            subjectsAndFields.add(new Pair<>(subject, field));
-
-                    }
-                } else if (token.tag().startsWith("N") && i < tokens.size() - 2 && tokens.get(i + 1).tag().equals("POS")) {
-                    if(tokens.get(i + 2).tag().equals("POS")){
-                        subject = token.word();
-                        field = tokens.get(i + 3).word();
-                        i += 3; // to over the current field
-                        subjectsAndFields.add(new Pair<>(subject, field));
-                        System.out.println(subjectsAndFields.toString());
-                    }
-                    else {
-                        subject = token.word();
-                        field = tokens.get(i + 2).word();
-                        i += 2; // to over the current field
-                        subjectsAndFields.add(new Pair<>(subject, field));
-                        System.out.println(subjectsAndFields.toString());
-                    }
-                } else if (token.tag().startsWith("N")) {
-                    subject = token.word();
-                    subjectsAndFields.add(new Pair<>(subject, null));
-
-
-                } else if (token.tag().startsWith("JJ")) {
-                    field = token.word();
-                    if (subjectsAndFields.get(subjectsAndFields.size() - 1).second != null) {
-                        subjectsAndFields.add(new Pair<>(subjectsAndFields.get(subjectsAndFields.size() - 1).first, field));
-                    } else {
-                        subjectsAndFields.get(subjectsAndFields.size() - 1).setSecond(field);
-                    }
-                }
-            }
-        }
-        return subjectsAndFields;
-    }
-
-
-
     private List<Pair<String, String>> findSubjectsAndFields(List<CoreLabel> tokens, SemanticGraph dependencies) {
 
         List<Pair<String, String>> subjectsAndFields = new ArrayList<>();
@@ -116,71 +36,101 @@ public class NLPTemplate {
         String subject = null;
         String field = null;
         boolean flagIgnor = false;
+
         for (int i = 0; i < tokens.size(); i++) {
             CoreLabel token = tokens.get(i);
             String word = token.word();
+            CoreLabel previousToken;
+            CoreLabel nextToken;
+            if (i > 0 && i < tokens.size() - 1) {
+                previousToken = tokens.get(i - 1);
+                nextToken = tokens.get(i + 1);
 
-            if ((word.equals("then") && tokens.get(i + 1).word().equals("set") && tokens.get(i + 2).word().equals("an") && tokens.get(i + 3).word().equals("error"))
-                || (word.equals("if") && tokens.get(i + 1).word().equals("because")))
-                flagIgnor = true;
-            else if (!word.contains("IGNORE")) {
-                if (containsSpecialSign(word)) {
-                    field = "";
-                    subject = "";
-                } else if (word.equals("of") && tokens.get(i - 1).tag().startsWith("N") && !flagIgnor) {
+                if (token.originalText().equals("of")) { //field of subject
 
-                    CoreLabel nextToken = tokens.get(i + 1);
                     if (nextToken.word().matches("(?i)(a|an|the|all)")) {
-                        subject = tokens.get(i + 2).word();
-                        field = tokens.get(i - 1).word();
-                        i += 2;
-                    } else {
-                        subject = nextToken.word();
-                        field = tokens.get(i - 1).word();
-                        i++;
+                        nextToken = tokens.get(i + 2);
                     }
-                    Pair<String, String> pair = new Pair<>(subject, field);
-                    Pair<String, String> tempPair1 = new Pair<>(subject, null);
-                    Pair<String, String> tempPair2 = new Pair<>(field, null);
-
-                    if (!subjectsAndFields.contains(pair) && !nextToken.word().contains("IGNORE") && !tokens.get(i - 2).word().contains("IGNORE")) {
-                        if(!subjectsAndFields.contains(tempPair1) && !subjectsAndFields.contains(tempPair2))
-                        subjectsAndFields.add(pair);
-                        else{
-                            //to delete the pair that exsist and after it to put the new pair.
-                            // Find the index of the existing pair
-                            int index = subjectsAndFields.indexOf(tempPair1);
-                            if (index == -1) {
-                                index = subjectsAndFields.indexOf(tempPair2);
-                            }
-                            // Remove the existing pair
-                            subjectsAndFields.remove(index);
-                            // Add the new pair at the same index
-                            subjectsAndFields.add(index, pair);
+                    if (!nextToken.word().contains("\"")){
+                        subject = nextToken.originalText();
+                        field = previousToken.originalText();
+                        Pair<String, String> pair = new Pair<>(subject, field);
+                        if (!subjectsAndFields.contains(pair) && !nextToken.word().contains("IGNORE") && !tokens.get(i - 2).word().contains("IGNORE")) {
+                            subjectsAndFields.add(pair);
                         }
                     }
 
-                } else if (token.tag().startsWith("N") && i < tokens.size() - 2 && tokens.get(i + 1).tag().equals("POS") && !flagIgnor) {
-                    CoreLabel nextToken = tokens.get(i + 2);
-                    if (nextToken.tag().equals("POS")) {
-                        subject = word;
-                        field = tokens.get(i + 3).word();
-                        i += 3;
-                    } else {
-                        subject = word;
-                        field = nextToken.word();
-                        i += 2;
-                    }
+                } else if (token.originalText().equals("'s")) { //subject's field
+                    subject = previousToken.originalText();
+                    field = nextToken.originalText();
                     Pair<String, String> pair = new Pair<>(subject, field);
-                    if (!subjectsAndFields.contains(pair)) {
+                    if (!subjectsAndFields.contains(pair) && !nextToken.word().contains("IGNORE") && !tokens.get(i - 2).word().contains("IGNORE")) {
                         subjectsAndFields.add(pair);
                     }
-                } else if (token.tag().startsWith("N") && !flagIgnor) {
-                    subject = word;
-                    Pair<String, String> pair = new Pair<>(subject, null);
-                    if (!subjectsAndFields.contains(pair)) {
-                        subjectsAndFields.add(pair);
-                    }
+                }
+
+            }
+
+                if ((word.equals("then") && tokens.get(i + 1).word().equals("set") && tokens.get(i + 2).word().equals("an") && tokens.get(i + 3).word().equals("error"))
+                || (word.equals("if") && tokens.get(i + 1).word().equals("because")))
+                flagIgnor = true;
+            else if (!word.contains("IGNORE")) {
+                if (!containsSpecialSign(word)) {
+//                    field = "";
+//                    subject = "";
+//                } else if (word.equals("of") && tokens.get(i - 1).tag().startsWith("N") && !flagIgnor) {
+//
+//                    nextToken = tokens.get(i + 1);
+//                    if (nextToken.word().matches("(?i)(a|an|the|all)")) {
+//                        subject = tokens.get(i + 2).word();
+//                        field = tokens.get(i - 1).word();
+//                        i += 2;
+//                    } else {
+//                        subject = nextToken.word();
+//                        field = tokens.get(i - 1).word();
+//                        i++;
+//                    }
+//                    Pair<String, String> pair = new Pair<>(subject, field);
+//                    Pair<String, String> tempPair1 = new Pair<>(subject, null);
+//                    Pair<String, String> tempPair2 = new Pair<>(field, null);
+//
+//                    if (!subjectsAndFields.contains(pair) && !nextToken.word().contains("IGNORE") && !tokens.get(i - 2).word().contains("IGNORE")) {
+//                        if(!subjectsAndFields.contains(tempPair1) && !subjectsAndFields.contains(tempPair2))
+//                        subjectsAndFields.add(pair);
+//                        else{
+//                            //to delete the pair that exsist and after it to put the new pair.
+//                            // Find the index of the existing pair
+//                            int index = subjectsAndFields.indexOf(tempPair1);
+//                            if (index == -1) {
+//                                index = subjectsAndFields.indexOf(tempPair2);
+//                            }
+//                            // Remove the existing pair
+//                            subjectsAndFields.remove(index);
+//                            // Add the new pair at the same index
+//                            subjectsAndFields.add(index, pair);
+//                        }
+//                    }
+//                } else if (token.tag().startsWith("N") && i < tokens.size() - 2 && tokens.get(i + 1).tag().equals("POS") && !flagIgnor) {
+//                     nextToken = tokens.get(i + 2);
+//                    if (nextToken.tag().equals("POS")) {
+//                        subject = word;
+//                        field = tokens.get(i + 3).word();
+//                        i += 3;
+//                    } else {
+//                        subject = word;
+//                        field = nextToken.word();
+//                        i += 2;
+//                    }
+//                    Pair<String, String> pair = new Pair<>(subject, field);
+//                    if (!subjectsAndFields.contains(pair)) {
+//                        subjectsAndFields.add(pair);
+//                    }
+//                } else if (token.tag().startsWith("N") && !flagIgnor) {
+//                    subject = word;
+//                    Pair<String, String> pair = new Pair<>(subject, null);
+//                    if (!subjectsAndFields.contains(pair)) {
+//                        subjectsAndFields.add(pair);
+//                    }
                 } else if (token.tag().startsWith("JJ") && !flagIgnor) {
                     field = word;
                     Pair<String, String> lastPair = subjectsAndFields.get(subjectsAndFields.size() - 1);
@@ -194,41 +144,20 @@ public class NLPTemplate {
 
             }
         }
-
-        for (SemanticGraphEdge edge : dependencies.edgeListSorted()) {
-            String rel = edge.getRelation().toString();
-            String gov = edge.getGovernor().lemma();
-            String dep = edge.getDependent().lemma();
-
-            if (rel.equals("nsubj") && !gov.matches(".*@IGNOR.*") && !containsSpecialSign(gov) && !flagIgnor) {
-                Pair<String, String> pair = new Pair<>(gov, dep);
-                Pair<String, String> pairOp = new Pair<>(dep,gov);
-                if (!subjectsAndFields.contains(pair) && !(subjectsAndFields.contains(pairOp))) {
-                    subjectsAndFields.add(pair);
-                }
-            }
-        }
+//        for (SemanticGraphEdge edge : dependencies.edgeListSorted()) {
+//            String rel = edge.getRelation().toString();
+//            String gov = edge.getGovernor().lemma();
+//            String dep = edge.getDependent().lemma();
+//
+//            if (rel.equals("nsubj") && !gov.matches(".*@IGNOR.*") && !containsSpecialSign(gov) && !flagIgnor) {
+//                Pair<String, String> pair = new Pair<>(gov, dep);
+//                Pair<String, String> pairOp = new Pair<>(dep,gov);
+//                if (!subjectsAndFields.contains(pair) && !(subjectsAndFields.contains(pairOp))) {
+//                    subjectsAndFields.add(pair);
+//                }
+//            }
+//        }
         System.out.println(subjectsAndFields.toString());
-        return subjectsAndFields;
-    }
-
-    public List<Pair<String, String>> readNLPTemplate1() throws IOException{
-        // Set up the Stanford CoreNLP pipeline
-
-        Properties props = new Properties();
-        props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner");
-        StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
-
-        String sentenceToNLP = getCleanSentenceForAnalysis(this.sentence);
-
-        System.out.println(sentenceToNLP);
-
-        CoreDocument doc = new CoreDocument(sentenceToNLP);
-        pipeline.annotate(doc);
-
-        //NLP
-        List<Pair<String, String>> subjectsAndFields = findSubjectsAndFields(doc.tokens());
-
         return subjectsAndFields;
     }
     public List<Pair<String, String>> readNLPTemplate() throws IOException{
@@ -239,6 +168,7 @@ public class NLPTemplate {
     StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
     String sentenceToNLP = getCleanSentenceForAnalysis(this.sentence);
+    //String sentenceToNLP = this.sentence;
 
     System.out.println(sentenceToNLP);
 
@@ -247,6 +177,13 @@ public class NLPTemplate {
     //NLP
     List<Pair<String, String>> subjectsAndFields = findSubjectsAndFields(doc.tokens(), doc.sentences().get(0).dependencyParse());
 
+    for (Pair<String, String> pair : subjectsAndFields) {
+        String subjectEnToDB = pair.first();
+        String fieldEnToDB = pair.second();
+        String subjectHeToDB =  translateSentenceFromEnglishToHebrew(subjectEnToDB);
+        String fieldHeToDB =  translateSentenceFromEnglishToHebrew(fieldEnToDB);
+        checkIfExistSubjectAndFieldInDB(fieldHeToDB, fieldEnToDB, subjectHeToDB, subjectEnToDB);
+    }
     return subjectsAndFields;
 }
     public void analysisNLPTemplate() throws IOException {
@@ -258,6 +195,11 @@ public class NLPTemplate {
 
     /************************************************************************************************************/
     /*DataBase*/
+    private void checkIfExistSubjectAndFieldInDB(String hfield, String efield, String hsubject, String esubject){
+
+        SelectQueryExample.addSubjectToDatabase(hfield, efield, hsubject, esubject );
+    }
+
     private void addSubjectsAndFieldsToDB(List<Pair<String, String>> subjectsAndFields) {
         /*query to insert to db*/
     }
@@ -273,6 +215,13 @@ public class NLPTemplate {
         String englishTranslation = translate.translate("he", "en", sentenceBeforeTranslation);
         //fix the html's signs:
         String sentenceAfterTranslation = StringEscapeUtils.unescapeHtml4(englishTranslation);
+        return sentenceAfterTranslation;
+    }
+    private String translateSentenceFromEnglishToHebrew(String sentenceBeforeTranslation) throws IOException {
+        Translator translate = new Translator(sentenceBeforeTranslation);
+        String hebrewTranslation = translate.translate("en", "he", sentenceBeforeTranslation);
+        //fix the html's signs:
+        String sentenceAfterTranslation = StringEscapeUtils.unescapeHtml4(hebrewTranslation);
         return sentenceAfterTranslation;
     }
 
@@ -383,10 +332,10 @@ public class NLPTemplate {
         String sentenceAfterClean = markNotNecessaryTemplatesWords(sentence);
         //translate the sentence:
         String sentenceAfterTranslate = translateSentenceFromHebrewToEnglish(sentenceAfterClean);
-        //find the indexes of " in order to add underscore between the words that in "":
+        //find the indexes of " in order to add @ between the words that in "":
         List<Integer> charsIndexes = getCharsIndexes(sentenceAfterTranslate, '"');
         //replace the space between the words that in "" with underscore:
-        String sentenceToAnalysis = replaceBetweenTwoCharsFromTwoIndexesInSentence(sentenceAfterTranslate, charsIndexes, ' ', '_');
+        String sentenceToAnalysis = replaceBetweenTwoCharsFromTwoIndexesInSentence(sentenceAfterTranslate, charsIndexes, ' ', '@');
         //remove the stop words from the sentence:
         //String sentenceToAnalysisWithoutStopWords = removeStopWords(sentenceToAnalysis);
         return sentenceToAnalysis;
@@ -413,9 +362,14 @@ public class NLPTemplate {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-        NLPTemplate t;
-        t = new NLPTemplate("אם יחס_ימי_אשראי_ספקים של דוח_כספי_אחרון גדול מ- 125 אזי הוסף 1 ל- מונה_תנאים_לספק_להמשך_פעילות של דוח_כספי_אחרון");
-        t.readNLPTemplate();
+        NLPTemplate t1;
+        NLPTemplate t2;
+        String s = "אם מחזור_רבעון_4 של לקוח גדול מ- מחזור_רבעון_3 של לקוח וגם מחזור_רבעון_3 של לקוח גדול מ- מחזור_רבעון_2 של לקוח וגם מחזור_רבעון_2 של לקוח גדול מ- מחזור_רבעון_1 של לקוח אזי פתח התראה עם קוד_התראה ל- \"153\" , תיאור ל- \"עליה במחזור לעובד ב- 4 רבעונים אחרונים\"";
+        t1 = new NLPTemplate("אם יחס_ימי_אשראי_ספקים של דוח_כספי_אחרון גדול מ- 125 אזי הוסף 1 ל- מונה_תנאים_לספק_להמשך_פעילות של דוח_כספי_אחרון");
+        t2 = new NLPTemplate(s);
+        t1.readNLPTemplate();
+        t2.readNLPTemplate();
+
 //        for (int i = 0; i < data.size(); i++) {
 //            try {
 //                t = new NLPTemplate(data.get(i));
