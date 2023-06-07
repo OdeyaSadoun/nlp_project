@@ -30,7 +30,7 @@ public class SelectQueryExample {
             Connection conn = null;
             Statement stmt = null;
             String current_date = getDateWithMS();
-            String type_name=GetType.getLabel(englishSubject);
+            String type_name=GetType.getLabel(englishField);
             String logist="לוגיסט";
 
             //fields for ktclass:
