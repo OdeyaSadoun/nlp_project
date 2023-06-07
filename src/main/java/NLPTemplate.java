@@ -160,7 +160,6 @@ public class NLPTemplate {
         System.out.println(subjectsAndFields.toString());
         return subjectsAndFields;
     }
-
     public List<Pair<String, String>> readNLPTemplate() throws IOException{
     // Set up the Stanford CoreNLP pipeline
 
@@ -178,6 +177,13 @@ public class NLPTemplate {
     //NLP
     List<Pair<String, String>> subjectsAndFields = findSubjectsAndFields(doc.tokens(), doc.sentences().get(0).dependencyParse());
 
+    for (Pair<String, String> pair : subjectsAndFields) {
+        String subjectEnToDB = pair.first();
+        String fieldEnToDB = pair.second();
+        String subjectHeToDB =  translateSentenceFromEnglishToHebrew(subjectEnToDB);
+        String fieldHeToDB =  translateSentenceFromEnglishToHebrew(fieldEnToDB);
+        checkIfExistSubjectAndFieldInDB(fieldHeToDB, fieldEnToDB, subjectHeToDB, subjectEnToDB);
+    }
     return subjectsAndFields;
 }
     public void analysisNLPTemplate() throws IOException {
@@ -189,7 +195,7 @@ public class NLPTemplate {
 
     /************************************************************************************************************/
     /*DataBase*/
-    private void checkIfExistSubjectAndFieldInDB(String hsubject, String esubject, String hfield,  String efield){
+    private void checkIfExistSubjectAndFieldInDB(String hfield, String efield, String hsubject, String esubject){
 
         SelectQueryExample.addSubjectToDatabase(hfield, efield, hsubject, esubject );
     }
