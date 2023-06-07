@@ -2,7 +2,7 @@ import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.semgraph.SemanticGraph;
-import edu.stanford.nlp.semgraph.SemanticGraphEdge;
+//import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 import edu.stanford.nlp.util.Pair;
 import java.util.List;
 import java.util.Properties;
@@ -208,7 +208,7 @@ public class NLPTemplate {
         return false;
     }
 
-    /*************************************************************************************************************/
+    /************************************************************************************************************/
     /*Translate*/
     private String translateSentenceFromHebrewToEnglish(String sentenceBeforeTranslation) throws IOException {
         Translator translate = new Translator(sentenceBeforeTranslation);
