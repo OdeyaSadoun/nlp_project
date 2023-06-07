@@ -208,7 +208,7 @@ public class NLPTemplate {
         return false;
     }
 
-    /*************************************************************************************************************/
+    /************************************************************************************************************/
     /*Translate*/
     private String translateSentenceFromHebrewToEnglish(String sentenceBeforeTranslation) throws IOException {
         Translator translate = new Translator(sentenceBeforeTranslation);
