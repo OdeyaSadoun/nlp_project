@@ -7,6 +7,10 @@ public class GetType {
         labelingMap.put("age", "Long");
         labelingMap.put("number", "Long");
         labelingMap.put("amount", "Long");
+        labelingMap.put("cycle", "Long");
+        labelingMap.put("counter", "Long");
+        labelingMap.put("count", "Long");
+        labelingMap.put("ratio", "Double");
         labelingMap.put("cost", "Double");
         labelingMap.put("price", "Double");
         labelingMap.put("profit", "Double");
