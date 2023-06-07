@@ -30,7 +30,7 @@ public class SelectQueryExample {
             Connection conn = null;
             Statement stmt = null;
             String current_date = getDateWithMS();
-            String type_name="null";
+            String type_name=GetType.getLabel(englishSubject);
             String logist="לוגיסט";
 
             //fields for ktclass:
@@ -80,6 +80,7 @@ public class SelectQueryExample {
                 }
 
                 //Add corresponding field to KTATTRIBUTE table
+
                 String getClassIdQuery = "SELECT ATTR_CODE_NAME FROM KTATTRIBUTE WHERE CLASS_CODE_NAME = '" + englishSubject + "' AND ATTR_CODE_NAME = '" + englishField + "'";
                 rs = stmt.executeQuery(getClassIdQuery);
                 if (!rs.next()) {
