@@ -21,15 +21,18 @@ public class GetType {
     }
 
     public static String getLabel(String word) {
-        if (labelingMap.containsKey(word)) {
-            return labelingMap.get(word);
-        } else {
-            return "Bool";
+        String[] parts = word.split("_");
+        for (String part : parts) {
+            if (labelingMap.containsKey(part)) {
+                return labelingMap.get(part);
+            }
         }
+        return "Bool";
+
     }
 
     public static void main(String[] args) {
-        String word1 = "age";
+        String word1 = "age_1";
         String label1 = getLabel(word1);
         System.out.println(word1 + " : " + label1);
 
