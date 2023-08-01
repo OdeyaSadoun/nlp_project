@@ -3,26 +3,22 @@ import java.util.Map;
 
 public class ClassifySentenceWithoutInternet {
 
-    private Map<String, String> reservedWords;
+    private Map<String, String> tlxTable;
 
     public ClassifySentenceWithoutInternet(Map<String, String> reservedWords) {
-        this.reservedWords = reservedWords;
+        this.tlxTable = reservedWords;
     }
 
     public ClassifySentenceWithoutInternet() {
-        this.reservedWords = new HashMap<>();
-    }
-
-    public void addReservedWord(String word, String meaning) {
-        this.reservedWords.put(word, meaning);
+        this.tlxTable = new HashMap<>();
     }
 
     public String ClassifySentenceWithoutInternet(String sentence) {
         String[] tokens = sentence.split(" ");
         Map<String, String> fields = new HashMap<>();
         for (int i = 0; i < tokens.length; i++) {
-            if (reservedWords.containsKey(tokens[i])) {
-                fields.put(reservedWords.get(tokens[i]), tokens[i]);
+            if (tlxTable.containsKey(tokens[i])) {
+                fields.put(tlxTable.get(tokens[i]), tokens[i]);
             }
         }
         String field = null;
@@ -47,8 +43,6 @@ public class ClassifySentenceWithoutInternet {
 
     public static void main(String[] args) {
         ClassifySentenceWithoutInternet classifier = new ClassifySentenceWithoutInternet();
-        classifier.addReservedWord("of", "field");
-        classifier.addReservedWord("is", "topic");
         System.out.println(classifier.ClassifySentenceWithoutInternet("The age of the user is 21."));
         // Output: age of the user of 21
         System.out.println(classifier.ClassifySentenceWithoutInternet("The user is 21 years old."));
