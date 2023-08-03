@@ -66,14 +66,35 @@ public class SelectQueryExample {
                 String checkSubjectQuery = "SELECT CLASS_CODE_NAME FROM KTCLASS WHERE CLASS_CODE_NAME = '" + englishSubject + "'";
                 rs = stmt.executeQuery(checkSubjectQuery);
                 // If the subject is not found, add it to the KTCLASS table
+//                if (!rs.next()) {
+//                    String insertSubjectQuery = "INSERT INTO KTCLASS (CLASS_CODE_NAME, NAME, OWNER, ACTIVATION_ORDER, CLASS_INDEX, CREATION_DATE, UPDATE_DATE) VALUES ('" + englishSubject + "','" +hebrewSubject+ "','" + logist + "','" + activationOrder + "','" + classIndex+ "','" + current_date + "', '" + current_date + "')";
+//                    stmt.executeUpdate(insertSubjectQuery);
+//                }
                 if (!rs.next()) {
-                    String insertSubjectQuery = "INSERT INTO KTCLASS (CLASS_CODE_NAME, NAME, OWNER, ACTIVATION_ORDER, CLASS_INDEX, CREATION_DATE, UPDATE_DATE) VALUES ('" + englishSubject + "','" +hebrewSubject+ "','" + logist + "','" + activationOrder + "','" + classIndex+ "','" + current_date + "', '" + current_date + "')";
-                    stmt.executeUpdate(insertSubjectQuery);
+                    String insertSubjectQuery = "INSERT INTO KTCLASS (CLASS_CODE_NAME, NAME, OWNER, ACTIVATION_ORDER, CLASS_INDEX, CREATION_DATE, UPDATE_DATE) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    PreparedStatement preparedStatement = conn.prepareStatement(insertSubjectQuery);
+
+                    preparedStatement.setString(1, englishSubject);
+                    preparedStatement.setString(2, hebrewSubject);
+                    preparedStatement.setString(3, logist);
+                    preparedStatement.setString(4, String.valueOf(activationOrder));
+                    preparedStatement.setString(5, String.valueOf(classIndex));
+                    preparedStatement.setString(6, current_date);
+                    preparedStatement.setString(7, current_date);
+
+                    preparedStatement.executeUpdate();
+                    preparedStatement.close();
                 }
 
                 //query to find attribute index to sent to insert query
-                String query_ATTRIBUTE_INDEX = "SELECT COALESCE(MAX(ATTRIBUTE_INDEX), 0) + 1 AS next_index FROM KVATTRIBUTE WHERE CLASS_CODE_NAME = '" + englishSubject + "'";
-                rs = stmt.executeQuery(query_ATTRIBUTE_INDEX);
+//                String query_ATTRIBUTE_INDEX = "SELECT COALESCE(MAX(ATTRIBUTE_INDEX), 0) + 1 AS next_index FROM KVATTRIBUTE WHERE CLASS_CODE_NAME = '" + englishSubject + "'";
+//                rs = stmt.executeQuery(query_ATTRIBUTE_INDEX);
+                String query_ATTRIBUTE_INDEX = "SELECT COALESCE(MAX(ATTRIBUTE_INDEX), 0) + 1 AS next_index FROM KVATTRIBUTE WHERE CLASS_CODE_NAME = ?";
+                PreparedStatement preparedStatement = conn.prepareStatement(query_ATTRIBUTE_INDEX);
+                preparedStatement.setString(1, englishSubject);
+                rs = preparedStatement.executeQuery();
+
+
                 if (rs.next()) {
                     attributeIndex = rs.getInt("next_index");
                     System.out.println("Next attribute_index: " + attributeIndex);
@@ -81,12 +102,40 @@ public class SelectQueryExample {
 
                 //Add corresponding field to KTATTRIBUTE table
 
-                String getClassIdQuery = "SELECT ATTR_CODE_NAME FROM KTATTRIBUTE WHERE CLASS_CODE_NAME = '" + englishSubject + "' AND ATTR_CODE_NAME = '" + englishField + "'";
-                rs = stmt.executeQuery(getClassIdQuery);
+//                String getClassIdQuery = "SELECT ATTR_CODE_NAME FROM KTATTRIBUTE WHERE CLASS_CODE_NAME = '" + englishSubject + "' AND ATTR_CODE_NAME = '" + englishField + "'";
+//                rs = stmt.executeQuery(getClassIdQuery);
+
+                String getClassIdQuery = "SELECT ATTR_CODE_NAME FROM KTATTRIBUTE WHERE CLASS_CODE_NAME = ? AND ATTR_CODE_NAME = ?";
+                preparedStatement = conn.prepareStatement(getClassIdQuery);
+                preparedStatement.setString(1, englishSubject);
+                preparedStatement.setString(2, englishField);
+                rs = preparedStatement.executeQuery();
+
+//                if (!rs.next()) {
+//                    String insertSubjectQuery = "INSERT INTO KTATTRIBUTE (CLASS_CODE_NAME, ATTR_CODE_NAME, NAME, TYPE_NAME, OVERLAP_POSITION,ATTRIBUTE_INDEX, CREATION_DATE, UPDATE_DATE, KEY_TYPE, IO_MODE, SORT_NUMBER, SORT_DIRECTION) VALUES ('" + englishSubject+ "','" + englishField+ "', '" + hebrewField+ "', '" + type_name+ "', '" + overlapPosition + "', '" + attributeIndex + "', '" + current_date + "', '" + current_date + "', '" + keyType + "', '" + ioMode + "', '" + sortNumber + "', '" + sortDirection + "')";
+//                    stmt.executeUpdate(insertSubjectQuery);
+//                }
                 if (!rs.next()) {
-                    String insertSubjectQuery = "INSERT INTO KTATTRIBUTE (CLASS_CODE_NAME, ATTR_CODE_NAME, NAME, TYPE_NAME, OVERLAP_POSITION,ATTRIBUTE_INDEX, CREATION_DATE, UPDATE_DATE, KEY_TYPE, IO_MODE, SORT_NUMBER, SORT_DIRECTION) VALUES ('" + englishSubject+ "','" + englishField+ "', '" + hebrewField+ "', '" + type_name+ "', '" + overlapPosition + "', '" + attributeIndex + "', '" + current_date + "', '" + current_date + "', '" + keyType + "', '" + ioMode + "', '" + sortNumber + "', '" + sortDirection + "')";
-                    stmt.executeUpdate(insertSubjectQuery);
+                    String insertSubjectQuery = "INSERT INTO KTATTRIBUTE (CLASS_CODE_NAME, ATTR_CODE_NAME, NAME, TYPE_NAME, OVERLAP_POSITION, ATTRIBUTE_INDEX, CREATION_DATE, UPDATE_DATE, KEY_TYPE, IO_MODE, SORT_NUMBER, SORT_DIRECTION) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    preparedStatement = conn.prepareStatement(insertSubjectQuery);
+
+                    preparedStatement.setString(1, englishSubject);
+                    preparedStatement.setString(2, englishField);
+                    preparedStatement.setString(3, hebrewField);
+                    preparedStatement.setString(4, type_name);
+                    preparedStatement.setString(5, String.valueOf(overlapPosition));
+                    preparedStatement.setString(6, String.valueOf(attributeIndex));
+                    preparedStatement.setString(7, current_date);
+                    preparedStatement.setString(8, current_date);
+                    preparedStatement.setString(9, String.valueOf(keyType));
+                    preparedStatement.setString(10, String.valueOf(ioMode));
+                    preparedStatement.setString(11, String.valueOf(sortNumber));
+                    preparedStatement.setString(12, String.valueOf(sortDirection));
+
+                    preparedStatement.executeUpdate();
+                    preparedStatement.close();
                 }
+
                 //Close the database resources
                 rs.close();
                 stmt.close();

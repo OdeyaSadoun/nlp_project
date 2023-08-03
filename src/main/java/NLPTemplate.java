@@ -36,6 +36,7 @@ public class NLPTemplate {
         String subject = null;
         String field = null;
         boolean flagIgnor = false;
+        int maxColumnLength = 50;
 
         for (int i = 0; i < tokens.size(); i++) {
             CoreLabel token = tokens.get(i);
@@ -53,7 +54,16 @@ public class NLPTemplate {
                     }
                     if (!nextToken.word().contains("\"")){
                         subject = nextToken.originalText();
+                       // Maximum length allowed for the column
+
+                        // Check if the value exceeds the maximum length
+                        if (subject.length() > maxColumnLength) {
+                            subject = subject.substring(0, maxColumnLength); // Truncate the value
+                        }
                         field = previousToken.originalText();
+                        if (field.length() > maxColumnLength) {
+                            field = field.substring(0, maxColumnLength); // Truncate the value
+                        }
                         Pair<String, String> pair = new Pair<>(subject, field);
                         if (!subjectsAndFields.contains(pair) && !nextToken.word().contains("IGNORE") && !tokens.get(i - 2).word().contains("IGNORE")) {
                             subjectsAndFields.add(pair);
@@ -265,7 +275,7 @@ public class NLPTemplate {
         for (String word : sentence.split(" ")) {
             if (wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_VALUE_OPERATOR, word) ||
                 wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_COMPARISON_OPERATOR, word) ||
-                    wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_NUMERIC_OPERATOR, word) ||
+                   // wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_NUMERIC_OPERATOR, word) ||
                     wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_SUM_OPERATOR, word) ||
                     wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_EDGE_OPERATOR, word) ||
                     wordExistsInConstantsList(LogistConstants.CONSTANT_LIST_EXISTENCE_OPERATOR, word) ||
@@ -364,11 +374,17 @@ public class NLPTemplate {
 //        }
         NLPTemplate t1;
         NLPTemplate t2;
-        String s = "אם מחזור_רבעון_4 של לקוח גדול מ- מחזור_רבעון_3 של לקוח וגם מחזור_רבעון_3 של לקוח גדול מ- מחזור_רבעון_2 של לקוח וגם מחזור_רבעון_2 של לקוח גדול מ- מחזור_רבעון_1 של לקוח אזי פתח התראה עם קוד_התראה ל- \"153\" , תיאור ל- \"עליה במחזור לעובד ב- 4 רבעונים אחרונים\"";
-        t1 = new NLPTemplate("אם יחס_ימי_אשראי_ספקים של דוח_כספי_אחרון גדול מ- 125 אזי הוסף 1 ל- מונה_תנאים_לספק_להמשך_פעילות של דוח_כספי_אחרון");
-        t2 = new NLPTemplate(s);
-        t1.readNLPTemplate();
-        t2.readNLPTemplate();
+        NLPTemplate t3;
+        String s1 = "אם יחס_ימי_אשראי_ספקים של דוח_כספי_אחרון גדול מ- 125 אזי הוסף 1 ל- מונה_תנאים_לספק_להמשך_פעילות של דוח_כספי_אחרון";
+        //String s2 = ""\אם מחזור_רבעון_4 של לקוח גדול מ- מחזור_רבעון_3 של לקוח וגם מחזור_רבעון_3 של לקוח גדול מ- מחזור_רבעון_2 של לקוח וגם מחזור_רבעון_2 של לקוח גדול מ- מחזור_רבעון_1 של לקוח אזי פתח התראה עם קוד_התראה ל- \"153\" , תיאור ל- \"עליה במחזור לעובד ב- 4 רבעונים אחרונים\";
+        String s3 = "אם גיל של ילד גדול מ שנות_הלימוד של ילד * בתי הספר של ילד + היסט של אנושות - 5 אזי עדכן זכאות של ילד ל מקסימום_בונוס של ילד + זכאות של אב";
+        //t1 = new NLPTemplate(s1);
+        //t2 = new NLPTemplate(s2);
+        t3 = new NLPTemplate(s3);
+        //t1.readNLPTemplate();
+        //t2.readNLPTemplate();
+        t3.readNLPTemplate();
+
 
 //        for (int i = 0; i < data.size(); i++) {
 //            try {
