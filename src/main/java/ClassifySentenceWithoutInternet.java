@@ -3,10 +3,73 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ClassifySentenceWithoutInternet {
+
+    static String sentence;
+    static String subject;
+    static String field;
+    boolean success;
+    String subSubject;
+    String subField;
+    int indexSub;
+    int indexFil;
+
+    public static void readTemplate(){
+        String[] template = sentence.split(" ");
+        List<String> lstTemplate = Arrays.asList(template);
+        findSubjectAndField(lstTemplate);
+    }
+
+    public static void findSubjectAndField(List<String> lstTemplate) {
+        for (int i = 0; i < lstTemplate.size(); i++) {
+            String word = lstTemplate.get(i);
+            System.out.println(word);
+
+            //option1
+            if(word.equals("של")){
+                field = lstTemplate.get(i-1);
+                if(lstTemplate.get(i+1).equals("כל")){
+                    subject = lstTemplate.get(i+2);
+                }
+                else{
+                    subject = lstTemplate.get(i+1);
+                }
+                checkFieldAndSubjectInDB(subject,field);
+                continue;
+            }
+            //option2
+            if (word.equals("אינו") || word.equals("הוא")) {
+                subject = lstTemplate.get(i-1);
+                field = lstTemplate.get(i+1);
+                checkFieldAndSubjectInDB(subject,field);
+                continue;
+            }
+            //option11
+            if (word.equals("ה-") || word.equals("ל-")) {
+                boolean isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+1));
+                if(!isSaveWord){
+                    subject = lstTemplate.get(i+1);
+                    field = null;
+                }
+                checkFieldAndSubjectInDB(subject,field);
+                continue;
+            }
+        }
+
+    }
+
+    private static boolean isSaveWordInTLXTable(String s) {
+        return false;
+    }
+
+    private static void checkFieldAndSubjectInDB(String subject, String field) {
+    }
+
 
     private Map<String, String> tlxTable;
 
