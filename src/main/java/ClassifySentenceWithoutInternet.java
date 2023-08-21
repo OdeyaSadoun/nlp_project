@@ -15,6 +15,7 @@ public class ClassifySentenceWithoutInternet {
     static String pluralSubject;
     static String field;
     static String mainSubject = "mainSubject";
+    static String dataType = "Bool"; //default
 
     public static void readTemplate(){
         String[] template = sentence.split(" ");
@@ -24,22 +25,27 @@ public class ClassifySentenceWithoutInternet {
 
     public static void findSubjectAndField(List<String> lstTemplate) {
         for (int i = 0; i < lstTemplate.size(); i++) {
+
             String word = lstTemplate.get(i);
             System.out.println(word);
+
             boolean isSaveWord = isSaveWordInTLXTable(word);
+
             if (!isSaveWord){
                 //option5-6
                 if(lstTemplate.get(i+1).equals("קיים") ||
                         lstTemplate.get(i+1).equals("לא") && lstTemplate.get(i+2).equals("קיים")){
                     subject = word;
                     field = null;
+                    checkFieldAndSubjectInDB(subject,field, dataType);
                     continue;
                 }
                 //option7
-                isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+1));
+                isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+1)); //the next word
                 if(!isSaveWord){
                     subject = word;
                     field = lstTemplate.get(i+1);
+                    checkFieldAndSubjectInDB(subject,field, dataType);
                     continue;
                 }
                 //option8a
@@ -49,6 +55,7 @@ public class ClassifySentenceWithoutInternet {
                     if(!isSaveWord){
                         subject = lstTemplate.get(i+3);
                         field = word;
+                        checkFieldAndSubjectInDB(subject,field, dataType);
                         continue;
                     }
                 }
@@ -63,15 +70,21 @@ public class ClassifySentenceWithoutInternet {
                 else{
                     subject = lstTemplate.get(i+1);
                 }
-                checkFieldAndSubjectInDB(subject,field);
+                checkFieldAndSubjectInDB(subject,field, dataType);
                 continue;
             }
             //option2
             if (word.equals("אינו") || word.equals("הוא")) {
-                subject = lstTemplate.get(i-1);
-                field = lstTemplate.get(i+1);
-                checkFieldAndSubjectInDB(subject,field);
-                continue;
+                isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i - 1));
+                if(!isSaveWord){
+                    subject = lstTemplate.get(i-1);
+                    isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 1));
+                    if(!isSaveWord){
+                        field = lstTemplate.get(i+1);
+                        checkFieldAndSubjectInDB(subject,field, dataType);
+                        continue;
+                    }
+                }
             }
             //option3
             //3. אם מילהלאשמורה  אינו/הוא  מילהשמורה  -  אזי הראשון הוא שדה  בתוך נושא מרכזי
@@ -84,6 +97,7 @@ public class ClassifySentenceWithoutInternet {
                         if (isSaveWord) {
                             subject = mainSubject;
                             field = lstTemplate.get(i+1);
+                            checkFieldAndSubjectInDB(subject,field, dataType);
                             continue;
                         }
                     }
@@ -94,6 +108,7 @@ public class ClassifySentenceWithoutInternet {
                         if(!isSaveWord){
                             subject = lstTemplate.get(i+4);
                             field = lstTemplate.get(i+1);
+                            checkFieldAndSubjectInDB(subject,field, dataType);
                             continue;
                         }
                     }
@@ -101,6 +116,7 @@ public class ClassifySentenceWithoutInternet {
                     //4.  אם מילהלאשמורה{[הוא] /מילהשמורה}  (למשל אופרטור) – אזי הראשון הוא שדה בתוך נושא מרכזי
                     subject = mainSubject;
                     field = lstTemplate.get(i+1);
+                    checkFieldAndSubjectInDB(subject,field, dataType);
                     continue;
                 } else {
                     //option9-10
@@ -109,12 +125,13 @@ public class ClassifySentenceWithoutInternet {
                         pluralSubject = lstTemplate.get(i + 5);
                         subject = changePluralSubjectToSingle(pluralSubject);
                         field = lstTemplate.get(i + 1);
-                        checkFieldAndSubjectInDB(subject, field);
+                        checkFieldAndSubjectInDB(subject, field, dataType);
+
                         if (lstTemplate.get(i + 6) != "") {
                             isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 6));
                             if (!isSaveWord) {
                                 field = lstTemplate.get(i + 6);
-                                checkFieldAndSubjectInDB(subject, field);
+                                checkFieldAndSubjectInDB(subject, field, dataType);
                             }
                         }
                         continue;
@@ -126,12 +143,13 @@ public class ClassifySentenceWithoutInternet {
                             pluralSubject = lstTemplate.get(i + 3);
                             subject = changePluralSubjectToSingle(pluralSubject);
                             field = lstTemplate.get(i + 1);
-                            checkFieldAndSubjectInDB(subject, field);
+                            checkFieldAndSubjectInDB(subject, field, dataType);
+
                             if (lstTemplate.get(i + 4) != "") {
                                 isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 6));
                                 if (!isSaveWord) {
                                     field = lstTemplate.get(i + 4);
-                                    checkFieldAndSubjectInDB(subject, field);
+                                    checkFieldAndSubjectInDB(subject, field, dataType);
                                 }
                             }
                             continue;
@@ -140,10 +158,10 @@ public class ClassifySentenceWithoutInternet {
                     String pluralSubject = lstTemplate.get(i + 5);
                     subject = changePluralSubjectToSingle(pluralSubject);
                     field = lstTemplate.get(i + 1);
-                    checkFieldAndSubjectInDB(subject, field);
+                    checkFieldAndSubjectInDB(subject, field, dataType);
                     if (lstTemplate.get(i + 6) != "") {
                         field = lstTemplate.get(i + 6);
-                        checkFieldAndSubjectInDB(subject, field);
+                        checkFieldAndSubjectInDB(subject, field, dataType);
                     }
                     continue;
                 }
@@ -157,9 +175,9 @@ public class ClassifySentenceWithoutInternet {
                 if(!isSaveWord){
                     subject = lstTemplate.get(i+1);
                     field = null;
+                    checkFieldAndSubjectInDB(subject,field, dataType);
+                    continue;
                 }
-                checkFieldAndSubjectInDB(subject,field);
-                continue;
             }
             //option12
             if (word.equals("ו-")) {
@@ -167,9 +185,8 @@ public class ClassifySentenceWithoutInternet {
                 if(!isSaveWord){
                     subject = mainSubject;
                     field = lstTemplate.get(i+1);
+                    checkFieldAndSubjectInDB(subject,field, dataType);
                 }
-                checkFieldAndSubjectInDB(subject,field);
-                continue;
             }
         }
     }
@@ -186,7 +203,7 @@ public class ClassifySentenceWithoutInternet {
         return false;
     }
 
-    private static void checkFieldAndSubjectInDB(String subject, String field) {
+    private static void checkFieldAndSubjectInDB(String subject, String field, String dataType) {
     }
 
 
