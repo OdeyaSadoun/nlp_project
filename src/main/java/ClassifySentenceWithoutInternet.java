@@ -12,6 +12,7 @@ public class ClassifySentenceWithoutInternet {
 
     static String sentence;
     static String subject;
+    static String pluralSubject;
     static String field;
     static String mainSubject = "1";
 
@@ -72,33 +73,63 @@ public class ClassifySentenceWithoutInternet {
             //3. אם מילהלאשמורה  אינו/הוא  מילהשמורה  -  אזי הראשון הוא שדה  בתוך נושא מרכזי
             //4.  אם מילהלאשמורה{[הוא] /מילהשמורה}  (למשל אופרטור) – אזי הראשון הוא שדה בתוך נושא מרכזי
             if (word.equals("אם")) {
-                isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+1));
-                if(!isSaveWord){
-                    if(lstTemplate.get(i+2).equals("הוא") || lstTemplate.get(i+2).equals("אינו")){
-                        isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+3));
-                        if(isSaveWord){
+                isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 1));
+                if (!isSaveWord) {
+                    if (lstTemplate.get(i + 2).equals("הוא") || lstTemplate.get(i + 2).equals("אינו")) {
+                        isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 3));
+                        if (isSaveWord) {
                             subject = mainSubject;
                             field = word;
                             continue;
                         }
                     }
-                //option4
-                }
-                else {
+                    //option4
+                } else {
                     //option9-10
                     //  אם מילהשמורה טקסט שמור של כל ה-  מילהלא שמורה [מילהלאשמורה]  -  הראשון שדה השני נושא ברבים אחריו שדה לוואי
                     if (lstTemplate.get(i + 2).equals("של") && lstTemplate.get(i + 3).equals("כל") && lstTemplate.get(i + 4).equals("ה-")) {
-                        String pluralSubject = lstTemplate.get(i + 5);
+                        pluralSubject = lstTemplate.get(i + 5);
                         subject = changePluralSubjectToSingle(pluralSubject);
-                        field = lstTemplate.get(i+1);
+                        field = lstTemplate.get(i + 1);
                         checkFieldAndSubjectInDB(subject, field);
-                        if(lstTemplate.get(i+6) != ""){
-                            field = lstTemplate.get(i+6);
-                            checkFieldAndSubjectInDB(subject, field);
+                        if (lstTemplate.get(i + 6) != "") {
+                            isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 6));
+                            if (!isSaveWord) {
+                                field = lstTemplate.get(i + 6);
+                                checkFieldAndSubjectInDB(subject, field);
+                            }
                         }
                         continue;
                     }
+                    //10 אם מילהשמורה טקסט שמור [מספר בעברית]   מילהלאשמורה [מילהלאשמורה]   -  הראשון שדה השני נושא ברבים אחריו שדה לוואי ו
+                    if (isNumericNumber(lstTemplate.get(i + 2))) {
+                        isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 3));
+                        if (!isSaveWord) {
+                            pluralSubject = lstTemplate.get(i + 3);
+                            subject = changePluralSubjectToSingle(pluralSubject);
+                            field = lstTemplate.get(i + 1);
+                            checkFieldAndSubjectInDB(subject, field);
+                            if (lstTemplate.get(i + 4) != "") {
+                                isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 6));
+                                if (!isSaveWord) {
+                                    field = lstTemplate.get(i + 4);
+                                    checkFieldAndSubjectInDB(subject, field);
+                                }
+                            }
+                            continue;
+                        }
+                    }
+                    String pluralSubject = lstTemplate.get(i + 5);
+                    subject = changePluralSubjectToSingle(pluralSubject);
+                    field = lstTemplate.get(i + 1);
+                    checkFieldAndSubjectInDB(subject, field);
+                    if (lstTemplate.get(i + 6) != "") {
+                        field = lstTemplate.get(i + 6);
+                        checkFieldAndSubjectInDB(subject, field);
+                    }
+                    continue;
                 }
+            
                 checkFieldAndSubjectInDB(subject,field);
                 continue;
             }
@@ -124,6 +155,10 @@ public class ClassifySentenceWithoutInternet {
             }
         }
 
+    }
+
+    private static boolean isNumericNumber(String s) {
+        return false;
     }
 
     private static String changePluralSubjectToSingle(String pluralSubject) {
