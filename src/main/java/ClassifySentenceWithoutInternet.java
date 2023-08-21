@@ -31,7 +31,16 @@ public class ClassifySentenceWithoutInternet {
         for (int i = 0; i < lstTemplate.size(); i++) {
             String word = lstTemplate.get(i);
             System.out.println(word);
-
+            boolean isSaveWord = isSaveWordInTLXTable(word);
+            if (!isSaveWord){
+                //option5-6
+                if(lstTemplate.get(i+1).equals("קיים") ||
+                        lstTemplate.get(i+1).equals("לא") && lstTemplate.get(i+2).equals("קיים")){
+                    subject = word;
+                    field = null;
+                    continue;
+                }
+            }
             //option1
             if(word.equals("של")){
                 field = lstTemplate.get(i-1);
@@ -55,7 +64,7 @@ public class ClassifySentenceWithoutInternet {
             //3. אם מילהלאשמורה  אינו/הוא  מילהשמורה  -  אזי הראשון הוא שדה  בתוך נושא מרכזי
             //4.  אם מילהלאשמורה{[הוא] /מילהשמורה}  (למשל אופרטור) – אזי הראשון הוא שדה בתוך נושא מרכזי
             if (word.equals("אם")) {
-                boolean isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+1));
+                isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+1));
                 if(!isSaveWord){
                     if(lstTemplate.get(i+2).equals("הוא") || lstTemplate.get(i+2).equals("אינו")){
                         isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+3));
@@ -75,7 +84,7 @@ public class ClassifySentenceWithoutInternet {
             }
             //option11
             if (word.equals("ה-") || word.equals("ל-")) {
-                boolean isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+1));
+                isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+1));
                 if(!isSaveWord){
                     subject = lstTemplate.get(i+1);
                     field = null;
