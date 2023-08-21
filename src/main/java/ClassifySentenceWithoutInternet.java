@@ -195,9 +195,39 @@ public class ClassifySentenceWithoutInternet {
         return false;
     }
 
-    private static String changePluralSubjectToSingle(String pluralSubject) {
-        return  "";
+    public static String changePluralSubjectToSingle(String pluralSubject) {
+        // Check if the word ends with a plural suffix such as "ות" or "ים".
+        if (pluralSubject.endsWith("ות") || pluralSubject.endsWith("ים")) {
+            // If so, remove the plural suffix.
+            pluralSubject = pluralSubject.substring(0, pluralSubject.length() - 2);
+        }
+
+        // Check if the final letter is a Hebrew final letter.
+        if (pluralSubject.endsWith("מ") || pluralSubject.endsWith("נ") || pluralSubject.endsWith("פ") || pluralSubject.endsWith("צ") || pluralSubject.endsWith("כ")) {
+            // If so, replace the final letter with its corresponding singular letter.
+            char lastChar = pluralSubject.charAt(pluralSubject.length() - 1);
+            switch (lastChar) {
+                case 'מ':
+                    pluralSubject = pluralSubject.substring(0, pluralSubject.length() - 1) + 'ם';
+                    break;
+                case 'נ':
+                    pluralSubject = pluralSubject.substring(0, pluralSubject.length() - 1) + 'ן';
+                    break;
+                case 'פ':
+                    pluralSubject = pluralSubject.substring(0, pluralSubject.length() - 1) + 'ף';
+                    break;
+                case 'צ':
+                    pluralSubject = pluralSubject.substring(0, pluralSubject.length() - 1) + 'ץ';
+                    break;
+                case 'כ':
+                    pluralSubject = pluralSubject.substring(0, pluralSubject.length() - 1) + 'ך';
+                    break;
+            }
+        }
+
+        return pluralSubject;
     }
+
 
     private static boolean isSaveWordInTLXTable(String s) {
         return false;
