@@ -100,6 +100,16 @@ public class ClassifySentenceWithoutInternet {
                 checkFieldAndSubjectInDB(subject,field);
                 continue;
             }
+            //option12
+            if (word.equals("ו-")) {
+                isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+1));
+                if(!isSaveWord){
+                    subject = mainSubject;
+                    field = lstTemplate.get(i+1);
+                }
+                checkFieldAndSubjectInDB(subject,field);
+                continue;
+            }
         }
 
     }
