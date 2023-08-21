@@ -86,6 +86,18 @@ public class ClassifySentenceWithoutInternet {
                 }
                 else {
                     //option9-10
+                    //  אם מילהשמורה טקסט שמור של כל ה-  מילהלא שמורה [מילהלאשמורה]  -  הראשון שדה השני נושא ברבים אחריו שדה לוואי
+                    if (lstTemplate.get(i + 2).equals("של") && lstTemplate.get(i + 3).equals("כל") && lstTemplate.get(i + 4).equals("ה-")) {
+                        String pluralSubject = lstTemplate.get(i + 5);
+                        subject = changePluralSubjectToSingle(pluralSubject);
+                        field = lstTemplate.get(i+1);
+                        checkFieldAndSubjectInDB(subject, field);
+                        if(lstTemplate.get(i+6) != ""){
+                            field = lstTemplate.get(i+6);
+                            checkFieldAndSubjectInDB(subject, field);
+                        }
+                        continue;
+                    }
                 }
                 checkFieldAndSubjectInDB(subject,field);
                 continue;
@@ -112,6 +124,10 @@ public class ClassifySentenceWithoutInternet {
             }
         }
 
+    }
+
+    private static String changePluralSubjectToSingle(String pluralSubject) {
+        return  "";
     }
 
     private static boolean isSaveWordInTLXTable(String s) {
