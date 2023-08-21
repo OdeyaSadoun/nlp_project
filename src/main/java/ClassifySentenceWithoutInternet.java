@@ -89,7 +89,7 @@ public class ClassifySentenceWithoutInternet {
                         isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 3));
                         if (isSaveWord) {
                             subject = mainSubject;
-                            field = word;
+                            field = lstTemplate.get(i+1);
                             continue;
                         }
                     }
@@ -104,6 +104,10 @@ public class ClassifySentenceWithoutInternet {
                         }
                     }
                     //option4
+                    //4.  אם מילהלאשמורה{[הוא] /מילהשמורה}  (למשל אופרטור) – אזי הראשון הוא שדה בתוך נושא מרכזי
+                    subject = mainSubject;
+                    field = lstTemplate.get(i+1);
+                    continue;
                 } else {
                     //option9-10
                     //  אם מילהשמורה טקסט שמור של כל ה-  מילהלא שמורה [מילהלאשמורה]  -  הראשון שדה השני נושא ברבים אחריו שדה לוואי
@@ -150,8 +154,8 @@ public class ClassifySentenceWithoutInternet {
                     continue;
                 }
             
-                checkFieldAndSubjectInDB(subject,field);
-                continue;
+//                checkFieldAndSubjectInDB(subject,field);
+//                continue;
             }
             //option11
             if (word.equals("ה-") || word.equals("ל-")) {
