@@ -13,6 +13,8 @@ public class ClassifySentenceWithoutInternet {
     static String sentence;
     static String subject;
     static String field;
+    static String mainSubject = "1";
+
     boolean success;
     String subSubject;
     String subField;
@@ -46,6 +48,28 @@ public class ClassifySentenceWithoutInternet {
             if (word.equals("אינו") || word.equals("הוא")) {
                 subject = lstTemplate.get(i-1);
                 field = lstTemplate.get(i+1);
+                checkFieldAndSubjectInDB(subject,field);
+                continue;
+            }
+            //option3
+            //3. אם מילהלאשמורה  אינו/הוא  מילהשמורה  -  אזי הראשון הוא שדה  בתוך נושא מרכזי
+            //4.  אם מילהלאשמורה{[הוא] /מילהשמורה}  (למשל אופרטור) – אזי הראשון הוא שדה בתוך נושא מרכזי
+            if (word.equals("אם")) {
+                boolean isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+1));
+                if(!isSaveWord){
+                    if(lstTemplate.get(i+2).equals("הוא") || lstTemplate.get(i+2).equals("אינו")){
+                        isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+3));
+                        if(isSaveWord){
+                            subject = mainSubject;
+                            field = word;
+                            continue;
+                        }
+                    }
+                //option4
+                }
+                else {
+                    //option9-10
+                }
                 checkFieldAndSubjectInDB(subject,field);
                 continue;
             }
