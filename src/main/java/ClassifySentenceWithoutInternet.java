@@ -48,6 +48,16 @@ public class ClassifySentenceWithoutInternet {
                     field = lstTemplate.get(i+1);
                     continue;
                 }
+                //option8a
+                //מילהלאשמורה [טקסט שמור] של כל מילהלאשמורה -  שדה והשני זה נושא
+                if (lstTemplate.get(i + 1).equals("של") && lstTemplate.get(i + 2).equals("כל")) {
+                    isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 3));
+                    if(!isSaveWord){
+                        subject = lstTemplate.get(i+3);
+                        field = word;
+                        continue;
+                    }
+                }
 
             }
             //option1
@@ -80,6 +90,16 @@ public class ClassifySentenceWithoutInternet {
                         if (isSaveWord) {
                             subject = mainSubject;
                             field = word;
+                            continue;
+                        }
+                    }
+                    //option8b
+                    //מילהלאשמורה [טקסט שמור] של כל מילהלאשמורה -  שדה והשני זה נושא  (אם)8
+                    if (lstTemplate.get(i + 2).equals("של") && lstTemplate.get(i + 3).equals("כל")) {
+                        isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 4));
+                        if(!isSaveWord){
+                            subject = lstTemplate.get(i+4);
+                            field = lstTemplate.get(i+1);
                             continue;
                         }
                     }
