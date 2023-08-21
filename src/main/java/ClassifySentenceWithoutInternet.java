@@ -40,6 +40,14 @@ public class ClassifySentenceWithoutInternet {
                     field = null;
                     continue;
                 }
+                //option7
+                isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+1));
+                if(!isSaveWord){
+                    subject = word;
+                    field = lstTemplate.get(i+1);
+                    continue;
+                }
+
             }
             //option1
             if(word.equals("של")){
