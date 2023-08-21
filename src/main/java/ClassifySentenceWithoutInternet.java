@@ -14,13 +14,7 @@ public class ClassifySentenceWithoutInternet {
     static String subject;
     static String pluralSubject;
     static String field;
-    static String mainSubject = "1";
-
-    boolean success;
-    String subSubject;
-    String subField;
-    int indexSub;
-    int indexFil;
+    static String mainSubject = "mainSubject";
 
     public static void readTemplate(){
         String[] template = sentence.split(" ");
@@ -178,7 +172,6 @@ public class ClassifySentenceWithoutInternet {
                 continue;
             }
         }
-
     }
 
     private static boolean isNumericNumber(String s) {
