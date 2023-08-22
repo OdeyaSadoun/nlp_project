@@ -7,7 +7,7 @@ public class SaveToDatabase {
 
     public static void main(String[] args) {
 
-        addSubjectToDatabase("ורוד", "pink", "ילדה", "girl");
+        addSubjectToDatabase("א", "a", "אא", "aa");
 
     }
 
@@ -164,6 +164,8 @@ public class SaveToDatabase {
 
         preparedStatement.executeUpdate();
         preparedStatement.close();
+
+        conn.close();
     }
 
 
@@ -218,11 +220,9 @@ public class SaveToDatabase {
                 insertAttribute(englishSubject, englishField, hebrewField, type_name, OVERLAP_POSITION,
                         attributeIndex, CURRENT_DATE, keyType, IO_MODE, SORT_NUMBER, SORT_DIRECTION, conn);
             }
-
-            //Close the database resources
-            rs.close();
-            stmt.close();
-            conn.close();
+//            //Close the database resources
+//            rs.close();
+//            stmt.close();
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
