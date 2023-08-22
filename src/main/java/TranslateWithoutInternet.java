@@ -11,7 +11,7 @@ public class TranslateWithoutInternet {
 
     public static void main(String[] args) {
         createCopingTableIfNotExists();
-        System.out.println(retrieveEnglishValuesFromHebrewValues("ילדה"));
+        //System.out.println(retrieveEnglishValuesFromHebrewValues("ילדון"));
     }
 
     public static char[] breakWordIntoLetters(String word) {
