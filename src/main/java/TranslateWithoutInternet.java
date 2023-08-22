@@ -2,6 +2,7 @@ import java.sql.*;
 
 public class TranslateWithoutInternet {
     public static void main(String[] args) {
+        createTableIfNotExists();
         //insertToDatabase("ב" , "b");
         //System.out.println(retrieveHebrewValues("בא"));
     }
@@ -14,6 +15,50 @@ public class TranslateWithoutInternet {
         }
 
         return letters;
+    }
+
+
+    public static void createTableIfNotExists() {
+        // Define constants for the database connection information
+        final String JDBC_URL = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
+        final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+        final String USERNAME = "logisticcourse1";
+        final String PASSWORD = "logisticcourse1";
+
+        Connection conn = null;
+        Statement stmt = null;
+
+        try {
+            Class.forName(JDBC_DRIVER);
+            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+            stmt = conn.createStatement();
+
+            // SQL query to check if the table exists
+            String checkTableQuery = "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'Copying'";
+            ResultSet resultSet = stmt.executeQuery(checkTableQuery);
+            resultSet.next();
+            int tableCount = resultSet.getInt(1);
+
+            if (tableCount == 0) {
+                // Create the table if it doesn't exist
+                String createTableQuery = "CREATE TABLE Copying (Hebrew VARCHAR(255), English VARCHAR(255))";
+                stmt.executeUpdate(createTableQuery);
+            }
+
+            stmt.close();
+            conn.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static String retrieveHebrewValues(String word) {
