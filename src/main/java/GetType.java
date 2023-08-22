@@ -11,6 +11,9 @@ public class GetType {
 
     public static String getLabel(String word, String sentence, Boolean pluralWord) {
 
+        if(word == null){
+            return DEFAULT_TYPE;
+        }
         //check if the word exist in the type table:
         if(isWordExistInVARTYPETable(word) != null){
             return isWordExistInVARTYPETable(word);
@@ -219,6 +222,6 @@ public class GetType {
 
     public static void main(String[] args) {
         createVARTYPETableIfNotExists();
-        System.out.println(getLabel("בלה","בלהבלהבלה", false));
+        //System.out.println(getLabel("בלה","בלהבלהבלה", false));
     }
 }
