@@ -75,6 +75,7 @@ public class TranslateWithoutInternet {
             hebrewToEnglishMapping.put("ר", "r");
             hebrewToEnglishMapping.put("ש", "sh");
             hebrewToEnglishMapping.put("ת", "t");
+            hebrewToEnglishMapping.put("_", "_");
 
             for (Map.Entry<String, String> entry : hebrewToEnglishMapping.entrySet()) {
                 String hebrew = entry.getKey();
@@ -184,7 +185,7 @@ public class TranslateWithoutInternet {
 
             if (resultSet.next()) {
                 // Word exists in the table
-                String englishWord = resultSet.getString("ATT_CODE_NAME");
+                String englishWord = resultSet.getString("ATTR_CODE_NAME");
                 System.out.println("English Word: " + englishWord);
                 return englishWord;
             }
@@ -243,19 +244,15 @@ public class TranslateWithoutInternet {
     }
 
     public static void insertToDatabase(String hebrew, String english){
-        String jdbcUrl = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
-        String jdbcDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        // Database credentials
-        String username = "logistcourse1";
-        String password = "logistcourse1";
+
         // Database credentials
         Connection conn = null;
         Statement stmt = null;
         //Connect to the database
 
         try{
-            Class.forName(jdbcDriver);
-            conn = DriverManager.getConnection(jdbcUrl, username, password);
+            Class.forName(JDBC_DRIVER);
+            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
             String insertQuery = "INSERT INTO Copying (Hebrew, English) VALUES (?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(insertQuery);
 
