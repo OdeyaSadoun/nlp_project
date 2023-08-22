@@ -5,42 +5,6 @@ import java.util.Map;
 public class TranslateWithoutInternet {
     public static void main(String[] args) {
         createTableIfNotExists();
-
-        //Fill the Coping table in DataBase:
-        Map<String, String> hebrewToEnglishMapping = new HashMap<>();
-        hebrewToEnglishMapping.put("א", "a");
-        hebrewToEnglishMapping.put("ב", "b");
-        hebrewToEnglishMapping.put("ג", "g");
-        hebrewToEnglishMapping.put("ד", "d");
-        hebrewToEnglishMapping.put("ה", "h");
-        hebrewToEnglishMapping.put("ו", "v");
-        hebrewToEnglishMapping.put("ז", "z");
-        hebrewToEnglishMapping.put("ח", "kh");
-        hebrewToEnglishMapping.put("ט", "t");
-        hebrewToEnglishMapping.put("י", "y");
-        hebrewToEnglishMapping.put("כ", "k");
-        hebrewToEnglishMapping.put("ך", "kh");
-        hebrewToEnglishMapping.put("ל", "l");
-        hebrewToEnglishMapping.put("מ", "m");
-        hebrewToEnglishMapping.put("ם", "m");
-        hebrewToEnglishMapping.put("נ", "n");
-        hebrewToEnglishMapping.put("ן", "n");
-        hebrewToEnglishMapping.put("ס", "s");
-        hebrewToEnglishMapping.put("ע", "a");
-        hebrewToEnglishMapping.put("פ", "p");
-        hebrewToEnglishMapping.put("ף", "f");
-        hebrewToEnglishMapping.put("צ", "ts");
-        hebrewToEnglishMapping.put("ץ", "tz");
-        hebrewToEnglishMapping.put("ק", "k");
-        hebrewToEnglishMapping.put("ר", "r");
-        hebrewToEnglishMapping.put("ש", "sh");
-        hebrewToEnglishMapping.put("ת", "t");
-
-        for (Map.Entry<String, String> entry : hebrewToEnglishMapping.entrySet()) {
-            String hebrew = entry.getKey();
-            String english = entry.getValue();
-            insertToDatabase(hebrew, english);
-        }
         System.out.println(retrieveHebrewValues("אודיה"));
     }
 
@@ -62,7 +26,6 @@ public class TranslateWithoutInternet {
         final String USERNAME = "logistcourse1";
         final String PASSWORD = "logistcourse1";
 
-
         Connection conn = null;
         Statement stmt = null;
 
@@ -82,14 +45,52 @@ public class TranslateWithoutInternet {
                 String createTableQuery = "CREATE TABLE Copying (Hebrew VARCHAR(255), English VARCHAR(255))";
                 stmt.executeUpdate(createTableQuery);
             }
-
             stmt.close();
             conn.close();
-        } catch (ClassNotFoundException e) {
+
+            //Fill the Coping table in DataBase:
+            Map<String, String> hebrewToEnglishMapping = new HashMap<>();
+            hebrewToEnglishMapping.put("א", "a");
+            hebrewToEnglishMapping.put("ב", "b");
+            hebrewToEnglishMapping.put("ג", "g");
+            hebrewToEnglishMapping.put("ד", "d");
+            hebrewToEnglishMapping.put("ה", "h");
+            hebrewToEnglishMapping.put("ו", "v");
+            hebrewToEnglishMapping.put("ז", "z");
+            hebrewToEnglishMapping.put("ח", "kh");
+            hebrewToEnglishMapping.put("ט", "t");
+            hebrewToEnglishMapping.put("י", "y");
+            hebrewToEnglishMapping.put("כ", "k");
+            hebrewToEnglishMapping.put("ך", "kh");
+            hebrewToEnglishMapping.put("ל", "l");
+            hebrewToEnglishMapping.put("מ", "m");
+            hebrewToEnglishMapping.put("ם", "m");
+            hebrewToEnglishMapping.put("נ", "n");
+            hebrewToEnglishMapping.put("ן", "n");
+            hebrewToEnglishMapping.put("ס", "s");
+            hebrewToEnglishMapping.put("ע", "a");
+            hebrewToEnglishMapping.put("פ", "p");
+            hebrewToEnglishMapping.put("ף", "f");
+            hebrewToEnglishMapping.put("צ", "ts");
+            hebrewToEnglishMapping.put("ץ", "tz");
+            hebrewToEnglishMapping.put("ק", "k");
+            hebrewToEnglishMapping.put("ר", "r");
+            hebrewToEnglishMapping.put("ש", "sh");
+            hebrewToEnglishMapping.put("ת", "t");
+
+            for (Map.Entry<String, String> entry : hebrewToEnglishMapping.entrySet()) {
+                String hebrew = entry.getKey();
+                String english = entry.getValue();
+                insertToDatabase(hebrew, english);
+            }
+        }
+        catch (ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             try {
                 if (stmt != null) stmt.close();
                 if (conn != null) conn.close();
