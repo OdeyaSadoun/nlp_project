@@ -45,26 +45,37 @@ public class SelectQueryExample {
             int sortNumber = 0;
             int sortDirection = 0;
 
+            PreparedStatement preparedStatement;
+
 
             try {
                 //Connect to the database
                 Class.forName(jdbcDriver);
                 conn = DriverManager.getConnection(jdbcUrl, username, password);
-
-
                 stmt = conn.createStatement();
 
                 //query to find class index to sent to insert query
-                String query_CLASS_INDEX = "SELECT MAX(CLASS_INDEX) + 1 AS next_index FROM KVCLASS";
-                rs = stmt.executeQuery(query_CLASS_INDEX);
+                String queryClassIndex = "SELECT MAX(CLASS_INDEX) + 1 AS next_index FROM KVCLASS";
+                rs = stmt.executeQuery(queryClassIndex);
                 if (rs.next()) {
-                    classIndex = rs.getInt("next_index");
-                    System.out.println("Next class_index: " + classIndex);
+                    if(englishSubject == "mainSubject"){
+                        classIndex = 1;
+                        System.out.println("main class_index: " + classIndex);
+                    }
+                    else{
+                        classIndex = rs.getInt("next_index");
+                        System.out.println("Next class_index: " + classIndex);
+                    }
                 }
 
                 //Check if subject is in KTCLASS table
-                String checkSubjectQuery = "SELECT CLASS_CODE_NAME FROM KTCLASS WHERE CLASS_CODE_NAME = '" + englishSubject + "'";
+                String checkSubjectQuery = "SELECT CLASS_CODE_NAME FROM KTCLASS WHERE CLASS_CODE_NAME = ?";
+
+                preparedStatement = conn.prepareStatement(checkSubjectQuery);
+                preparedStatement.setString(1, englishSubject);
+
                 rs = stmt.executeQuery(checkSubjectQuery);
+
                 // If the subject is not found, add it to the KTCLASS table
 //                if (!rs.next()) {
 //                    String insertSubjectQuery = "INSERT INTO KTCLASS (CLASS_CODE_NAME, NAME, OWNER, ACTIVATION_ORDER, CLASS_INDEX, CREATION_DATE, UPDATE_DATE) VALUES ('" + englishSubject + "','" +hebrewSubject+ "','" + logist + "','" + activationOrder + "','" + classIndex+ "','" + current_date + "', '" + current_date + "')";
@@ -72,7 +83,7 @@ public class SelectQueryExample {
 //                }
                 if (!rs.next()) {
                     String insertSubjectQuery = "INSERT INTO KTCLASS (CLASS_CODE_NAME, NAME, OWNER, ACTIVATION_ORDER, CLASS_INDEX, CREATION_DATE, UPDATE_DATE) VALUES (?, ?, ?, ?, ?, ?, ?)";
-                    PreparedStatement preparedStatement = conn.prepareStatement(insertSubjectQuery);
+                    preparedStatement = conn.prepareStatement(insertSubjectQuery);
 
                     preparedStatement.setString(1, englishSubject);
                     preparedStatement.setString(2, hebrewSubject);
@@ -90,7 +101,7 @@ public class SelectQueryExample {
 //                String query_ATTRIBUTE_INDEX = "SELECT COALESCE(MAX(ATTRIBUTE_INDEX), 0) + 1 AS next_index FROM KVATTRIBUTE WHERE CLASS_CODE_NAME = '" + englishSubject + "'";
 //                rs = stmt.executeQuery(query_ATTRIBUTE_INDEX);
                 String query_ATTRIBUTE_INDEX = "SELECT COALESCE(MAX(ATTRIBUTE_INDEX), 0) + 1 AS next_index FROM KVATTRIBUTE WHERE CLASS_CODE_NAME = ?";
-                PreparedStatement preparedStatement = conn.prepareStatement(query_ATTRIBUTE_INDEX);
+                preparedStatement = conn.prepareStatement(query_ATTRIBUTE_INDEX);
                 preparedStatement.setString(1, englishSubject);
                 rs = preparedStatement.executeQuery();
 
