@@ -1,8 +1,46 @@
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TranslateWithoutInternet {
     public static void main(String[] args) {
         createTableIfNotExists();
+
+        //Fill the Coping table in DataBase:
+        Map<String, String> hebrewToEnglishMapping = new HashMap<>();
+        hebrewToEnglishMapping.put("א", "a");
+        hebrewToEnglishMapping.put("ב", "b");
+        hebrewToEnglishMapping.put("ג", "g");
+        hebrewToEnglishMapping.put("ד", "d");
+        hebrewToEnglishMapping.put("ה", "h");
+        hebrewToEnglishMapping.put("ו", "v");
+        hebrewToEnglishMapping.put("ז", "z");
+        hebrewToEnglishMapping.put("ח", "kh");
+        hebrewToEnglishMapping.put("ט", "t");
+        hebrewToEnglishMapping.put("י", "y");
+        hebrewToEnglishMapping.put("כ", "k");
+        hebrewToEnglishMapping.put("ך", "kh");
+        hebrewToEnglishMapping.put("ל", "l");
+        hebrewToEnglishMapping.put("מ", "m");
+        hebrewToEnglishMapping.put("ם", "m");
+        hebrewToEnglishMapping.put("נ", "n");
+        hebrewToEnglishMapping.put("ן", "n");
+        hebrewToEnglishMapping.put("ס", "s");
+        hebrewToEnglishMapping.put("ע", "a");
+        hebrewToEnglishMapping.put("פ", "p");
+        hebrewToEnglishMapping.put("ף", "f");
+        hebrewToEnglishMapping.put("צ", "ts");
+        hebrewToEnglishMapping.put("ץ", "tz");
+        hebrewToEnglishMapping.put("ק", "k");
+        hebrewToEnglishMapping.put("ר", "r");
+        hebrewToEnglishMapping.put("ש", "sh");
+        hebrewToEnglishMapping.put("ת", "t");
+
+        for (Map.Entry<String, String> entry : hebrewToEnglishMapping.entrySet()) {
+            String hebrew = entry.getKey();
+            String english = entry.getValue();
+            insertToDatabase(hebrew, english);
+        }
         //insertToDatabase("ב" , "b");
         //System.out.println(retrieveHebrewValues("בא"));
     }
