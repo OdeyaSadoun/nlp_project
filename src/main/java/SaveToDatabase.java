@@ -163,38 +163,36 @@ public class SaveToDatabase {
     }
 
     public static void addSubjectToDatabase(String hebrewField, String englishField, String hebrewSubject, String englishSubject) {
-        String jdbcUrl = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
-        String jdbcDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        // Database credentials
-        String username = "logistcourse1";
-        String password = "logistcourse1";
+        // Define constants for the database connection information
+        final String JDBC_URL = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
+        final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+        final String USERNAME = "logistcourse1";
+        final String PASSWORD = "logistcourse1";
+
+        // Define constants for the field names in the KTCLASS and KTATTRIBUTE tables
+        final String CURRENT_DATE = getDateWithMS();
+        final String LOGIST = "לוגיסט";
+        final int ACTIVATION_ORDER = 0;
+        final int OVERLAP_POSITION = 0;
+        final int IO_MODE = 0;
+        final int SORT_NUMBER = 0;
+        final int SORT_DIRECTION = 0;
+
         // Database credentials
         ResultSet rs = null;
         Connection conn = null;
         Statement stmt = null;
-        String current_date = getDateWithMS();
+
+        // More variables:
         String type_name = GetType.getLabel(englishField);
-        String logist = "לוגיסט";
-
-        //fields for ktclass:
-        int activationOrder = 0;
         int classIndex = 0;
-
-        //for ktattribute:
-        int overlapPosition = 0;
         int attributeIndex = 0;
         int keyType = 0; //always 0 (unless it is the default attribute in a new class - then it is 1)
-        int ioMode = 0;
-        int sortNumber = 0;
-        int sortDirection = 0;
-
-        PreparedStatement preparedStatement;
-
 
         try {
             //Connect to the database
-            Class.forName(jdbcDriver);
-            conn = DriverManager.getConnection(jdbcUrl, username, password);
+            Class.forName(JDBC_DRIVER);
+            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
             stmt = conn.createStatement();
 
             //Find class index:
@@ -202,7 +200,7 @@ public class SaveToDatabase {
 
             //Check if subject is in KTCLASS table
             if (!isSubjectInKTCLASSTable(englishSubject, conn)) {
-                insertSubject(englishSubject,hebrewSubject,logist, activationOrder, classIndex, current_date, conn);
+                insertSubject(englishSubject,hebrewSubject,LOGIST, ACTIVATION_ORDER, classIndex, CURRENT_DATE, conn);
             }
 
             //Find attribute index to sent to insert query
@@ -212,8 +210,8 @@ public class SaveToDatabase {
 
             //Check if subject is in KTATTRIBUTE table
             if (!isSubjectInKTATTRIBUTETable(englishSubject, englishField, conn)) {
-                insertAttribute(englishSubject, englishField, hebrewField, type_name, overlapPosition,
-                        attributeIndex, current_date, keyType, ioMode, sortNumber, sortDirection, conn);
+                insertAttribute(englishSubject, englishField, hebrewField, type_name, OVERLAP_POSITION,
+                        attributeIndex, CURRENT_DATE, keyType, IO_MODE, SORT_NUMBER, SORT_DIRECTION, conn);
             }
 
             //Close the database resources
