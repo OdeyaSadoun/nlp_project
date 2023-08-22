@@ -47,9 +47,7 @@ public class GetType {
         return null;
     }
 
-    public static void main(String[] args) {
-        createVARTYPETableIfNotExists();
-    }
+
     public static void insertToDatabase(String hebrewWord, String type){
 
         Connection conn = null;
@@ -217,5 +215,10 @@ public class GetType {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static void main(String[] args) {
+        createVARTYPETableIfNotExists();
+        System.out.println(getLabel("בלה","בלהבלהבלה", false));
     }
 }
