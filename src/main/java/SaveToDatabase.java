@@ -216,9 +216,11 @@ public class SaveToDatabase {
             }
 
             //Check if subject is in KTATTRIBUTE table
-            if (!isSubjectInKTATTRIBUTETable(englishSubject, englishField, conn)) {
-                insertAttribute(englishSubject, englishField, hebrewField, type_name, OVERLAP_POSITION,
-                        attributeIndex, CURRENT_DATE, keyType, IO_MODE, SORT_NUMBER, SORT_DIRECTION, conn);
+            if(englishField != null && hebrewField != null) {
+                if (!isSubjectInKTATTRIBUTETable(englishSubject, englishField, conn)) {
+                    insertAttribute(englishSubject, englishField, hebrewField, type_name, OVERLAP_POSITION,
+                            attributeIndex, CURRENT_DATE, keyType, IO_MODE, SORT_NUMBER, SORT_DIRECTION, conn);
+                }
             }
 //            //Close the database resources
 //            rs.close();
