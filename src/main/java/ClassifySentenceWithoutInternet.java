@@ -1,8 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -20,10 +16,14 @@ public class ClassifySentenceWithoutInternet {
     public static void readTemplate(){
         String[] template = sentence.split(" ");
         List<String> lstTemplate = Arrays.asList(template);
-        findSubjectAndField(lstTemplate);
+        try {
+            findSubjectAndField(lstTemplate);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public static void findSubjectAndField(List<String> lstTemplate) {
+    public static void findSubjectAndField(List<String> lstTemplate) throws SQLException {
         for (int i = 0; i < lstTemplate.size(); i++) {
 
             String word = lstTemplate.get(i);
@@ -248,11 +248,48 @@ public class ClassifySentenceWithoutInternet {
     }
 
 
-    private static boolean isSaveWordInTLXTable(String s) {
-        return false;
+    private static boolean isSaveWordInTLXTable(String token) throws SQLException {
+        // Connect to the SQL Server database.
+        String jdbcUrl = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
+        String jdbcDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+        // Database credentials
+        String username = "logistcourse1";
+        String password = "logistcourse1";
+        Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
+
+        // Create a statement.
+
+
+        PreparedStatement statement = connection.prepareStatement("SELECT token FROM ZTRLPTLX WHERE token = ?");
+
+        // Set the parameter.
+        statement.setString(1, token);
+
+        // Execute the query.
+        ResultSet resultSet = statement.executeQuery();
+
+        // Check if the word is in the table.
+        return resultSet.next();
     }
 
+
+
     private static void checkFieldAndSubjectInDB(String subject, String field, String dataType) {
+        String hebrewField = field;
+        String englishField;
+        String hebrewSubject = subject;
+        String englishSubject;
+        if (hebrewField == null) {
+            englishField = null;
+        } else {
+            englishField = translateFromHebrewToEnglishWithoutInternet(hebrewField);
+        }
+        englishSubject = translateFromHebrewToEnglishWithoutInternet(hebrewSubject);
+        SaveToDatabase.addSubjectToDatabase(hebrewField, englishField, hebrewSubject, englishSubject);
+    }
+
+    private static String translateFromHebrewToEnglishWithoutInternet(String hebrewWord) {
+        return "";
     }
 
     public static void main(String[] args) {
