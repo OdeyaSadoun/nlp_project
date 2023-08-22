@@ -6,9 +6,7 @@ public class SaveToDatabase {
 
 
     public static void main(String[] args) {
-
-        addSubjectToDatabase("א", "a", "אא", "aa");
-
+        addSubjectToDatabase("א", "a", "אא", "aa", "Bool");
     }
 
     public static String getDateWithMS() {
@@ -169,7 +167,7 @@ public class SaveToDatabase {
     }
 
 
-    public static void addSubjectToDatabase(String hebrewField, String englishField, String hebrewSubject, String englishSubject) {
+    public static void addSubjectToDatabase(String hebrewField, String englishField, String hebrewSubject, String englishSubject, String type_name) {
         // Define constants for the database connection information
         final String JDBC_URL = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
         final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
@@ -191,7 +189,6 @@ public class SaveToDatabase {
         Statement stmt = null;
 
         // More variables:
-        String type_name = GetType.getLabel(englishField);
         int classIndex = 0;
         int attributeIndex = 0;
         int keyType = 0; //always 0 (unless it is the default attribute in a new class - then it is 1)
