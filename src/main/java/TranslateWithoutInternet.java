@@ -11,7 +11,7 @@ public class TranslateWithoutInternet {
 
     public static void main(String[] args) {
         createCopingTableIfNotExists();
-        System.out.println(retrieveEnglishValuesFromHebrewValues("אודיה"));
+        System.out.println(retrieveEnglishValuesFromHebrewValues("ילדה"));
     }
 
     public static char[] breakWordIntoLetters(String word) {
@@ -107,12 +107,17 @@ public class TranslateWithoutInternet {
         //Connect to the database
         ResultSet rs = null;
 
-        //check if the hebrew word exist in database or in ktclass or in ktattribute:
-        //if yes - we take the translate from the database
-        if(isWordExistInKTCLASSTable(word) != null || isWordExistInKTATTRIBUTETable(word) != null){
+        String translateWord = "";
 
+        //check if the hebrew word exist in database or in ktclass or in ktattribute:
+        //if yes, we take the translate from the database
+        if(isWordExistInKTCLASSTable(word) != null){
+            translateWord = isWordExistInKTCLASSTable(word);
         }
-        //if not- we use this function:
+        else if(isWordExistInKTATTRIBUTETable(word) != null){
+            translateWord = isWordExistInKTATTRIBUTETable(word);
+        }
+        //if not, we use this function:
         else{
             char[] letters=breakWordIntoLetters(word);
             StringBuilder wordBuilder = new StringBuilder();
@@ -159,7 +164,7 @@ public class TranslateWithoutInternet {
             }
             return wordBuilder.toString();
         }
-        return ""; //------------------need to fix------------------
+        return translateWord;
     }
 
     private static String isWordExistInKTATTRIBUTETable(String word) {
@@ -171,7 +176,7 @@ public class TranslateWithoutInternet {
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
 
-            String selectQuery = "SELECT ATT_CODE_NAME FROM KTATTRIBUTE WHERE NAME = ?";
+            String selectQuery = "SELECT ATTR_CODE_NAME FROM KTATTRIBUTE WHERE NAME = ?";
             preparedStatement = conn.prepareStatement(selectQuery);
             preparedStatement.setString(1, word);
 
