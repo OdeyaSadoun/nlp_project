@@ -3,6 +3,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TranslateWithoutInternet {
+
+    final static String JDBC_URL = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
+    final static String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    final static String USERNAME = "logistcourse1";
+    final static String PASSWORD = "logistcourse1";
+
     public static void main(String[] args) {
         createCopingTableIfNotExists();
         System.out.println(retrieveEnglishValuesFromHebrewValues("אודיה"));
@@ -17,11 +23,6 @@ public class TranslateWithoutInternet {
     }
 
     public static void createCopingTableIfNotExists() {
-        // Define constants for the database connection information
-        final String JDBC_URL = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
-        final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        final String USERNAME = "logistcourse1";
-        final String PASSWORD = "logistcourse1";
 
         Connection conn = null;
         Statement stmt = null;
@@ -98,11 +99,6 @@ public class TranslateWithoutInternet {
     }
 
     public static String retrieveEnglishValuesFromHebrewValues(String word) {
-        // Define constants for the database connection information
-        final String JDBC_URL = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
-        final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        final String USERNAME = "logistcourse1";
-        final String PASSWORD = "logistcourse1";
 
         // Database credentials
         Connection conn = null;
@@ -167,11 +163,6 @@ public class TranslateWithoutInternet {
     }
 
     private static String isWordExistInKTATTRIBUTETable(String word) {
-        final String JDBC_URL = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
-        final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        final String USERNAME = "logisticcourse1";
-        final String PASSWORD = "logisticcourse1";
-
         Connection conn = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -209,10 +200,6 @@ public class TranslateWithoutInternet {
     }
 
     private static String isWordExistInKTCLASSTable(String word) {
-        final String JDBC_URL = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
-        final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        final String USERNAME = "logisticcourse1";
-        final String PASSWORD = "logisticcourse1";
 
         Connection conn = null;
         PreparedStatement preparedStatement = null;
