@@ -1,44 +1,157 @@
+import java.sql.*;
 import java.util.*;
 
 public class GetType {
-    private static final Map<String, String> labelingMap = new HashMap<>();
 
-    static {
-        labelingMap.put("age", "Long");
-        labelingMap.put("number", "Long");
-        labelingMap.put("amount", "Long");
-        labelingMap.put("cycle", "Long");
-        labelingMap.put("counter", "Long");
-        labelingMap.put("count", "Long");
-        labelingMap.put("ratio", "Double");
-        labelingMap.put("cost", "Double");
-        labelingMap.put("price", "Double");
-        labelingMap.put("profit", "Double");
-        labelingMap.put("sum", "Double");
-        labelingMap.put("salary", "Double");
-        labelingMap.put("date", "DateTime");
-        labelingMap.put("name", "Char");
-    }
+    final static String JDBC_URL = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
+    final static String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    final static String USERNAME = "logistcourse1";
+    final static String PASSWORD = "logistcourse1";
+    final static String DEFAULT_TYPE = "D8.2";
 
     public static String getLabel(String word) {
-        String[] parts = word.split("_");
-        for (String part : parts) {
-            if (labelingMap.containsKey(part)) {
-                return labelingMap.get(part);
-            }
-        }
-        return "Bool";
+//        for (String part : parts) {
+//            if (labelingMap.containsKey(part)) {
+//                return labelingMap.get(part);
+//            }
+//        }
+        return DEFAULT_TYPE;
 
     }
 
     public static void main(String[] args) {
-        String word1 = "age_1";
-        String label1 = getLabel(word1);
-        System.out.println(word1 + " : " + label1);
+        createVARTYPETableIfNotExists();
+    }
+    public static void insertToDatabase(String hebrewWord, String type){
 
-        String word2 = "price";
-        String label2 = getLabel(word2);
-        System.out.println(word2 + " : " + label2);
+        Connection conn = null;
+        Statement stmt = null;
+
+        try{
+            Class.forName(JDBC_DRIVER);
+            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+            String insertQuery = "INSERT INTO VARTYPE (HEBREW_WORD, VAR_TYPE) VALUES (?, ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(insertQuery);
+
+            preparedStatement.setString(1, hebrewWord);
+            preparedStatement.setString(2, type);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+            conn.close();
+        }
+        catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void createVARTYPETableIfNotExists() {
+
+        Connection conn = null;
+        Statement stmt = null;
+
+        try {
+            Class.forName(JDBC_DRIVER);
+            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+            stmt = conn.createStatement();
+
+            // SQL query to check if the table exists
+            String checkTableQuery = "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'VARTYPE'";
+            ResultSet resultSet = stmt.executeQuery(checkTableQuery);
+            resultSet.next();
+            int tableCount = resultSet.getInt(1);
+
+            if (tableCount == 0) {
+                // Create the table if it doesn't exist
+                String createTableQuery = "CREATE TABLE VARTYPE (HEBREW_WORD VARCHAR(255), VAR_TYPE VARCHAR(255))";
+                stmt.executeUpdate(createTableQuery);
+            }
+            stmt.close();
+            conn.close();
+
+            //Fill the VARTYPR table in DataBase:
+            Map<String, String> knownWords = new HashMap<>();
+            knownWords.put("גיל", "Long");
+            knownWords.put("מספר", "Long");
+            knownWords.put("כמות", "Long");
+            knownWords.put("סיבוב", "Long");
+            knownWords.put("מונה", "Long");
+            knownWords.put("יחס", "Double");
+            knownWords.put("מחיר", "Double");
+            knownWords.put("עלות", "Double");
+            knownWords.put("עולה", "Double");
+            knownWords.put("ערך", "Double");
+            knownWords.put("סכום", "Double");
+            knownWords.put("משכורת", "Double");
+            knownWords.put("תאריך", "DateTime");
+            knownWords.put("תאריך_לידה", "DateTime");
+            knownWords.put("שם", "Char");
+            knownWords.put("מין", "Char");
+            knownWords.put("עיר", "Char");
+            knownWords.put("מדינה", "Char");
+            knownWords.put("טלפון", "Char");
+            knownWords.put("דואר_אלקטרוני", "Char");
+            knownWords.put("אימייל", "Char");
+            knownWords.put("מייל", "Char");
+            knownWords.put("כתובת", "Char");
+            knownWords.put("URL", "Char");
+            knownWords.put("צבע", "Char");
+            knownWords.put("גודל", "Double");
+            knownWords.put("משקל", "Double");
+            knownWords.put("טמפרטורה", "Double");
+            knownWords.put("זמן", "DateTime");
+            knownWords.put("מספר_טלפון", "Char");
+            knownWords.put("שם_משפחה", "Char");
+            knownWords.put("שם_פרטי", "Char");
+            knownWords.put("שם_בדוי", "Char");
+            knownWords.put("שם_חברה", "Char");
+            knownWords.put("שם_מוצר", "Char");
+            knownWords.put("שם_שירות", "Char");
+            knownWords.put("שם_מקום", "Char");
+            knownWords.put("מקום", "Char");
+            knownWords.put("שם_חיה", "Char");
+            knownWords.put("שם_צמח", "Char");
+            knownWords.put("שם_עצם", "Char");
+            knownWords.put("שם_חומר", "Char");
+            knownWords.put("כביש", "Char");
+            knownWords.put("נהר", "Char");
+            knownWords.put("הר", "Char");
+            knownWords.put("אגם", "Char");
+            knownWords.put("ים", "Char");
+            knownWords.put("אוקיינוס", "Char");
+            knownWords.put("יבשת", "Char");
+            knownWords.put("כוכב", "Char");
+
+            for (Map.Entry<String, String> entry : knownWords.entrySet()) {
+                String hebrewWord = entry.getKey();
+                String type = entry.getValue();
+                insertToDatabase(hebrewWord, type);
+            }
+        }
+        catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
