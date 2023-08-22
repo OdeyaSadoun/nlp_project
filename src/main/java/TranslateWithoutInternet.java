@@ -41,8 +41,7 @@ public class TranslateWithoutInternet {
             String english = entry.getValue();
             insertToDatabase(hebrew, english);
         }
-        //insertToDatabase("ב" , "b");
-        //System.out.println(retrieveHebrewValues("בא"));
+        System.out.println(retrieveHebrewValues("אודיה"));
     }
 
     public static char[] breakWordIntoLetters(String word) {
@@ -60,8 +59,9 @@ public class TranslateWithoutInternet {
         // Define constants for the database connection information
         final String JDBC_URL = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
         final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        final String USERNAME = "logisticcourse1";
-        final String PASSWORD = "logisticcourse1";
+        final String USERNAME = "logistcourse1";
+        final String PASSWORD = "logistcourse1";
+
 
         Connection conn = null;
         Statement stmt = null;
