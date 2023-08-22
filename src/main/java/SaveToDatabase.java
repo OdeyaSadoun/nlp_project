@@ -11,12 +11,12 @@ public class SaveToDatabase {
 
     }
 
-
     public static String getDateWithMS() {
         String date = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
                 .replace("T", " ");
         return date.substring(0, date.length() - 4);
     }
+
 
     /**
      * Function with a query to find class index to sent to insert class query
@@ -40,6 +40,7 @@ public class SaveToDatabase {
         return classIndex;
     }
 
+
     /**
      * Function with a query to check if subject is in KTCLASS table
      *
@@ -56,15 +57,16 @@ public class SaveToDatabase {
         return rs.next();
     }
 
+
     /**
      * Function to insert subject to KTCLASS table
      *
-     * @param englishSubject
-     * @param hebrewSubject
-     * @param logist
-     * @param activationOrder
-     * @param classIndex
-     * @param current_date
+     * @param englishSubject the english subject
+     * @param hebrewSubject the hebrew subject
+     * @param logist for the table
+     * @param activationOrder for the table
+     * @param classIndex the index for this subject
+     * @param current_date for the date
      * @param conn for the connection to DB
      */
     private static void insertSubject(String englishSubject, String hebrewSubject, String logist, int activationOrder, int classIndex, String current_date, Connection conn) throws SQLException {
@@ -82,6 +84,7 @@ public class SaveToDatabase {
         preparedStatement.executeUpdate();
         preparedStatement.close();
     }
+
 
     /**
      * Function for query to find attribute index to sent to insert attribute query
@@ -124,20 +127,21 @@ public class SaveToDatabase {
         return rs.next();
     }
 
+
     /**
      * Function to insert field to KTATTRIBUTE table
      *
-     * @param englishSubject
-     * @param englishField
-     * @param attributeIndex
-     * @param hebrewField
-     * @param ioMode
-     * @param keyType
-     * @param overlapPosition
-     * @param sortDirection
-     * @param sortNumber
-     * @param type_name
-     * @param current_date
+     * @param englishSubject the english subject that match to the field
+     * @param englishField the english field
+     * @param attributeIndex the index for this field
+     * @param hebrewField the hebrew field
+     * @param ioMode for the table
+     * @param keyType for the table
+     * @param overlapPosition for the table
+     * @param sortDirection for the table
+     * @param sortNumber for the table
+     * @param type_name for the table
+     * @param current_date for the date
      * @param conn for the connection to DB
      */
     private static void insertAttribute(String englishSubject, String englishField, String hebrewField, String type_name, int overlapPosition, int attributeIndex, String current_date, int keyType, int ioMode, int sortNumber, int sortDirection, Connection conn) throws SQLException {
@@ -161,6 +165,7 @@ public class SaveToDatabase {
         preparedStatement.executeUpdate();
         preparedStatement.close();
     }
+
 
     public static void addSubjectToDatabase(String hebrewField, String englishField, String hebrewSubject, String englishSubject) {
         // Define constants for the database connection information
