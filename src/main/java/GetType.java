@@ -9,14 +9,42 @@ public class GetType {
     final static String PASSWORD = "logistcourse1";
     final static String DEFAULT_TYPE = "D8.2";
 
-    public static String getLabel(String word) {
-//        for (String part : parts) {
-//            if (labelingMap.containsKey(part)) {
-//                return labelingMap.get(part);
-//            }
-//        }
-        return DEFAULT_TYPE;
+    public static String getLabel(String word, String sentence, Boolean pluralWord) {
 
+        //check if the word exist in the type table:
+        if(isWordExistInVARTYPETable(word) != null){
+            return isWordExistInVARTYPETable(word);
+        }
+        if(pluralWord){
+            return "Bool"; // boolean type value
+        }
+        if(getNumericWord(sentence) != null){
+            return "Long"; // numeric type value
+        }
+
+        return DEFAULT_TYPE;
+    }
+
+    public static String getNumericWord(String sentence) {
+        // Split the sentence into words.
+        String[] words = sentence.split(" ");
+
+        // Iterate over the words.
+        for (String word : words) {
+            // Check if the word is a number.
+            if (word.matches("\\d+")) {
+                // Return the word as a number.
+                return word;
+            }
+            // Check if the word is an operator.
+            if (word.equals("+") || word.equals("-") || word.equals("*") || word.equals("/") || word.equals("<") || word.equals(">") || word.equals("=") || word.equals("גדול מ") || word.equals("ועוד") || word.equals("פלוס") || word.equals("מינוס")) {
+                // Return the word as an operator.
+                return word;
+            }
+        }
+
+        // Return null if the sentence does not contain a number or an operator.
+        return null;
     }
 
     public static void main(String[] args) {
@@ -154,4 +182,40 @@ public class GetType {
         }
     }
 
+    private static String isWordExistInVARTYPETable(String word) {
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            Class.forName(JDBC_DRIVER);
+            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+
+            String selectQuery = "SELECT VAR_TYPE FROM VARTYPE WHERE HEBREW_WORD = ?";
+            preparedStatement = conn.prepareStatement(selectQuery);
+            preparedStatement.setString(1, word);
+
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                // Word exists in the table
+                String type = resultSet.getString("VAR_TYPE");
+                System.out.println("VAR_TYPE: " + type);
+                return type;
+            }
+
+            return null;
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

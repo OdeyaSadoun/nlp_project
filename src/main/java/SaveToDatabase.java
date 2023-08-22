@@ -4,7 +4,7 @@ import java.time.format.DateTimeFormatter;
 
 public class SaveToDatabase {
 
-
+    final static String DEFAULT_TYPE = "D8.2";
     public static void main(String[] args) {
         addSubjectToDatabase("א", "a", "אא", "aa", "Bool");
     }
