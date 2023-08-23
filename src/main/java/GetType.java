@@ -21,33 +21,27 @@ public class GetType {
         if(pluralWord){
             return "Bool"; // boolean type value
         }
-        if(getNumericWord(sentence) != null){
+        if(getNumericWord(sentence)){
             return "Long"; // numeric type value
         }
 
         return DEFAULT_TYPE;
     }
 
-    public static String getNumericWord(String sentence) {
-        // Split the sentence into words.
-        String[] words = sentence.split(" ");
+    public static boolean getNumericWord(String sentence) {
+        // Split the sentence based on non-numeric characters
+        String[] parts = sentence.split("[^0-9]+");
 
-        // Iterate over the words.
-        for (String word : words) {
-            // Check if the word is a number.
-            if (word.matches("\\d+")) {
-                // Return the word as a number.
-                return word;
-            }
-            // Check if the word is an operator.
-            if (word.equals("+") || word.equals("-") || word.equals("*") || word.equals("/") || word.equals("<") || word.equals(">") || word.equals("=") || word.equals("גדול מ") || word.equals("ועוד") || word.equals("פלוס") || word.equals("מינוס")) {
-                // Return the word as an operator.
-                return word;
+        // Iterate over the parts
+        for (String part : parts) {
+            if (!part.isEmpty()) {
+                // Return true if a non-empty part is found
+                return true;
             }
         }
 
-        // Return null if the sentence does not contain a number or an operator.
-        return null;
+        // Return false if the sentence does not contain a number
+        return false;
     }
 
 
@@ -228,7 +222,8 @@ public class GetType {
     }
 
     public static void main(String[] args) {
-        createVARTYPETableIfNotExists();
+//        createVARTYPETableIfNotExists();
+        System.out.println(getNumericWord("אם יחפ של פריט הוא אחד מתוך (02,03,04)"));
 //        insertToDatabase("סטטוס", "Char");
 //        insertToDatabase("קריטי", "Bool");
 //        insertToDatabase("מספר_קטלוגי", "Long");
