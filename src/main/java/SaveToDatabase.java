@@ -168,6 +168,7 @@ public class SaveToDatabase {
 
 
     public static void addSubjectToDatabase(String hebrewField, String englishField, String hebrewSubject, String englishSubject, String type_name) {
+
         // Define constants for the database connection information
         final String JDBC_URL = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
         final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
@@ -204,7 +205,9 @@ public class SaveToDatabase {
 
             //Check if subject is in KTCLASS table
             if (!isSubjectInKTCLASSTable(englishSubject, conn)) {
-                insertSubject(englishSubject,hebrewSubject,LOGIST, ACTIVATION_ORDER, classIndex, CURRENT_DATE, conn);
+                if(!HebrewSpellChecker.isSameWordInDB(hebrewSubject,1)) {
+                    insertSubject(englishSubject, hebrewSubject, LOGIST, ACTIVATION_ORDER, classIndex, CURRENT_DATE, conn);
+                }
             }
 
             //Find attribute index to sent to insert query
@@ -215,13 +218,13 @@ public class SaveToDatabase {
             //Check if subject is in KTATTRIBUTE table
             if(englishField != null && hebrewField != null) {
                 if (!isSubjectInKTATTRIBUTETable(englishSubject, englishField, conn)) {
-                    insertAttribute(englishSubject, englishField, hebrewField, type_name, OVERLAP_POSITION,
-                            attributeIndex, CURRENT_DATE, keyType, IO_MODE, SORT_NUMBER, SORT_DIRECTION, conn);
+                    if(!HebrewSpellChecker.isSameWordInDB(hebrewField,1)) {
+
+                        insertAttribute(englishSubject, englishField, hebrewField, type_name, OVERLAP_POSITION,
+                                attributeIndex, CURRENT_DATE, keyType, IO_MODE, SORT_NUMBER, SORT_DIRECTION, conn);
+                    }
                 }
             }
-//            //Close the database resources
-//            rs.close();
-//            stmt.close();
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
