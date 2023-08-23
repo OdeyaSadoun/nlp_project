@@ -31,7 +31,11 @@
       <classifier>models</classifier>
     </dependency>
 
-
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-text</artifactId>
+      <version>1.9</version> <!-- Use the latest version -->
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
