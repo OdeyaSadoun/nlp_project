@@ -14,7 +14,7 @@ public class TestTheProject {
             sentenceWithoutQuotes = removeQuotes(sentence);
             System.out.println("Sentence num " + counterForPrint + " : " +sentenceWithoutQuotes);
             counterForPrint++;
-//            ClassifySentenceWithoutInternet.readTemplate(sentenceWithoutQuotes);
+            ClassifySentenceWithoutInternet.readTemplate(sentenceWithoutQuotes);
         }
     }
 

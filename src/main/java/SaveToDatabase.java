@@ -206,7 +206,7 @@ public class SaveToDatabase {
             //Check if subject is in KTCLASS table
             if (!isSubjectInKTCLASSTable(englishSubject, conn)) {
                 System.out.println("subject not in KTCLASS table - add to DB");
-                if(!HebrewSpellChecker.isSameWordInDB(hebrewSubject,1)) {
+                if(!HebrewSpellChecker.isSameWordInDBInKTCLASSTable(hebrewSubject,1)) {
                     insertSubject(englishSubject, hebrewSubject, LOGIST, ACTIVATION_ORDER, classIndex, CURRENT_DATE, conn);
                 }
             }
@@ -220,7 +220,7 @@ public class SaveToDatabase {
             if(englishField != null && hebrewField != null) {
                 if (!isSubjectInKTATTRIBUTETable(englishSubject, englishField, conn)) {
                     System.out.println("field not in KTATTRIBUT table - add to DB");
-                    if(!HebrewSpellChecker.isSameWordInDB(hebrewField,1)) {
+                    if(!HebrewSpellChecker.isSameWordInDBInKTATTRIBUTETable(hebrewSubject,hebrewField,1)) {
 
                         insertAttribute(englishSubject, englishField, hebrewField, type_name, OVERLAP_POSITION,
                                 attributeIndex, CURRENT_DATE, keyType, IO_MODE, SORT_NUMBER, SORT_DIRECTION, conn);

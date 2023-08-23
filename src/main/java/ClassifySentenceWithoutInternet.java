@@ -92,7 +92,7 @@ public class ClassifySentenceWithoutInternet {
                 continue;
             }
             //option2
-            if (i != 0 && (word.equals("אינו") || word.equals("הוא"))) {
+            if (i != 0 && (word.equals("אינו") || word.equals("הוא") || word.equals("היא"))) {
                 isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i - 1));
                 if(!isSaveWord && i + 1 < lstTemplate.size()){
                     subject = lstTemplate.get(i-1);
@@ -142,6 +142,9 @@ public class ClassifySentenceWithoutInternet {
                     }
                     //option4
                     //4.  אם מילהלאשמורה{[הוא] /מילהשמורה}  (למשל אופרטור) – אזי הראשון הוא שדה בתוך נושא מרכזי
+                    if(i + 2 < lstTemplate.size() && (lstTemplate.get(i + 2).equals("היא") || lstTemplate.get(i + 2).equals("אינו") || lstTemplate.get(i + 2).equals("הוא"))){
+                        continue;
+                    }
                     subject = mainSubject;
                     field = lstTemplate.get(i+1);
                     dataType = GetType.getLabel(field, sentence, false);
