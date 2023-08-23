@@ -32,6 +32,10 @@ public class ClassifySentenceWithoutInternet {
 
             boolean isSaveWord = isSaveWordInTLXTable(word);
 
+            if(word.equals("הפעל") || word.equals("חוקי")){
+                i++;
+                continue;
+            }
             if (!isSaveWord){
                 //option5-6
                 if(lstTemplate.get(i+1).equals("קיים") ||
