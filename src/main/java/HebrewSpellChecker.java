@@ -1,5 +1,3 @@
-import org.apache.commons.text.similarity.LevenshteinDistance;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,26 +28,30 @@ public class HebrewSpellChecker {
     }
 
     public static boolean findSameWordFromKTCLASSTable(String newWord, int levenshteinThreshold) {
-        List<String> words = getColumnValues("KTCLASS", "WORD");
+        List<String> words = getWORDColumnValues("KTCLASS");
         return isDuplicate(newWord, words, levenshteinThreshold);
     }
 
     public static boolean findSameWordFromKTATTRIBUTETable(String newWord, int levenshteinThreshold) {
-        List<String> words = getColumnValues("KTATTRIBUTE", "WORD");
+        List<String> words = getWORDColumnValues("KTATTRIBUTE");
         return isDuplicate(newWord, words, levenshteinThreshold);
     }
 
-    public static List<String> getColumnValues(String tableName, String columnName) {
+    public static List<String> getWORDColumnValues(String tableName) {
         List<String> columnValues = new ArrayList<>();
 
         try {
             Class.forName(JDBC_DRIVER);
             Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+            String sql = "";
 
-            String sql = "SELECT ? FROM ?";
+            if(tableName == "KTCLASS"){
+                sql = "SELECT NAME FROM KTCLASS";
+            }
+            else if(tableName == "KTATTRIBUTE"){
+                sql = "SELECT NAME FROM KTATTRIBUTE";
+            }
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, columnName);
-            preparedStatement.setString(2, tableName);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
