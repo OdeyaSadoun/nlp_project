@@ -104,68 +104,75 @@ public class GetType {
                 // Create the table if it doesn't exist
                 String createTableQuery = "CREATE TABLE VARTYPE (HEBREW_WORD VARCHAR(255), VAR_TYPE VARCHAR(255))";
                 stmt.executeUpdate(createTableQuery);
+
+                //Fill the VARTYPR table in DataBase:
+                Map<String, String> knownWords = new HashMap<>();
+                knownWords.put("גיל", "Long");
+                knownWords.put("מספר", "Long");
+                knownWords.put("כמות", "Long");
+                knownWords.put("סיבוב", "Long");
+                knownWords.put("מונה", "Long");
+                knownWords.put("יחס", "Double");
+                knownWords.put("מחיר", "Double");
+                knownWords.put("עלות", "Double");
+                knownWords.put("עולה", "Double");
+                knownWords.put("ערך", "Double");
+                knownWords.put("סכום", "Double");
+                knownWords.put("משכורת", "Double");
+                knownWords.put("תאריך", "DateTime");
+                knownWords.put("תאריך_לידה", "DateTime");
+                knownWords.put("שם", "Char");
+                knownWords.put("מין", "Char");
+                knownWords.put("עיר", "Char");
+                knownWords.put("מדינה", "Char");
+                knownWords.put("טלפון", "Char");
+                knownWords.put("דואר_אלקטרוני", "Char");
+                knownWords.put("אימייל", "Char");
+                knownWords.put("מייל", "Char");
+                knownWords.put("כתובת", "Char");
+                knownWords.put("URL", "Char");
+                knownWords.put("צבע", "Char");
+                knownWords.put("גודל", "Double");
+                knownWords.put("משקל", "Double");
+                knownWords.put("טמפרטורה", "Double");
+                knownWords.put("זמן", "DateTime");
+                knownWords.put("מספר_טלפון", "Char");
+                knownWords.put("שם_משפחה", "Char");
+                knownWords.put("שם_פרטי", "Char");
+                knownWords.put("שם_בדוי", "Char");
+                knownWords.put("שם_חברה", "Char");
+                knownWords.put("שם_מוצר", "Char");
+                knownWords.put("שם_שירות", "Char");
+                knownWords.put("שם_מקום", "Char");
+                knownWords.put("מקום", "Char");
+                knownWords.put("שם_חיה", "Char");
+                knownWords.put("שם_צמח", "Char");
+                knownWords.put("שם_עצם", "Char");
+                knownWords.put("שם_חומר", "Char");
+                knownWords.put("כביש", "Char");
+                knownWords.put("נהר", "Char");
+                knownWords.put("הר", "Char");
+                knownWords.put("אגם", "Char");
+                knownWords.put("ים", "Char");
+                knownWords.put("אוקיינוס", "Char");
+                knownWords.put("יבשת", "Char");
+                knownWords.put("כוכב", "Char");
+                knownWords.put("סטטוס", "Char");
+                knownWords.put("קריטי", "Bool");
+                knownWords.put("מספר_קטלוגי", "Long");
+
+
+
+                for (Map.Entry<String, String> entry : knownWords.entrySet()) {
+                    String hebrewWord = entry.getKey();
+                    String type = entry.getValue();
+                    insertToDatabase(hebrewWord, type);
+                }
             }
             stmt.close();
             conn.close();
 
-            //Fill the VARTYPR table in DataBase:
-            Map<String, String> knownWords = new HashMap<>();
-            knownWords.put("גיל", "Long");
-            knownWords.put("מספר", "Long");
-            knownWords.put("כמות", "Long");
-            knownWords.put("סיבוב", "Long");
-            knownWords.put("מונה", "Long");
-            knownWords.put("יחס", "Double");
-            knownWords.put("מחיר", "Double");
-            knownWords.put("עלות", "Double");
-            knownWords.put("עולה", "Double");
-            knownWords.put("ערך", "Double");
-            knownWords.put("סכום", "Double");
-            knownWords.put("משכורת", "Double");
-            knownWords.put("תאריך", "DateTime");
-            knownWords.put("תאריך_לידה", "DateTime");
-            knownWords.put("שם", "Char");
-            knownWords.put("מין", "Char");
-            knownWords.put("עיר", "Char");
-            knownWords.put("מדינה", "Char");
-            knownWords.put("טלפון", "Char");
-            knownWords.put("דואר_אלקטרוני", "Char");
-            knownWords.put("אימייל", "Char");
-            knownWords.put("מייל", "Char");
-            knownWords.put("כתובת", "Char");
-            knownWords.put("URL", "Char");
-            knownWords.put("צבע", "Char");
-            knownWords.put("גודל", "Double");
-            knownWords.put("משקל", "Double");
-            knownWords.put("טמפרטורה", "Double");
-            knownWords.put("זמן", "DateTime");
-            knownWords.put("מספר_טלפון", "Char");
-            knownWords.put("שם_משפחה", "Char");
-            knownWords.put("שם_פרטי", "Char");
-            knownWords.put("שם_בדוי", "Char");
-            knownWords.put("שם_חברה", "Char");
-            knownWords.put("שם_מוצר", "Char");
-            knownWords.put("שם_שירות", "Char");
-            knownWords.put("שם_מקום", "Char");
-            knownWords.put("מקום", "Char");
-            knownWords.put("שם_חיה", "Char");
-            knownWords.put("שם_צמח", "Char");
-            knownWords.put("שם_עצם", "Char");
-            knownWords.put("שם_חומר", "Char");
-            knownWords.put("כביש", "Char");
-            knownWords.put("נהר", "Char");
-            knownWords.put("הר", "Char");
-            knownWords.put("אגם", "Char");
-            knownWords.put("ים", "Char");
-            knownWords.put("אוקיינוס", "Char");
-            knownWords.put("יבשת", "Char");
-            knownWords.put("כוכב", "Char");
 
-            for (Map.Entry<String, String> entry : knownWords.entrySet()) {
-                String hebrewWord = entry.getKey();
-                String type = entry.getValue();
-                insertToDatabase(hebrewWord, type);
-            }
         }
         catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -222,6 +229,9 @@ public class GetType {
 
     public static void main(String[] args) {
         createVARTYPETableIfNotExists();
+//        insertToDatabase("סטטוס", "Char");
+//        insertToDatabase("קריטי", "Bool");
+//        insertToDatabase("מספר_קטלוגי", "Long");
         //System.out.println(getLabel("בלה","בלהבלהבלה", false));
     }
 }
