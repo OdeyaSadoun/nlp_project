@@ -205,21 +205,7 @@ public class ClassifySentenceWithoutInternet {
                             }
                         }
                     }
-                    if (i + 5 < lstTemplate.size()) {
-                        String pluralSubject = lstTemplate.get(i + 5);
-                        subject = changePluralSubjectToSingle(pluralSubject);
-                        field = lstTemplate.get(i + 1);
-                        dataType = GetType.getLabel(field, sentence, false);
-                        System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
-                        checkFieldAndSubjectInDB(subject, field, dataType);
-                        if (i + 6 < lstTemplate.size()) {
-                            field = lstTemplate.get(i + 6);
-                            dataType = GetType.getLabel(field, sentence, false);
-                            System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
-                            checkFieldAndSubjectInDB(subject, field, dataType);
-                        }
-                        continue;
-                    }
+
                 }
             }
             //option11
@@ -256,16 +242,13 @@ public class ClassifySentenceWithoutInternet {
         // Check if the string contains only digits.
         boolean containsDigits = true;
         for (char c : s.toCharArray()) {
-            if (!Character.isDigit(c)) {
-                containsDigits = false;
-                break;
+            if (Character.isDigit(c)) {
+                return true;
             }
         }
 
         // Check if the string is a Hebrew number or contains only digits.
-        if (containsDigits) {
-            return true;
-        } else if (s.equals("אחת") || s.equals("שתיים") || s.equals("שלוש") || s.equals("ארבע") || s.equals("חמש")
+        if (s.equals("אחת") || s.equals("שתיים") || s.equals("שלוש") || s.equals("ארבע") || s.equals("חמש")
                 || s.equals("שש") || s.equals("שבע") || s.equals("שמונה") || s.equals("תשע") || s.equals("עשר")
                 || s.equals("אחד") || s.equals("שניים") || s.equals("שלושה") || s.equals("ארבעה") || s.equals("חמישה")
                 || s.equals("שישה") || s.equals("שיבעה") || s.equals("תשעה") || s.equals("עשרה")) {
