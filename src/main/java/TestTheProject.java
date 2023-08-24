@@ -6,7 +6,7 @@ public class TestTheProject {
 
     public static void main(String[] args) {
         // Read sentences from a text file.
-        List<String> sentences = readSentences("sentences.txt");
+        List<String> sentences = readSentences("sentences1.txt");
         String sentenceWithoutQuotes = "";
         int counterForPrint = 1;
         // For each sentence, call the readTemplate function from the static class AAA and pass the sentence to the function.

@@ -206,7 +206,9 @@ public class SaveToDatabase {
             //Check if subject is in KTCLASS table
             if (!isSubjectInKTCLASSTable(englishSubject, conn)) {
                 System.out.println("subject not in KTCLASS table - add to DB");
+                System.out.println("before levinshtain distance");
                 if(!HebrewSpellChecker.isSameWordInDBInKTCLASSTable(hebrewSubject,1)) {
+                    System.out.println("after levinshtain distance- not same");
                     insertSubject(englishSubject, hebrewSubject, LOGIST, ACTIVATION_ORDER, classIndex, CURRENT_DATE, conn);
                 }
             }

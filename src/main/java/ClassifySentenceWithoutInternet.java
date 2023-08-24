@@ -260,6 +260,15 @@ public class ClassifySentenceWithoutInternet {
     }
 
     public static String changePluralSubjectToSingle(String pluralSubject) {
+        if(pluralSubject == "ימים"){
+            return "יום";
+        }
+        if(pluralSubject == "שנים"){
+            return "שנה";
+        }
+        if(pluralSubject == "תאימות"){
+            return "תאימות";
+        }
         // Check if the word ends with a plural suffix such as "ות" or "ים".
         if (pluralSubject.endsWith("ות") || pluralSubject.endsWith("ים")) {
             // If so, remove the plural suffix.
