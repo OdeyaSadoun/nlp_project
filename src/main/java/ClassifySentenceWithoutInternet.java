@@ -44,7 +44,7 @@ public class ClassifySentenceWithoutInternet {
                 //option5-6
                 if(lstTemplate.get(i+1).equals("קיים") ||
                         lstTemplate.get(i+1).equals("לא") && i + 2 < lstTemplate.size() && lstTemplate.get(i+2).equals("קיים")){
-                    subject = word;
+                    subject = changePluralSubjectToSingle(word);
                     field = null;
                     dataType = GetType.getLabel(field, sentence, false);
                     System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
@@ -54,8 +54,8 @@ public class ClassifySentenceWithoutInternet {
                 //option7
                 isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+1)); //the next word
                 if(!isSaveWord && !( lstTemplate.get(i + 1).equals("הוא") ||  lstTemplate.get(i + 1).equals("אינו") || lstTemplate.get(i + 1).equals("היא") ||  lstTemplate.get(i + 1).equals("איננו"))){
-                    subject = word;
-                    field = lstTemplate.get(i+1);
+                    subject = changePluralSubjectToSingle(word);
+                    field = changePluralSubjectToSingle(lstTemplate.get(i+1));
                     dataType = GetType.getLabel(field, sentence, false);
                     System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
                     checkFieldAndSubjectInDB(subject, field, dataType);
@@ -67,8 +67,8 @@ public class ClassifySentenceWithoutInternet {
                     if(i + 3 < lstTemplate.size()) {
                         isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 3));
                         if (!isSaveWord) {
-                            subject = lstTemplate.get(i + 3);
-                            field = word;
+                            subject = changePluralSubjectToSingle(lstTemplate.get(i + 3));
+                            field = changePluralSubjectToSingle(word);
                             dataType = GetType.getLabel(field, sentence, false);
                             System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
                             checkFieldAndSubjectInDB(subject, field, dataType);
@@ -82,12 +82,12 @@ public class ClassifySentenceWithoutInternet {
                 continue;
             }
             if(word.equals("של") && i + 1 < lstTemplate.size() && i != 0){
-                field = lstTemplate.get(i-1);
+                field = changePluralSubjectToSingle(lstTemplate.get(i-1));
                 if(lstTemplate.get(i+1).equals("כל") && i + 2 < lstTemplate.size()){
-                    subject = lstTemplate.get(i+2);
+                    subject = changePluralSubjectToSingle(lstTemplate.get(i+2));
                 }
                 else{
-                    subject = lstTemplate.get(i+1);
+                    subject = changePluralSubjectToSingle(lstTemplate.get(i+1));
                 }
                 dataType = GetType.getLabel(field, sentence, false);
                 System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
@@ -98,10 +98,10 @@ public class ClassifySentenceWithoutInternet {
             if (i != 0 && (word.equals("איננו") || word.equals("אינו") || word.equals("הוא") || word.equals("היא"))) {
                 isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i - 1));
                 if(!isSaveWord && i + 1 < lstTemplate.size()){
-                    subject = lstTemplate.get(i-1);
+                    subject = changePluralSubjectToSingle(lstTemplate.get(i-1));
                     isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 1));
                     if(!isSaveWord && !isNumericNumber(subject) && !isNumericNumber( lstTemplate.get(i+1))){
-                        field = lstTemplate.get(i+1);
+                        field = changePluralSubjectToSingle(lstTemplate.get(i+1));
                         dataType = GetType.getLabel(field, sentence, false);
                         System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
                         checkFieldAndSubjectInDB(subject, field, dataType);
@@ -149,7 +149,7 @@ public class ClassifySentenceWithoutInternet {
                         continue;
                     }
                     subject = mainSubject;
-                    field = lstTemplate.get(i+1);
+                    field = changePluralSubjectToSingle(lstTemplate.get(i+1));
                     dataType = GetType.getLabel(field, sentence, false);
                     System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
                     checkFieldAndSubjectInDB(subject, field, dataType);
@@ -163,7 +163,7 @@ public class ClassifySentenceWithoutInternet {
                         if (i + 5 < lstTemplate.size()) {
                             pluralSubject = lstTemplate.get(i + 5);
                             subject = changePluralSubjectToSingle(pluralSubject);
-                            field = lstTemplate.get(i + 1);
+                            field = changePluralSubjectToSingle(lstTemplate.get(i + 1));
                             dataType = GetType.getLabel(field, sentence, true);
                             System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
                             checkFieldAndSubjectInDB(subject, field, dataType);
@@ -171,7 +171,7 @@ public class ClassifySentenceWithoutInternet {
                             if (i + 6 < lstTemplate.size()) {
                                 isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 6));
                                 if (!isSaveWord) {
-                                    field = lstTemplate.get(i + 6);
+                                    field = changePluralSubjectToSingle(lstTemplate.get(i + 6));
                                     dataType = GetType.getLabel(field, sentence, true);
                                     System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
                                     checkFieldAndSubjectInDB(subject, field, dataType);
@@ -186,8 +186,8 @@ public class ClassifySentenceWithoutInternet {
                             isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 3));
                             if (!isSaveWord) {
                                 pluralSubject = lstTemplate.get(i + 3);
-                                subject = changePluralSubjectToSingle(pluralSubject);
-                                field = lstTemplate.get(i + 1);
+                                subject = changePluralSubjectToSingle(changePluralSubjectToSingle(pluralSubject));
+                                field = changePluralSubjectToSingle(lstTemplate.get(i + 1));
                                 dataType = GetType.getLabel(field, sentence, true);
                                 System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
                                 checkFieldAndSubjectInDB(subject, field, dataType);
@@ -195,7 +195,7 @@ public class ClassifySentenceWithoutInternet {
                                 if (i + 4 < lstTemplate.size()) {
                                     isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 4));
                                     if (!isSaveWord) {
-                                        field = lstTemplate.get(i + 4);
+                                        field = changePluralSubjectToSingle(lstTemplate.get(i + 4));
                                         dataType = GetType.getLabel(field, sentence, true);
                                         System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
                                         checkFieldAndSubjectInDB(subject, field, dataType);
@@ -212,7 +212,7 @@ public class ClassifySentenceWithoutInternet {
             if (i + 1 < lstTemplate.size() && (word.equals("ה-") || word.equals("ל-"))) {
                 isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+1));
                 if(!isSaveWord){
-                    subject = lstTemplate.get(i+1);
+                    subject = changePluralSubjectToSingle(lstTemplate.get(i+1));
                     field = null;
                     dataType = GetType.getLabel(field, sentence, false);
                     System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
@@ -225,7 +225,7 @@ public class ClassifySentenceWithoutInternet {
                 isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+1));
                 if(!isSaveWord){
                     subject = mainSubject;
-                    field = lstTemplate.get(i+1);
+                    field = changePluralSubjectToSingle(lstTemplate.get(i+1));
                     dataType = GetType.getLabel(field, sentence, false);
                     System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
                     checkFieldAndSubjectInDB(subject, field, dataType);
