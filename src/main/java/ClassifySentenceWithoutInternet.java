@@ -100,7 +100,7 @@ public class ClassifySentenceWithoutInternet {
                 if(!isSaveWord && i + 1 < lstTemplate.size()){
                     subject = lstTemplate.get(i-1);
                     isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 1));
-                    if(!isSaveWord){
+                    if(!isSaveWord && !isNumericNumber(subject) && !isNumericNumber( lstTemplate.get(i+1))){
                         field = lstTemplate.get(i+1);
                         dataType = GetType.getLabel(field, sentence, false);
                         System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
@@ -249,25 +249,30 @@ public class ClassifySentenceWithoutInternet {
     }
 
     private static boolean isNumericNumber(String s) {
-    // Check if the string is empty or null.
         if (s == null || s.isEmpty()) {
             return false;
         }
 
-    // Check if the string contains only digits.
+        // Check if the string contains only digits.
+        boolean containsDigits = true;
         for (char c : s.toCharArray()) {
             if (!Character.isDigit(c)) {
-                return false;
+                containsDigits = false;
+                break;
             }
         }
 
-    // Check if the string is a Hebrew number.
-        if (s.equals("אחת") || s.equals("שתיים") || s.equals("שלוש") || s.equals("ארבע") || s.equals("חמש") || s.equals("שש") || s.equals("שבע") || s.equals("שמונה") || s.equals("תשע") || s.equals("עשר")
-        || s.equals("אחד") || s.equals("שניים") || s.equals("שלושה") || s.equals("ארבעה") || s.equals("חמישה") || s.equals("שישה") || s.equals("שיבעה") || s.equals("תשעה") || s.equals("עשרה")) {
+        // Check if the string is a Hebrew number or contains only digits.
+        if (containsDigits) {
+            return true;
+        } else if (s.equals("אחת") || s.equals("שתיים") || s.equals("שלוש") || s.equals("ארבע") || s.equals("חמש")
+                || s.equals("שש") || s.equals("שבע") || s.equals("שמונה") || s.equals("תשע") || s.equals("עשר")
+                || s.equals("אחד") || s.equals("שניים") || s.equals("שלושה") || s.equals("ארבעה") || s.equals("חמישה")
+                || s.equals("שישה") || s.equals("שיבעה") || s.equals("תשעה") || s.equals("עשרה")) {
             return true;
         }
 
-    // If the string is not empty, does not contain only digits, and is not a Hebrew number, it is not a number.
+        // If the string is not empty and does not represent a numeric value, return false.
         return false;
     }
 
