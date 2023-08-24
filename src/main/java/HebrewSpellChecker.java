@@ -7,6 +7,7 @@ public class HebrewSpellChecker {
     final static String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     final static String USERNAME = "logistcourse1";
     final static String PASSWORD = "logistcourse1";
+
     public static int levenshteinDistance(String word1, String word2) {
         int[][] dp = new int[word1.length() + 1][word2.length() + 1];
 
@@ -163,10 +164,10 @@ public class HebrewSpellChecker {
     public static boolean isSameWordInDBInKTCLASSTable(String newWord, int levenshteinThreshold){
         return findSameWordFromKTCLASSTable(newWord,levenshteinThreshold);
     }
+
     public static boolean isSameWordInDBInKTATTRIBUTETable(String hebrewSubject, String hebrewField, int levenshteinThreshold){
         return findSameWordFromKTATTRIBUTETable(hebrewSubject, hebrewField, levenshteinThreshold);
     }
-
 
     public static void main(String[] args) {
         String newWord = "אמא"; // The word to be inserted
