@@ -37,7 +37,7 @@ public class ClassifySentenceWithoutInternet {
                 i++;
                 continue;
             }
-            if(isNumericNumber(word)){
+            if(isNumericNumber(word) || GetType.getNumericWord(word)){
                 continue;
             }
             if (i + 1 < lstTemplate.size() && !isSaveWord){
@@ -53,7 +53,7 @@ public class ClassifySentenceWithoutInternet {
                 }
                 //option7
                 isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+1)); //the next word
-                if(!isSaveWord){
+                if(!isSaveWord && !( lstTemplate.get(i + 1).equals("הוא") ||  lstTemplate.get(i + 1).equals("אינו") || lstTemplate.get(i + 1).equals("היא") ||  lstTemplate.get(i + 1).equals("איננו"))){
                     subject = word;
                     field = lstTemplate.get(i+1);
                     dataType = GetType.getLabel(field, sentence, false);
