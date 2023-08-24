@@ -44,7 +44,6 @@ public class GetType {
         return false;
     }
 
-
     public static void insertToDatabase(String hebrewWord, String type){
 
         Connection conn = null;
