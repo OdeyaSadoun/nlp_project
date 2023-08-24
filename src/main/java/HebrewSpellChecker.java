@@ -115,9 +115,6 @@ public class HebrewSpellChecker {
 
         return false;
     }
-//////////////////////////
-
-
 
     public static List<String> getWORDColumnValues(String tableName) {
         List<String> columnValues = new ArrayList<>();

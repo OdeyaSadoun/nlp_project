@@ -37,6 +37,9 @@ public class ClassifySentenceWithoutInternet {
                 i++;
                 continue;
             }
+            if(isNumericNumber(word)){
+                continue;
+            }
             if (i + 1 < lstTemplate.size() && !isSaveWord){
                 //option5-6
                 if(lstTemplate.get(i+1).equals("קיים") ||
@@ -92,7 +95,7 @@ public class ClassifySentenceWithoutInternet {
                 continue;
             }
             //option2
-            if (i != 0 && (word.equals("אינו") || word.equals("הוא") || word.equals("היא"))) {
+            if (i != 0 && (word.equals("איננו") || word.equals("אינו") || word.equals("הוא") || word.equals("היא"))) {
                 isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i - 1));
                 if(!isSaveWord && i + 1 < lstTemplate.size()){
                     subject = lstTemplate.get(i-1);
@@ -112,7 +115,7 @@ public class ClassifySentenceWithoutInternet {
             if (word.equals("אם") && i + 1 < lstTemplate.size()) {
                 isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 1));
                 if (!isSaveWord) {
-                    if (i + 2 < lstTemplate.size() && lstTemplate.get(i + 2).equals("הוא") || i + 2 < lstTemplate.size() && lstTemplate.get(i + 2).equals("אינו")) {
+                    if (i + 2 < lstTemplate.size() && ( lstTemplate.get(i + 2).equals("הוא") ||  lstTemplate.get(i + 2).equals("אינו") || lstTemplate.get(i + 2).equals("היא") ||  lstTemplate.get(i + 2).equals("איננו"))) {
                         if(i + 3 < lstTemplate.size()) {
                             isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 3));
                             if (isSaveWord) {
@@ -300,6 +303,7 @@ public class ClassifySentenceWithoutInternet {
 
         return pluralSubject;
     }
+
     public static String reverseString(String word) {
         // Create a new string to store the output.
         String output = "";
@@ -313,7 +317,6 @@ public class ClassifySentenceWithoutInternet {
         // Return the output string.
         return output;
     }
-
 
     private static boolean isSaveWordInTLXTable(String token) throws SQLException {
         // Connect to the SQL Server database.
@@ -352,7 +355,13 @@ public class ClassifySentenceWithoutInternet {
         } else {
             englishField = TranslateWithoutInternet.retrieveEnglishValuesFromHebrewValues(hebrewField);
         }
-        englishSubject = TranslateWithoutInternet.retrieveEnglishValuesFromHebrewValues(hebrewSubject);
+        if(subject == "mainSubject"){
+            englishSubject = "main_class";
+            hebrewSubject = "נושא_ראשי";
+        }
+        else {
+            englishSubject = TranslateWithoutInternet.retrieveEnglishValuesFromHebrewValues(hebrewSubject);
+        }
         System.out.println("**********subject in hebrew: " + hebrewSubject + " field in hebrew: " + hebrewField + " subject in english: " + englishSubject + " field in english: " + englishField + "----------");
         SaveToDatabase.addSubjectToDatabase(hebrewField, englishField, hebrewSubject, englishSubject, dataType);
     }
