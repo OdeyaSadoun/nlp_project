@@ -10,7 +10,9 @@ public class ClassifySentenceWithoutInternet {
     static String pluralSubject;
     static String field;
     static String mainSubject = "mainSubject";
-    static String dataType = "Bool"; //default
+    final static String JDBC_URL = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
+    final static String USERNAME = "logistcourse1";
+    final static String PASSWORD = "logistcourse1";
 
     public static void readTemplate(String sentence){
         String[] template = sentence.split(" ");
@@ -23,7 +25,7 @@ public class ClassifySentenceWithoutInternet {
     }
 
     public static void findSubjectAndField(List<String> lstTemplate, String sentence) throws SQLException {
-        Boolean isPlural = false;
+        String dataType;
 
         for (int i = 0; i < lstTemplate.size(); i++) {
 
@@ -316,13 +318,8 @@ public class ClassifySentenceWithoutInternet {
     }
 
     private static boolean isSaveWordInTLXTable(String token) throws SQLException {
-        // Connect to the SQL Server database.
-        String jdbcUrl = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
-        String jdbcDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        // Database credentials
-        String username = "logistcourse1";
-        String password = "logistcourse1";
-        Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
+
+        Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
 
         // Create a statement.
 
