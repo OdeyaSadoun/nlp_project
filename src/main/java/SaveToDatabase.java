@@ -4,7 +4,12 @@ import java.time.format.DateTimeFormatter;
 
 public class SaveToDatabase {
 
-    final static String DEFAULT_TYPE = "D8.2";
+    // Define constants for the database connection information
+    static final String JDBC_URL = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
+    static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    static final String USERNAME = "logistcourse1";
+    static final String PASSWORD = "logistcourse1";
+
     public static void main(String[] args) {
         addSubjectToDatabase("א", "a", "אא", "aa", "Bool");
     }
@@ -166,14 +171,7 @@ public class SaveToDatabase {
         conn.close();
     }
 
-
     public static void addSubjectToDatabase(String hebrewField, String englishField, String hebrewSubject, String englishSubject, String type_name) {
-
-        // Define constants for the database connection information
-        final String JDBC_URL = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
-        final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        final String USERNAME = "logistcourse1";
-        final String PASSWORD = "logistcourse1";
 
         // Define constants for the field names in the KTCLASS and KTATTRIBUTE tables
         final String CURRENT_DATE = getDateWithMS();
