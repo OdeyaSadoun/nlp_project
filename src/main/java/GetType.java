@@ -221,11 +221,6 @@ public class GetType {
     }
 
     public static void main(String[] args) {
-//        createVARTYPETableIfNotExists();
-        System.out.println(getNumericWord("אם יחפ של פריט הוא אחד מתוך (02,03,04)"));
-//        insertToDatabase("סטטוס", "Char");
-//        insertToDatabase("קריטי", "Bool");
-//        insertToDatabase("מספר_קטלוגי", "Long");
-        //System.out.println(getLabel("בלה","בלהבלהבלה", false));
+        createVARTYPETableIfNotExists();
     }
 }
