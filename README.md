@@ -26,8 +26,10 @@ Within this project, NLP algorithms will be adapted to handle intricate Hebrew t
 The successful implementation of this project could potentially result in substantial enhancements in the efficiency and effectiveness of the Logist system.
 To interface with the existing Logist system, the project will be developed using the Java programming language. The Stanfordnlp library will be employed to identify sentence components and perform linguistic analysis. Data generated will be stored in a Microsoft SQL Server database.
 
+---------------
 
-##The relevant files for the final version of the project:
+
+## The relevant files for the final version of the project:
 
 • ClassifySentenceWithoutInternet.java
 • GetType.java
