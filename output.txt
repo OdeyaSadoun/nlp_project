@@ -1,0 +1,3243 @@
+"C:\Program Files\Java\jdk-15.0.2\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2021.3\lib\idea_rt.jar=61309:C:\Program Files\JetBrains\IntelliJ IDEA 2021.3\bin" -Dfile.encoding=UTF-8 -classpath "C:\Users\Odeya.ODEYA-LP\Documents\tefen\nlp_project\target\classes;C:\Users\אודיה סעדון\.m2\repository\edu\stanford\nlp\stanford-corenlp\4.5.1\stanford-corenlp-4.5.1.jar;C:\Users\אודיה סעדון\.m2\repository\com\apple\AppleJavaExtensions\1.4\AppleJavaExtensions-1.4.jar;C:\Users\אודיה סעדון\.m2\repository\de\jollyday\jollyday\0.4.9\jollyday-0.4.9.jar;C:\Users\אודיה סעדון\.m2\repository\org\apache\commons\commons-lang3\3.3.1\commons-lang3-3.3.1.jar;C:\Users\אודיה סעדון\.m2\repository\org\apache\lucene\lucene-queryparser\7.5.0\lucene-queryparser-7.5.0.jar;C:\Users\אודיה סעדון\.m2\repository\org\apache\lucene\lucene-queries\7.5.0\lucene-queries-7.5.0.jar;C:\Users\אודיה סעדון\.m2\repository\org\apache\lucene\lucene-sandbox\7.5.0\lucene-sandbox-7.5.0.jar;C:\Users\אודיה סעדון\.m2\repository\org\apache\lucene\lucene-analyzers-common\7.5.0\lucene-analyzers-common-7.5.0.jar;C:\Users\אודיה סעדון\.m2\repository\org\apache\lucene\lucene-core\7.5.0\lucene-core-7.5.0.jar;C:\Users\אודיה סעדון\.m2\repository\javax\servlet\javax.servlet-api\3.0.1\javax.servlet-api-3.0.1.jar;C:\Users\אודיה סעדון\.m2\repository\xom\xom\1.3.7\xom-1.3.7.jar;C:\Users\אודיה סעדון\.m2\repository\xerces\xercesImpl\2.8.0\xercesImpl-2.8.0.jar;C:\Users\אודיה סעדון\.m2\repository\xml-apis\xml-apis\1.3.03\xml-apis-1.3.03.jar;C:\Users\אודיה סעדון\.m2\repository\xalan\xalan\2.7.2\xalan-2.7.2.jar;C:\Users\אודיה סעדון\.m2\repository\xalan\serializer\2.7.2\serializer-2.7.2.jar;C:\Users\אודיה סעדון\.m2\repository\joda-time\joda-time\2.10.5\joda-time-2.10.5.jar;C:\Users\אודיה סעדון\.m2\repository\org\ejml\ejml-core\0.39\ejml-core-0.39.jar;C:\Users\אודיה סעדון\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\אודיה סעדון\.m2\repository\org\ejml\ejml-ddense\0.39\ejml-ddense-0.39.jar;C:\Users\אודיה סעדון\.m2\repository\org\ejml\ejml-simple\0.39\ejml-simple-0.39.jar;C:\Users\אודיה סעדון\.m2\repository\org\ejml\ejml-fdense\0.39\ejml-fdense-0.39.jar;C:\Users\אודיה סעדון\.m2\repository\org\ejml\ejml-cdense\0.39\ejml-cdense-0.39.jar;C:\Users\אודיה סעדון\.m2\repository\org\ejml\ejml-zdense\0.39\ejml-zdense-0.39.jar;C:\Users\אודיה סעדון\.m2\repository\org\ejml\ejml-dsparse\0.39\ejml-dsparse-0.39.jar;C:\Users\אודיה סעדון\.m2\repository\org\ejml\ejml-fsparse\0.39\ejml-fsparse-0.39.jar;C:\Users\אודיה סעדון\.m2\repository\org\glassfish\javax.json\1.0.4\javax.json-1.0.4.jar;C:\Users\אודיה סעדון\.m2\repository\org\slf4j\slf4j-api\1.7.12\slf4j-api-1.7.12.jar;C:\Users\אודיה סעדון\.m2\repository\com\google\protobuf\protobuf-java\3.19.2\protobuf-java-3.19.2.jar;C:\Users\אודיה סעדון\.m2\repository\javax\activation\javax.activation-api\1.2.0\javax.activation-api-1.2.0.jar;C:\Users\אודיה סעדון\.m2\repository\javax\xml\bind\jaxb-api\2.4.0-b180830.0359\jaxb-api-2.4.0-b180830.0359.jar;C:\Users\אודיה סעדון\.m2\repository\com\sun\istack\istack-commons-runtime\3.0.7\istack-commons-runtime-3.0.7.jar;C:\Users\אודיה סעדון\.m2\repository\com\sun\xml\bind\jaxb-impl\2.4.0-b180830.0438\jaxb-impl-2.4.0-b180830.0438.jar;C:\Users\אודיה סעדון\.m2\repository\com\googlecode\json-simple\json-simple\1.1.1\json-simple-1.1.1.jar;C:\Users\אודיה סעדון\.m2\repository\org\apache\opennlp\opennlp-tools\2.2.0\opennlp-tools-2.2.0.jar;C:\Users\אודיה סעדון\.m2\repository\com\hankcs\hanlp\portable-1.8.3\hanlp-portable-1.8.3.jar;C:\Users\אודיה סעדון\.m2\repository\edu\stanford\nlp\stanford-corenlp\4.5.1\stanford-corenlp-4.5.1-models.jar;C:\Users\אודיה סעדון\.m2\repository\org\apache\commons\commons-text\1.9\commons-text-1.9.jar;C:\Users\Odeya.ODEYA-LP\Documents\tefen\nlp_project\lib\sqljdbc4.jar" TestTheProject
+Sentence num 1 : אם סטטוס של פריט הוא מיושן
+current word: אם
+current word: סטטוס
+current word: של
+VAR_TYPE: Char
+VAR_TYPE: Char
+----------subject: פריט field: סטטוס type: Char----------
+**********subject in hebrew: פריט field in hebrew: סטטוס subject in english: fryt field in english: sttvs----------
+Next class_index: 8
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: פריט
+current word: הוא
+----------subject: פריט field: מיושן type: D8.2----------
+English Word: fryt
+English Word: fryt
+**********subject in hebrew: פריט field in hebrew: מיושן subject in english: fryt field in english: myvshn----------
+Next class_index: 9
+Next attribute_index: 2
+Next attribute_index: 2
+field not in KTATTRIBUT table - add to DB
+current word: מיושן
+Sentence num 2 : אם סטטוס אינו מיושן
+current word: אם
+current word: סטטוס
+current word: אינו
+----------subject: סטטוס field: מיושן type: D8.2----------
+English Word: myvshn
+English Word: myvshn
+English Word: sttvs
+English Word: sttvs
+**********subject in hebrew: סטטוס field in hebrew: מיושן subject in english: sttvs field in english: myvshn----------
+Next class_index: 9
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: מיושן
+Sentence num 3 : אם יחפ של פריט הוא אחד מתוך (02,03,04)
+current word: אם
+current word: יחפ
+current word: של
+----------subject: פריט field: יחף type: Long----------
+English Word: fryt
+English Word: fryt
+**********subject in hebrew: פריט field in hebrew: יחף subject in english: fryt field in english: ykhf----------
+Next class_index: 10
+Next attribute_index: 3
+Next attribute_index: 3
+field not in KTATTRIBUT table - add to DB
+current word: פריט
+current word: הוא
+current word: אחד
+current word: מתוך
+current word: (02,03,04)
+Sentence num 4 : אם יחפ איננו אחד מתוך (02,03,04)
+current word: אם
+----------subject: mainSubject field: יחפ type: Long----------
+English Word: ykhf
+English Word: ykhf
+**********subject in hebrew: נושא_ראשי field in hebrew: יחפ subject in english: main_class field in english: ykhf----------
+Next class_index: 10
+Next attribute_index: 6
+Next attribute_index: 6
+field not in KTATTRIBUT table - add to DB
+current word: יחפ
+current word: איננו
+current word: אחד
+current word: מתוך
+current word: (02,03,04)
+Sentence num 5 : אם יחפ קטן שווה 03
+current word: אם
+----------subject: mainSubject field: יחף type: Long----------
+English Word: ykhf
+English Word: ykhf
+**********subject in hebrew: נושא_ראשי field in hebrew: יחף subject in english: main_class field in english: ykhf----------
+Next class_index: 10
+Next attribute_index: 7
+Next attribute_index: 7
+current word: יחפ
+current word: קטן
+current word: שווה
+current word: 03
+Sentence num 6 : אם יחפ קטן מ- 03
+current word: אם
+----------subject: mainSubject field: יחף type: Long----------
+English Word: ykhf
+English Word: ykhf
+**********subject in hebrew: נושא_ראשי field in hebrew: יחף subject in english: main_class field in english: ykhf----------
+Next class_index: 10
+Next attribute_index: 7
+Next attribute_index: 7
+current word: יחפ
+current word: קטן
+current word: מ-
+current word: 03
+Sentence num 7 : אם יחפ גדול שווה 03
+current word: אם
+----------subject: mainSubject field: יחף type: Long----------
+English Word: ykhf
+English Word: ykhf
+**********subject in hebrew: נושא_ראשי field in hebrew: יחף subject in english: main_class field in english: ykhf----------
+Next class_index: 10
+Next attribute_index: 7
+Next attribute_index: 7
+current word: יחפ
+current word: גדול
+current word: שווה
+current word: 03
+Sentence num 8 : אם יחפ גדול מ- 03
+current word: אם
+----------subject: mainSubject field: יחף type: Long----------
+English Word: ykhf
+English Word: ykhf
+**********subject in hebrew: נושא_ראשי field in hebrew: יחף subject in english: main_class field in english: ykhf----------
+Next class_index: 10
+Next attribute_index: 7
+Next attribute_index: 7
+current word: יחפ
+current word: גדול
+current word: מ-
+current word: 03
+Sentence num 9 : אם יחפ הוא בתחום 03 עד 07
+current word: אם
+----------subject: mainSubject field: יחפ type: Long----------
+English Word: ykhf
+English Word: ykhf
+**********subject in hebrew: נושא_ראשי field in hebrew: יחפ subject in english: main_class field in english: ykhf----------
+Next class_index: 10
+Next attribute_index: 7
+Next attribute_index: 7
+current word: יחפ
+current word: הוא
+current word: בתחום
+current word: 03
+current word: עד
+current word: 07
+Sentence num 10 : אם יחפ אינו בתחום 03 עד 07
+current word: אם
+----------subject: mainSubject field: יחפ type: Long----------
+English Word: ykhf
+English Word: ykhf
+**********subject in hebrew: נושא_ראשי field in hebrew: יחפ subject in english: main_class field in english: ykhf----------
+Next class_index: 10
+Next attribute_index: 7
+Next attribute_index: 7
+current word: יחפ
+current word: אינו
+current word: בתחום
+current word: 03
+current word: עד
+current word: 07
+Sentence num 11 : אם יחפ הוא אחד מתוך (01, בתחום 02 עד 04, גדול מ- 07)
+current word: אם
+----------subject: mainSubject field: יחפ type: Long----------
+English Word: ykhf
+English Word: ykhf
+**********subject in hebrew: נושא_ראשי field in hebrew: יחפ subject in english: main_class field in english: ykhf----------
+Next class_index: 10
+Next attribute_index: 7
+Next attribute_index: 7
+current word: יחפ
+current word: הוא
+current word: אחד
+current word: מתוך
+current word: (01,
+current word: בתחום
+current word: 02
+current word: עד
+current word: 04,
+current word: גדול
+current word: מ-
+current word: 07)
+Sentence num 12 : אם סטטוס אינו אחד מתוך (01, בתחום 02 עד 04, גדול מ- 07)
+current word: אם
+VAR_TYPE: Char
+VAR_TYPE: Char
+----------subject: mainSubject field: סטטוס type: Char----------
+English Word: sttvs
+English Word: sttvs
+**********subject in hebrew: נושא_ראשי field in hebrew: סטטוס subject in english: main_class field in english: sttvs----------
+Next class_index: 10
+Next attribute_index: 7
+Next attribute_index: 7
+field not in KTATTRIBUT table - add to DB
+current word: סטטוס
+current word: אינו
+current word: אחד
+current word: מתוך
+current word: (01,
+current word: בתחום
+current word: 02
+current word: עד
+current word: 04,
+current word: גדול
+current word: מ-
+current word: 07)
+Sentence num 13 : אם פריט הוא מדא
+current word: אם
+current word: פריט
+current word: הוא
+----------subject: פריט field: מדא type: D8.2----------
+English Word: fryt
+English Word: fryt
+**********subject in hebrew: פריט field in hebrew: מדא subject in english: fryt field in english: mda----------
+Next class_index: 10
+Next attribute_index: 4
+Next attribute_index: 4
+field not in KTATTRIBUT table - add to DB
+current word: מדא
+Sentence num 14 : אם יצרן הוא קריטי
+current word: אם
+current word: יצרן
+current word: הוא
+VAR_TYPE: Bool
+VAR_TYPE: Bool
+----------subject: יצרן field: קריטי type: Bool----------
+**********subject in hebrew: יצרן field in hebrew: קריטי subject in english: ytzrn field in english: kryty----------
+Next class_index: 10
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: קריטי
+Sentence num 15 : אם יצרן אינו קריטי
+current word: אם
+current word: יצרן
+current word: אינו
+VAR_TYPE: Bool
+VAR_TYPE: Bool
+----------subject: יצרן field: קריטי type: Bool----------
+English Word: kryty
+English Word: kryty
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: קריטי subject in english: ytzrn field in english: kryty----------
+Next class_index: 11
+Next attribute_index: 2
+Next attribute_index: 2
+current word: קריטי
+Sentence num 16 : אם פריט אינו מדא
+current word: אם
+current word: פריט
+current word: אינו
+----------subject: פריט field: מדא type: D8.2----------
+English Word: mda
+English Word: mda
+English Word: fryt
+English Word: fryt
+**********subject in hebrew: פריט field in hebrew: מדא subject in english: fryt field in english: mda----------
+Next class_index: 11
+Next attribute_index: 5
+Next attribute_index: 5
+current word: מדא
+Sentence num 17 : אם מחיר של יצרן גדול מ- 0 דולרים
+current word: אם
+current word: מחיר
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 11
+Next attribute_index: 2
+Next attribute_index: 2
+field not in KTATTRIBUT table - add to DB
+current word: יצרן
+current word: גדול
+current word: מ-
+current word: 0
+current word: דולרים
+Sentence num 18 : אם מספר_קטלוגי מתחיל ב- 101
+current word: אם
+VAR_TYPE: Long
+VAR_TYPE: Long
+----------subject: mainSubject field: מספר_קטלוגי type: Long----------
+**********subject in hebrew: נושא_ראשי field in hebrew: מספר_קטלוגי subject in english: main_class field in english: msfr_ktlvgy----------
+Next class_index: 11
+Next attribute_index: 8
+Next attribute_index: 8
+field not in KTATTRIBUT table - add to DB
+current word: מספר_קטלוגי
+current word: מתחיל
+current word: ב-
+current word: 101
+Sentence num 19 : אם מספר_קטלוגי אינו מתחיל ב- 101
+current word: אם
+VAR_TYPE: Long
+VAR_TYPE: Long
+----------subject: mainSubject field: מספר_קטלוגי type: Long----------
+English Word: msfr_ktlvgy
+English Word: msfr_ktlvgy
+**********subject in hebrew: נושא_ראשי field in hebrew: מספר_קטלוגי subject in english: main_class field in english: msfr_ktlvgy----------
+Next class_index: 11
+Next attribute_index: 9
+Next attribute_index: 9
+current word: מספר_קטלוגי
+current word: אינו
+current word: מתחיל
+current word: ב-
+current word: 101
+Sentence num 20 : אם מספר_קטלוגי מתחיל ב- אחד מתוך (101, 202, 303)
+current word: אם
+VAR_TYPE: Long
+VAR_TYPE: Long
+----------subject: mainSubject field: מספר_קטלוגי type: Long----------
+English Word: msfr_ktlvgy
+English Word: msfr_ktlvgy
+**********subject in hebrew: נושא_ראשי field in hebrew: מספר_קטלוגי subject in english: main_class field in english: msfr_ktlvgy----------
+Next class_index: 11
+Next attribute_index: 9
+Next attribute_index: 9
+current word: מספר_קטלוגי
+current word: מתחיל
+current word: ב-
+current word: אחד
+current word: מתוך
+current word: (101,
+current word: 202,
+current word: 303)
+Sentence num 21 : אם מספר_קטלוגי אינו מתחיל ב- אחד מתוך (101, 202, 303)
+current word: אם
+VAR_TYPE: Long
+VAR_TYPE: Long
+----------subject: mainSubject field: מספר_קטלוגי type: Long----------
+English Word: msfr_ktlvgy
+English Word: msfr_ktlvgy
+**********subject in hebrew: נושא_ראשי field in hebrew: מספר_קטלוגי subject in english: main_class field in english: msfr_ktlvgy----------
+Next class_index: 11
+Next attribute_index: 9
+Next attribute_index: 9
+current word: מספר_קטלוגי
+current word: אינו
+current word: מתחיל
+current word: ב-
+current word: אחד
+current word: מתוך
+current word: (101,
+current word: 202,
+current word: 303)
+Sentence num 22 : אם סימול מחסן החל מתו 3 הוא 42
+current word: אם
+----------subject: mainSubject field: סימול type: Long----------
+**********subject in hebrew: נושא_ראשי field in hebrew: סימול subject in english: main_class field in english: symvl----------
+Next class_index: 11
+Next attribute_index: 9
+Next attribute_index: 9
+field not in KTATTRIBUT table - add to DB
+current word: סימול
+----------subject: סימול field: מחסן type: Long----------
+English Word: symvl
+English Word: symvl
+**********subject in hebrew: סימול field in hebrew: מחסן subject in english: symvl field in english: mkhsn----------
+Next class_index: 11
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: מחסן
+current word: החל
+current word: מתו
+current word: 3
+current word: הוא
+current word: 42
+Sentence num 23 : אם סטטוס הוא שגוי
+current word: אם
+VAR_TYPE: Char
+VAR_TYPE: Char
+----------subject: mainSubject field: סטטוס type: Char----------
+English Word: sttvs
+English Word: sttvs
+**********subject in hebrew: נושא_ראשי field in hebrew: סטטוס subject in english: main_class field in english: sttvs----------
+Next class_index: 12
+Next attribute_index: 10
+Next attribute_index: 10
+current word: סטטוס
+current word: הוא
+current word: שגוי
+Sentence num 24 : אם סטטוס אינו שגוי
+current word: אם
+VAR_TYPE: Char
+VAR_TYPE: Char
+----------subject: mainSubject field: סטטוס type: Char----------
+English Word: sttvs
+English Word: sttvs
+**********subject in hebrew: נושא_ראשי field in hebrew: סטטוס subject in english: main_class field in english: sttvs----------
+Next class_index: 12
+Next attribute_index: 10
+Next attribute_index: 10
+current word: סטטוס
+current word: אינו
+current word: שגוי
+Sentence num 25 : אם סטטוס ידוע
+current word: אם
+VAR_TYPE: Char
+VAR_TYPE: Char
+----------subject: mainSubject field: סטטוס type: Char----------
+English Word: sttvs
+English Word: sttvs
+**********subject in hebrew: נושא_ראשי field in hebrew: סטטוס subject in english: main_class field in english: sttvs----------
+Next class_index: 12
+Next attribute_index: 10
+Next attribute_index: 10
+current word: סטטוס
+current word: ידוע
+Sentence num 26 : אם סטטוס אינו ידוע
+current word: אם
+VAR_TYPE: Char
+VAR_TYPE: Char
+----------subject: mainSubject field: סטטוס type: Char----------
+English Word: sttvs
+English Word: sttvs
+**********subject in hebrew: נושא_ראשי field in hebrew: סטטוס subject in english: main_class field in english: sttvs----------
+Next class_index: 12
+Next attribute_index: 10
+Next attribute_index: 10
+current word: סטטוס
+current word: אינו
+current word: ידוע
+Sentence num 27 : אם מחיר של יצרן קיים
+current word: אם
+current word: מחיר
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 12
+Next attribute_index: 3
+Next attribute_index: 3
+current word: יצרן
+----------subject: יצרן field: null type: D8.2----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: null subject in english: ytzrn field in english: null----------
+Next class_index: 12
+Next attribute_index: 3
+Next attribute_index: 3
+current word: קיים
+Sentence num 28 : אם מחיר של יצרן אינו קיים
+current word: אם
+current word: מחיר
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 12
+Next attribute_index: 3
+Next attribute_index: 3
+current word: יצרן
+current word: אינו
+current word: קיים
+Sentence num 29 : אם יצרן קיים
+current word: אם
+----------subject: mainSubject field: יצרן type: D8.2----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: נושא_ראשי field in hebrew: יצרן subject in english: main_class field in english: ytzrn----------
+Next class_index: 12
+Next attribute_index: 10
+Next attribute_index: 10
+field not in KTATTRIBUT table - add to DB
+current word: יצרן
+----------subject: יצרן field: null type: D8.2----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: null subject in english: ytzrn field in english: null----------
+Next class_index: 12
+Next attribute_index: 3
+Next attribute_index: 3
+current word: קיים
+Sentence num 30 : אם יצרן לא קיים
+current word: אם
+----------subject: mainSubject field: יצרן type: D8.2----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: נושא_ראשי field in hebrew: יצרן subject in english: main_class field in english: ytzrn----------
+Next class_index: 12
+Next attribute_index: 11
+Next attribute_index: 11
+current word: יצרן
+----------subject: יצרן field: null type: D8.2----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: null subject in english: ytzrn field in english: null----------
+Next class_index: 12
+Next attribute_index: 3
+Next attribute_index: 3
+current word: לא
+current word: קיים
+Sentence num 31 : אם יצרן קריטי קיים
+current word: אם
+----------subject: mainSubject field: יצרן type: D8.2----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: נושא_ראשי field in hebrew: יצרן subject in english: main_class field in english: ytzrn----------
+Next class_index: 12
+Next attribute_index: 11
+Next attribute_index: 11
+current word: יצרן
+VAR_TYPE: Bool
+VAR_TYPE: Bool
+----------subject: יצרן field: קריטי type: Bool----------
+English Word: kryty
+English Word: kryty
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: קריטי subject in english: ytzrn field in english: kryty----------
+Next class_index: 12
+Next attribute_index: 3
+Next attribute_index: 3
+current word: קריטי
+----------subject: קריטי field: null type: D8.2----------
+English Word: kryty
+English Word: kryty
+**********subject in hebrew: קריטי field in hebrew: null subject in english: kryty field in english: null----------
+Next class_index: 12
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+current word: קיים
+Sentence num 32 : אם יצרן קריטי לא קיים
+current word: אם
+----------subject: mainSubject field: יצרן type: D8.2----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: נושא_ראשי field in hebrew: יצרן subject in english: main_class field in english: ytzrn----------
+Next class_index: 13
+Next attribute_index: 11
+Next attribute_index: 11
+current word: יצרן
+VAR_TYPE: Bool
+VAR_TYPE: Bool
+----------subject: יצרן field: קריטי type: Bool----------
+English Word: kryty
+English Word: kryty
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: קריטי subject in english: ytzrn field in english: kryty----------
+Next class_index: 13
+Next attribute_index: 3
+Next attribute_index: 3
+current word: קריטי
+----------subject: קריטי field: null type: D8.2----------
+English Word: kryty
+English Word: kryty
+**********subject in hebrew: קריטי field in hebrew: null subject in english: kryty field in english: null----------
+Next class_index: 13
+Next attribute_index: 1
+Next attribute_index: 1
+current word: לא
+current word: קיים
+Sentence num 33 : אם מספר ה- יצרנים גדול מ- 5
+current word: אם
+current word: מספר
+current word: ה-
+----------subject: יצרן field: null type: D8.2----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: null subject in english: ytzrn field in english: null----------
+Next class_index: 13
+Next attribute_index: 3
+Next attribute_index: 3
+current word: יצרנים
+current word: גדול
+current word: מ-
+current word: 5
+Sentence num 34 : אם מספר ה- יצרנים ה- קריטיים גדול מ- 5
+current word: אם
+current word: מספר
+current word: ה-
+----------subject: יצרן field: null type: D8.2----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: null subject in english: ytzrn field in english: null----------
+Next class_index: 13
+Next attribute_index: 3
+Next attribute_index: 3
+current word: יצרנים
+current word: ה-
+----------subject: קריטי field: null type: D8.2----------
+English Word: kryty
+English Word: kryty
+**********subject in hebrew: קריטי field in hebrew: null subject in english: kryty field in english: null----------
+Next class_index: 13
+Next attribute_index: 1
+Next attribute_index: 1
+current word: קריטיים
+current word: גדול
+current word: מ-
+current word: 5
+Sentence num 35 : אם הוסק ל- מחסן ש- מלאי הוא גדול מאד
+current word: אם
+current word: הוסק
+current word: ל-
+----------subject: מחסן field: null type: D8.2----------
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: null subject in english: mkhsn field in english: null----------
+Next class_index: 13
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+current word: מחסן
+current word: ש-
+current word: מלאי
+current word: הוא
+current word: גדול
+current word: מאד
+Sentence num 36 : אם הוסק ל- מחסנים ש- כדאי לבדוק כל המחסנים
+current word: אם
+current word: הוסק
+current word: ל-
+----------subject: מחסן field: null type: D8.2----------
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: null subject in english: mkhsn field in english: null----------
+Next class_index: 14
+Next attribute_index: 1
+Next attribute_index: 1
+current word: מחסנים
+current word: ש-
+current word: כדאי
+----------subject: כדאי field: לבדוק type: D8.2----------
+**********subject in hebrew: כדאי field in hebrew: לבדוק subject in english: khday field in english: lbdvk----------
+Next class_index: 14
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: לבדוק
+current word: כל
+current word: המחסנים
+Sentence num 37 : אם הוסק ש- קיים חוסר תאימות בין יחפ לא שלם לסיווג שפיץ
+current word: אם
+current word: הוסק
+current word: ש-
+current word: קיים
+current word: חוסר
+----------subject: חוסר field: תאים type: D8.2----------
+**********subject in hebrew: חוסר field in hebrew: תאים subject in english: khvsr field in english: taym----------
+Next class_index: 15
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: תאימות
+current word: בין
+current word: יחפ
+current word: לא
+current word: שלם
+current word: לסיווג
+----------subject: לסיווג field: שפיץ type: D8.2----------
+**********subject in hebrew: לסיווג field in hebrew: שפיץ subject in english: lsyvvg field in english: shfytz----------
+Next class_index: 16
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: שפיץ
+Sentence num 38 : אם הוסק ש- קיים חוסר תאימות בין יחפ לא שלם ל- סיווג שפיץ
+current word: אם
+current word: הוסק
+current word: ש-
+current word: קיים
+current word: חוסר
+----------subject: חוסר field: תאים type: D8.2----------
+English Word: taym
+English Word: taym
+English Word: khvsr
+English Word: khvsr
+**********subject in hebrew: חוסר field in hebrew: תאים subject in english: khvsr field in english: taym----------
+Next class_index: 17
+Next attribute_index: 2
+Next attribute_index: 2
+current word: תאימות
+current word: בין
+current word: יחפ
+current word: לא
+current word: שלם
+current word: ל-
+----------subject: סיווג field: null type: D8.2----------
+**********subject in hebrew: סיווג field in hebrew: null subject in english: syvvg field in english: null----------
+Next class_index: 17
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+Next attribute_index: 1
+Next attribute_index: 1
+current word: סיווג
+----------subject: סיווג field: שפיץ type: D8.2----------
+English Word: shfytz
+English Word: shfytz
+**********subject in hebrew: סיווג field in hebrew: שפיץ subject in english: syvvg field in english: shfytz----------
+Next class_index: 17
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: שפיץ
+Sentence num 39 : אם מלאי של מחסן * 10 גדול מ- רממז של מחסן
+current word: אם
+current word: מלאי
+current word: של
+----------subject: מחסן field: מלאי type: Long----------
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: מלאי subject in english: mkhsn field in english: mlay----------
+Next class_index: 17
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: מחסן
+current word: *
+current word: 10
+current word: גדול
+current word: מ-
+current word: רממז
+current word: של
+----------subject: מחסן field: רממז type: Long----------
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: רממז subject in english: mkhsn field in english: rmmz----------
+Next class_index: 17
+Next attribute_index: 2
+Next attribute_index: 2
+field not in KTATTRIBUT table - add to DB
+current word: מחסן
+Sentence num 40 : אם (מלאי של מחסן * 10) גדול מ- רממז של מחסן
+current word: אם
+current word: (מלאי
+current word: של
+----------subject: מחסן field: (מלאי type: Long----------
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: (מלאי subject in english: mkhsn field in english: mlay----------
+Next class_index: 17
+Next attribute_index: 3
+Next attribute_index: 3
+current word: מחסן
+current word: *
+current word: 10)
+current word: גדול
+current word: מ-
+current word: רממז
+current word: של
+----------subject: מחסן field: רממז type: Long----------
+English Word: rmmz
+English Word: rmmz
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: רממז subject in english: mkhsn field in english: rmmz----------
+Next class_index: 17
+Next attribute_index: 3
+Next attribute_index: 3
+current word: מחסן
+Sentence num 41 : אם (מלאי של מחסן + 5) * 7.5 גדול מ- רממב של מחסן
+current word: אם
+current word: (מלאי
+current word: של
+----------subject: מחסן field: (מלאי type: Long----------
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: (מלאי subject in english: mkhsn field in english: mlay----------
+Next class_index: 17
+Next attribute_index: 3
+Next attribute_index: 3
+current word: מחסן
+current word: +
+current word: 5)
+current word: *
+current word: 7.5
+current word: גדול
+current word: מ-
+current word: רממב
+current word: של
+----------subject: מחסן field: רממב type: Long----------
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: רממב subject in english: mkhsn field in english: rmmb----------
+Next class_index: 17
+Next attribute_index: 3
+Next attribute_index: 3
+field not in KTATTRIBUT table - add to DB
+current word: מחסן
+Sentence num 42 : אם עברו יותר מ- 3.4 שנים מתאריך 05/03/89
+current word: אם
+current word: עברו
+current word: יותר
+current word: מ-
+current word: 3.4
+current word: שנים
+current word: מתאריך
+current word: 05/03/89
+Sentence num 43 : אם עברו פחות מ- 3.4 שנים מתאריך תאריך_סטטוס
+current word: אם
+current word: עברו
+current word: פחות
+current word: מ-
+current word: 3.4
+current word: שנים
+current word: מתאריך
+current word: תאריך_סטטוס
+Sentence num 44 : אם עברו פחות מ- 3 חודשים מתאריך תא.צריכה_רא. עד תאריך 01/05/89
+current word: אם
+current word: עברו
+current word: פחות
+current word: מ-
+current word: 3
+current word: חודשים
+current word: מתאריך
+current word: תא.צריכה_רא.
+current word: עד
+current word: תאריך
+current word: 01/05/89
+Sentence num 45 : אם עברו יותר מ- 3 חודשים מתאריך תא.צריכה_רא. עד תאריך תאריך תא._צריכה_אח.
+current word: אם
+current word: עברו
+current word: יותר
+current word: מ-
+current word: 3
+current word: חודשים
+current word: מתאריך
+current word: תא.צריכה_רא.
+current word: עד
+current word: תאריך
+current word: תאריך
+current word: תא._צריכה_אח.
+Sentence num 46 : אם תא_צריכה_אחרונה הוא בתחום מתאריך 01/05/2001 עד תאריך תאריך_עדכון_אחרון
+current word: אם
+----------subject: mainSubject field: תא_צריכה_אחרונה type: Long----------
+**********subject in hebrew: נושא_ראשי field in hebrew: תא_צריכה_אחרונה subject in english: main_class field in english: ta_tzrykhh_akhrvnh----------
+Next class_index: 17
+Next attribute_index: 11
+Next attribute_index: 11
+field not in KTATTRIBUT table - add to DB
+current word: תא_צריכה_אחרונה
+current word: הוא
+current word: בתחום
+current word: מתאריך
+current word: 01/05/2001
+current word: עד
+current word: תאריך
+current word: תאריך_עדכון_אחרון
+Sentence num 47 : אם סכום צריכה_לפני_3_שנים ו- צריכה_לפני_4_שנים גדול מ- צריכה_השנה
+current word: אם
+current word: סכום
+current word: צריכה_לפני_3_שנים
+current word: ו-
+----------subject: mainSubject field: צריכה_לפני_4_שן type: Long----------
+**********subject in hebrew: נושא_ראשי field in hebrew: צריכה_לפני_4_שן subject in english: main_class field in english: tzrykhh_lfny__shn----------
+Next class_index: 17
+Next attribute_index: 12
+Next attribute_index: 12
+field not in KTATTRIBUT table - add to DB
+current word: צריכה_לפני_4_שנים
+current word: גדול
+current word: מ-
+current word: צריכה_השנה
+Sentence num 48 : אם הפרש בין רממז של מחסן ל- רממב של מחסן גדול מ- 0
+current word: אם
+current word: הפרש
+current word: בין
+current word: רממז
+current word: של
+----------subject: מחסן field: רממז type: Long----------
+English Word: rmmz
+English Word: rmmz
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: רממז subject in english: mkhsn field in english: rmmz----------
+Next class_index: 17
+Next attribute_index: 4
+Next attribute_index: 4
+current word: מחסן
+current word: ל-
+current word: רממב
+current word: של
+----------subject: מחסן field: רממב type: Long----------
+English Word: rmmb
+English Word: rmmb
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: רממב subject in english: mkhsn field in english: rmmb----------
+Next class_index: 17
+Next attribute_index: 4
+Next attribute_index: 4
+current word: מחסן
+current word: גדול
+current word: מ-
+current word: 0
+Sentence num 49 : אם מכפלה צריכה_השנה ב- מחיר ממוצע גדול מ- ערך_מלאי
+current word: אם
+----------subject: mainSubject field: מכפלה type: D8.2----------
+**********subject in hebrew: נושא_ראשי field in hebrew: מכפלה subject in english: main_class field in english: mkhflh----------
+Next class_index: 17
+Next attribute_index: 13
+Next attribute_index: 13
+field not in KTATTRIBUT table - add to DB
+current word: מכפלה
+----------subject: מכפלה field: צריכה_השנה type: D8.2----------
+English Word: mkhflh
+English Word: mkhflh
+**********subject in hebrew: מכפלה field in hebrew: צריכה_השנה subject in english: mkhflh field in english: tzrykhh_hshnh----------
+Next class_index: 17
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: צריכה_השנה
+current word: ב-
+current word: מחיר
+current word: ממוצע
+current word: גדול
+current word: מ-
+current word: ערך_מלאי
+Sentence num 50 : אם היחס בין מלאי של מחסן ל- רממז של מחסן גדול מ- 7
+current word: אם
+current word: היחס
+current word: בין
+current word: מלאי
+current word: של
+----------subject: מחסן field: מלאי type: Long----------
+English Word: mlay
+English Word: mlay
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: מלאי subject in english: mkhsn field in english: mlay----------
+Next class_index: 18
+Next attribute_index: 4
+Next attribute_index: 4
+current word: מחסן
+current word: ל-
+current word: רממז
+current word: של
+----------subject: מחסן field: רממז type: Long----------
+English Word: rmmz
+English Word: rmmz
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: רממז subject in english: mkhsn field in english: rmmz----------
+Next class_index: 18
+Next attribute_index: 4
+Next attribute_index: 4
+current word: מחסן
+current word: גדול
+current word: מ-
+current word: 7
+Sentence num 51 : אם מחיר של כל יצרן גדול מ- 100 דולר
+current word: אם
+current word: מחיר
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 18
+Next attribute_index: 3
+Next attribute_index: 3
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 18
+Next attribute_index: 3
+Next attribute_index: 3
+current word: כל
+current word: יצרן
+current word: גדול
+current word: מ-
+current word: 100
+current word: דולר
+Sentence num 52 : אם מחיר של כל אחד מ- כל ה- יצרנים גדול מ- 100 דולר
+current word: אם
+current word: מחיר
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: אחד field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+**********subject in hebrew: אחד field in hebrew: מחיר subject in english: akhd field in english: mkhyr----------
+Next class_index: 18
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: כל
+current word: אחד
+current word: מ-
+current word: כל
+current word: ה-
+----------subject: יצרן field: null type: D8.2----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: null subject in english: ytzrn field in english: null----------
+Next class_index: 19
+Next attribute_index: 3
+Next attribute_index: 3
+current word: יצרנים
+current word: גדול
+current word: מ-
+current word: 100
+current word: דולר
+Sentence num 53 : אם מחיר של לפחות יצרן אחד גדול מ- 100 שקל
+current word: אם
+current word: מחיר
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: לפח field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+**********subject in hebrew: לפח field in hebrew: מחיר subject in english: lfkh field in english: mkhyr----------
+Next class_index: 19
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: לפחות
+current word: יצרן
+current word: אחד
+current word: גדול
+current word: מ-
+current word: 100
+current word: שקל
+Sentence num 54 : אם מחיר של לפחות שלושה יצרנים גדול מ- 100 דולר
+current word: אם
+current word: מחיר
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: לפח field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: lfkh
+English Word: lfkh
+**********subject in hebrew: לפח field in hebrew: מחיר subject in english: lfkh field in english: mkhyr----------
+Next class_index: 20
+Next attribute_index: 2
+Next attribute_index: 2
+current word: לפחות
+current word: שלושה
+current word: יצרנים
+current word: גדול
+current word: מ-
+current word: 100
+current word: דולר
+Sentence num 55 : אם מחיר של כל יצרן קריטי גדול מ- 100 שקל
+current word: אם
+current word: מחיר
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 20
+Next attribute_index: 3
+Next attribute_index: 3
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 20
+Next attribute_index: 3
+Next attribute_index: 3
+current word: כל
+current word: יצרן
+VAR_TYPE: Bool
+VAR_TYPE: Bool
+----------subject: יצרן field: קריטי type: Bool----------
+English Word: kryty
+English Word: kryty
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: קריטי subject in english: ytzrn field in english: kryty----------
+Next class_index: 20
+Next attribute_index: 3
+Next attribute_index: 3
+current word: קריטי
+current word: גדול
+current word: מ-
+current word: 100
+current word: שקל
+Sentence num 56 : אם מחיר של לפחות יצרן קריטי אחד גדול מ- מחיר של יצרן עדיף
+current word: אם
+current word: מחיר
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: לפח field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: lfkh
+English Word: lfkh
+**********subject in hebrew: לפח field in hebrew: מחיר subject in english: lfkh field in english: mkhyr----------
+Next class_index: 20
+Next attribute_index: 2
+Next attribute_index: 2
+current word: לפחות
+current word: יצרן
+VAR_TYPE: Bool
+VAR_TYPE: Bool
+----------subject: יצרן field: קריטי type: Bool----------
+English Word: kryty
+English Word: kryty
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: קריטי subject in english: ytzrn field in english: kryty----------
+Next class_index: 20
+Next attribute_index: 3
+Next attribute_index: 3
+current word: קריטי
+current word: אחד
+current word: גדול
+current word: מ-
+current word: מחיר
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 20
+Next attribute_index: 3
+Next attribute_index: 3
+current word: יצרן
+----------subject: יצרן field: עדיף type: D8.2----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: עדיף subject in english: ytzrn field in english: adyf----------
+Next class_index: 20
+Next attribute_index: 3
+Next attribute_index: 3
+field not in KTATTRIBUT table - add to DB
+current word: עדיף
+Sentence num 57 : אם מחיר של לפחות שלושה יצרנים קריטיים גדול מ- 100 שקל
+current word: אם
+current word: מחיר
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: לפח field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: lfkh
+English Word: lfkh
+**********subject in hebrew: לפח field in hebrew: מחיר subject in english: lfkh field in english: mkhyr----------
+Next class_index: 20
+Next attribute_index: 2
+Next attribute_index: 2
+current word: לפחות
+current word: שלושה
+current word: יצרנים
+VAR_TYPE: Bool
+VAR_TYPE: Bool
+----------subject: יצרן field: קריטי type: Bool----------
+English Word: kryty
+English Word: kryty
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: קריטי subject in english: ytzrn field in english: kryty----------
+Next class_index: 20
+Next attribute_index: 4
+Next attribute_index: 4
+current word: קריטיים
+current word: גדול
+current word: מ-
+current word: 100
+current word: שקל
+Sentence num 58 : אם מחיר ממוצע של כל ה- יצרנים גדול מ- 100 שקל
+current word: אם
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: mainSubject field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+**********subject in hebrew: נושא_ראשי field in hebrew: מחיר subject in english: main_class field in english: mkhyr----------
+Next class_index: 20
+Next attribute_index: 14
+Next attribute_index: 14
+field not in KTATTRIBUT table - add to DB
+current word: מחיר
+current word: ממוצע
+current word: של
+----------subject: ה- field: ממוצע type: Long----------
+**********subject in hebrew: ה- field in hebrew: ממוצע subject in english: h field in english: mmvtza----------
+Next class_index: 20
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: כל
+current word: ה-
+----------subject: יצרן field: null type: D8.2----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: null subject in english: ytzrn field in english: null----------
+Next class_index: 21
+Next attribute_index: 4
+Next attribute_index: 4
+current word: יצרנים
+current word: גדול
+current word: מ-
+current word: 100
+current word: שקל
+Sentence num 59 : אם מחיר ממוצע של כל ה- יצרנים ה- קריטיים גדול מ- 100 שקל
+current word: אם
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: mainSubject field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+**********subject in hebrew: נושא_ראשי field in hebrew: מחיר subject in english: main_class field in english: mkhyr----------
+Next class_index: 21
+Next attribute_index: 15
+Next attribute_index: 15
+current word: מחיר
+current word: ממוצע
+current word: של
+----------subject: ה- field: ממוצע type: Long----------
+English Word: mmvtza
+English Word: mmvtza
+English Word: h
+English Word: h
+**********subject in hebrew: ה- field in hebrew: ממוצע subject in english: h field in english: mmvtza----------
+Next class_index: 21
+Next attribute_index: 2
+Next attribute_index: 2
+current word: כל
+current word: ה-
+----------subject: יצרן field: null type: D8.2----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: null subject in english: ytzrn field in english: null----------
+Next class_index: 21
+Next attribute_index: 4
+Next attribute_index: 4
+current word: יצרנים
+current word: ה-
+----------subject: קריטי field: null type: D8.2----------
+English Word: kryty
+English Word: kryty
+**********subject in hebrew: קריטי field in hebrew: null subject in english: kryty field in english: null----------
+Next class_index: 21
+Next attribute_index: 1
+Next attribute_index: 1
+current word: קריטיים
+current word: גדול
+current word: מ-
+current word: 100
+current word: שקל
+Sentence num 60 : אם מחיר הנמוך ביותר של כל ה- יצרנים גדול מ- 100 שקל
+current word: אם
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: mainSubject field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+**********subject in hebrew: נושא_ראשי field in hebrew: מחיר subject in english: main_class field in english: mkhyr----------
+Next class_index: 21
+Next attribute_index: 15
+Next attribute_index: 15
+current word: מחיר
+current word: הנמוך
+current word: ביותר
+current word: של
+----------subject: ה- field: ביותר type: Long----------
+English Word: h
+English Word: h
+**********subject in hebrew: ה- field in hebrew: ביותר subject in english: h field in english: byvtr----------
+Next class_index: 21
+Next attribute_index: 2
+Next attribute_index: 2
+field not in KTATTRIBUT table - add to DB
+current word: כל
+current word: ה-
+----------subject: יצרן field: null type: D8.2----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: null subject in english: ytzrn field in english: null----------
+Next class_index: 21
+Next attribute_index: 4
+Next attribute_index: 4
+current word: יצרנים
+current word: גדול
+current word: מ-
+current word: 100
+current word: שקל
+Sentence num 61 : אם מחיר הנמוך ביותר של כל ה- יצרנים ה- קריטיים גדול מ- 100 שקל
+current word: אם
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: mainSubject field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+**********subject in hebrew: נושא_ראשי field in hebrew: מחיר subject in english: main_class field in english: mkhyr----------
+Next class_index: 21
+Next attribute_index: 15
+Next attribute_index: 15
+current word: מחיר
+current word: הנמוך
+current word: ביותר
+current word: של
+----------subject: ה- field: ביותר type: Long----------
+English Word: byvtr
+English Word: byvtr
+English Word: h
+English Word: h
+**********subject in hebrew: ה- field in hebrew: ביותר subject in english: h field in english: byvtr----------
+Next class_index: 21
+Next attribute_index: 3
+Next attribute_index: 3
+current word: כל
+current word: ה-
+----------subject: יצרן field: null type: D8.2----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: null subject in english: ytzrn field in english: null----------
+Next class_index: 21
+Next attribute_index: 4
+Next attribute_index: 4
+current word: יצרנים
+current word: ה-
+----------subject: קריטי field: null type: D8.2----------
+English Word: kryty
+English Word: kryty
+**********subject in hebrew: קריטי field in hebrew: null subject in english: kryty field in english: null----------
+Next class_index: 21
+Next attribute_index: 1
+Next attribute_index: 1
+current word: קריטיים
+current word: גדול
+current word: מ-
+current word: 100
+current word: שקל
+Sentence num 62 : אם מחיר הגבוה ביותר של כל ה- יצרנים גדול מ- 100 שקל
+current word: אם
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: mainSubject field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+**********subject in hebrew: נושא_ראשי field in hebrew: מחיר subject in english: main_class field in english: mkhyr----------
+Next class_index: 21
+Next attribute_index: 15
+Next attribute_index: 15
+current word: מחיר
+current word: הגבוה
+current word: ביותר
+current word: של
+----------subject: ה- field: ביותר type: Long----------
+English Word: byvtr
+English Word: byvtr
+English Word: h
+English Word: h
+**********subject in hebrew: ה- field in hebrew: ביותר subject in english: h field in english: byvtr----------
+Next class_index: 21
+Next attribute_index: 3
+Next attribute_index: 3
+current word: כל
+current word: ה-
+----------subject: יצרן field: null type: D8.2----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: null subject in english: ytzrn field in english: null----------
+Next class_index: 21
+Next attribute_index: 4
+Next attribute_index: 4
+current word: יצרנים
+current word: גדול
+current word: מ-
+current word: 100
+current word: שקל
+Sentence num 63 : אם מחיר הגבוה ביותר של כל ה- יצרנים ה- קריטיים גדול מ- 100 שקל
+current word: אם
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: mainSubject field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+**********subject in hebrew: נושא_ראשי field in hebrew: מחיר subject in english: main_class field in english: mkhyr----------
+Next class_index: 21
+Next attribute_index: 15
+Next attribute_index: 15
+current word: מחיר
+current word: הגבוה
+current word: ביותר
+current word: של
+----------subject: ה- field: ביותר type: Long----------
+English Word: byvtr
+English Word: byvtr
+English Word: h
+English Word: h
+**********subject in hebrew: ה- field in hebrew: ביותר subject in english: h field in english: byvtr----------
+Next class_index: 21
+Next attribute_index: 3
+Next attribute_index: 3
+current word: כל
+current word: ה-
+----------subject: יצרן field: null type: D8.2----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: null subject in english: ytzrn field in english: null----------
+Next class_index: 21
+Next attribute_index: 4
+Next attribute_index: 4
+current word: יצרנים
+current word: ה-
+----------subject: קריטי field: null type: D8.2----------
+English Word: kryty
+English Word: kryty
+**********subject in hebrew: קריטי field in hebrew: null subject in english: kryty field in english: null----------
+Next class_index: 21
+Next attribute_index: 1
+Next attribute_index: 1
+current word: קריטיים
+current word: גדול
+current word: מ-
+current word: 100
+current word: שקל
+Sentence num 64 : אם מחיר כולל של כל ה- יצרנים גדול מ- 100 שקל
+current word: אם
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: mainSubject field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+**********subject in hebrew: נושא_ראשי field in hebrew: מחיר subject in english: main_class field in english: mkhyr----------
+Next class_index: 21
+Next attribute_index: 15
+Next attribute_index: 15
+current word: מחיר
+current word: כולל
+current word: של
+----------subject: ה- field: כולל type: Long----------
+English Word: h
+English Word: h
+**********subject in hebrew: ה- field in hebrew: כולל subject in english: h field in english: khvll----------
+Next class_index: 21
+Next attribute_index: 3
+Next attribute_index: 3
+field not in KTATTRIBUT table - add to DB
+current word: כל
+current word: ה-
+----------subject: יצרן field: null type: D8.2----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: null subject in english: ytzrn field in english: null----------
+Next class_index: 21
+Next attribute_index: 4
+Next attribute_index: 4
+current word: יצרנים
+current word: גדול
+current word: מ-
+current word: 100
+current word: שקל
+Sentence num 65 : אם מחיר כולל של כל ה-יצרנים ה-קריטיים גדול מ- 100 שקל
+current word: אם
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: mainSubject field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+**********subject in hebrew: נושא_ראשי field in hebrew: מחיר subject in english: main_class field in english: mkhyr----------
+Next class_index: 21
+Next attribute_index: 15
+Next attribute_index: 15
+current word: מחיר
+current word: כולל
+current word: של
+----------subject: ה-יצרן field: כולל type: Long----------
+English Word: khvll
+English Word: khvll
+**********subject in hebrew: ה-יצרן field in hebrew: כולל subject in english: hytzrn field in english: khvll----------
+Next class_index: 21
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: כל
+current word: ה-יצרנים
+----------subject: ה-יצרן field: ה-קריטי type: Long----------
+English Word: hytzrn
+English Word: hytzrn
+**********subject in hebrew: ה-יצרן field in hebrew: ה-קריטי subject in english: hytzrn field in english: hkryty----------
+Next class_index: 22
+Next attribute_index: 2
+Next attribute_index: 2
+field not in KTATTRIBUT table - add to DB
+current word: ה-קריטיים
+current word: גדול
+current word: מ-
+current word: 100
+current word: שקל
+Sentence num 66 : אם מחיר של יצרן גדול מ- 0 דולר
+current word: אם
+current word: מחיר
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 22
+Next attribute_index: 4
+Next attribute_index: 4
+current word: יצרן
+current word: גדול
+current word: מ-
+current word: 0
+current word: דולר
+Sentence num 67 : אם מחיר של יצרן (יצרן1) גדול מ- 0 שקל
+current word: אם
+current word: מחיר
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 22
+Next attribute_index: 4
+Next attribute_index: 4
+current word: יצרן
+----------subject: יצרן field: (יצרן1) type: Long----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: (יצרן1) subject in english: ytzrn field in english: ytzrn----------
+Next class_index: 22
+Next attribute_index: 4
+Next attribute_index: 4
+field not in KTATTRIBUT table - add to DB
+current word: (יצרן1)
+current word: גדול
+current word: מ-
+current word: 0
+current word: שקל
+Sentence num 68 : אם מחיר של יצרן (יצרן1) גדול שווה מחיר של יצרן (יצרן2)
+current word: אם
+current word: מחיר
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 22
+Next attribute_index: 5
+Next attribute_index: 5
+current word: יצרן
+----------subject: יצרן field: (יצרן1) type: Long----------
+English Word: ytzrn
+English Word: ytzrn
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: (יצרן1) subject in english: ytzrn field in english: ytzrn----------
+Next class_index: 22
+Next attribute_index: 5
+Next attribute_index: 5
+current word: (יצרן1)
+current word: גדול
+current word: שווה
+current word: מחיר
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 22
+Next attribute_index: 5
+Next attribute_index: 5
+current word: יצרן
+----------subject: יצרן field: (יצרן2) type: Long----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: (יצרן2) subject in english: ytzrn field in english: ytzrn----------
+Next class_index: 22
+Next attribute_index: 5
+Next attribute_index: 5
+current word: (יצרן2)
+Sentence num 69 : אם מנפר נמצא בטבלת מנפרים
+current word: אם
+----------subject: mainSubject field: מנפר type: D8.2----------
+**********subject in hebrew: נושא_ראשי field in hebrew: מנפר subject in english: main_class field in english: mnfr----------
+Next class_index: 22
+Next attribute_index: 15
+Next attribute_index: 15
+field not in KTATTRIBUT table - add to DB
+current word: מנפר
+current word: נמצא
+current word: בטבלת
+current word: מנפרים
+Sentence num 70 : אם מנפר אינו נמצא בטבלת מנפרים
+current word: אם
+current word: מנפר
+current word: אינו
+----------subject: מנפר field: נמצא בטבלת מנפר type: D8.2----------
+English Word: mnfr
+English Word: mnfr
+**********subject in hebrew: מנפר field in hebrew: נמצא בטבלת מנפר subject in english: mnfr field in english: nmtzabtbltmnfr----------
+Next class_index: 22
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: נמצא בטבלת מנפרים
+Sentence num 71 : אם מחיר של יצרן גדול מ- מחיר של יצרן של תחליפי
+current word: אם
+current word: מחיר
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 23
+Next attribute_index: 5
+Next attribute_index: 5
+current word: יצרן
+current word: גדול
+current word: מ-
+current word: מחיר
+current word: של
+current word: יצרן
+current word: של
+----------subject: תחליפי field: יצרן type: D8.2----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: תחליפי field in hebrew: יצרן subject in english: tkhlyfy field in english: ytzrn----------
+Next class_index: 23
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: תחליפי
+Sentence num 72 : אם מחיר של יצרן של חילופי גדול מ- 100 שקל 73
+current word: אם
+current word: מחיר
+current word: של
+current word: יצרן
+current word: של
+----------subject: חילופי field: יצרן type: Long----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: חילופי field in hebrew: יצרן subject in english: khylvfy field in english: ytzrn----------
+Next class_index: 24
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: חילופי
+current word: גדול
+current word: מ-
+current word: 100
+current word: שקל
+----------subject: שקל field: 73 type: Long----------
+**********subject in hebrew: שקל field in hebrew: 73 subject in english: shkl field in english: ----------
+Next class_index: 25
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: 73
+Sentence num 73 : אם מחיר של יצרן של תחליפי_דו_כיווני גדול מ- 100 שקל
+current word: אם
+current word: מחיר
+current word: של
+current word: יצרן
+current word: של
+----------subject: תחליפי_דו_כיווני field: יצרן type: Long----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: תחליפי_דו_כיווני field in hebrew: יצרן subject in english: tkhlyfy_dv_khyvvny field in english: ytzrn----------
+Next class_index: 26
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: תחליפי_דו_כיווני
+current word: גדול
+current word: מ-
+current word: 100
+current word: שקל
+Sentence num 74 : אם מחיר של כל יצרן גדול מ- מחיר של יצרן של תחליפי
+current word: אם
+current word: מחיר
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 27
+Next attribute_index: 5
+Next attribute_index: 5
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 27
+Next attribute_index: 5
+Next attribute_index: 5
+current word: כל
+current word: יצרן
+current word: גדול
+current word: מ-
+current word: מחיר
+current word: של
+current word: יצרן
+current word: של
+----------subject: תחליפי field: יצרן type: D8.2----------
+English Word: ytzrn
+English Word: ytzrn
+English Word: tkhlyfy
+English Word: tkhlyfy
+**********subject in hebrew: תחליפי field in hebrew: יצרן subject in english: tkhlyfy field in english: ytzrn----------
+Next class_index: 27
+Next attribute_index: 2
+Next attribute_index: 2
+current word: תחליפי
+Sentence num 75 : אם מחיר של כל יצרן גדול מ- מחיר של לפחות שלושה יצרנים של תחליפי
+current word: אם
+current word: מחיר
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 27
+Next attribute_index: 5
+Next attribute_index: 5
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 27
+Next attribute_index: 5
+Next attribute_index: 5
+current word: כל
+current word: יצרן
+current word: גדול
+current word: מ-
+current word: מחיר
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: לפח field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: lfkh
+English Word: lfkh
+**********subject in hebrew: לפח field in hebrew: מחיר subject in english: lfkh field in english: mkhyr----------
+Next class_index: 27
+Next attribute_index: 2
+Next attribute_index: 2
+current word: לפחות
+current word: שלושה
+current word: יצרנים
+current word: של
+----------subject: תחליפי field: יצרן type: D8.2----------
+English Word: ytzrn
+English Word: ytzrn
+English Word: tkhlyfy
+English Word: tkhlyfy
+**********subject in hebrew: תחליפי field in hebrew: יצרן subject in english: tkhlyfy field in english: ytzrn----------
+Next class_index: 27
+Next attribute_index: 2
+Next attribute_index: 2
+current word: תחליפי
+Sentence num 76 : אם מחיר של יצרן של חילופי חשוב גדול מ- 100 שקל
+current word: אם
+current word: מחיר
+current word: של
+current word: יצרן
+current word: של
+----------subject: חילופי field: יצרן type: Long----------
+English Word: ytzrn
+English Word: ytzrn
+English Word: khylvfy
+English Word: khylvfy
+**********subject in hebrew: חילופי field in hebrew: יצרן subject in english: khylvfy field in english: ytzrn----------
+Next class_index: 27
+Next attribute_index: 2
+Next attribute_index: 2
+current word: חילופי
+----------subject: חילופי field: חשוב type: Long----------
+English Word: khylvfy
+English Word: khylvfy
+**********subject in hebrew: חילופי field in hebrew: חשוב subject in english: khylvfy field in english: khshvb----------
+Next class_index: 27
+Next attribute_index: 2
+Next attribute_index: 2
+field not in KTATTRIBUT table - add to DB
+current word: חשוב
+current word: גדול
+current word: מ-
+current word: 100
+current word: שקל
+Sentence num 77 : אם מכיוון ש- מדיניות מפא היא להסב נצרך לשפיץ
+current word: אם
+current word: מכיוון
+current word: ש-
+current word: מדיניות
+----------subject: מדיני field: מפא type: D8.2----------
+**********subject in hebrew: מדיני field in hebrew: מפא subject in english: mdyny field in english: mfa----------
+Next class_index: 27
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: מפא
+current word: היא
+----------subject: מפא field: להסב type: D8.2----------
+English Word: mfa
+English Word: mfa
+**********subject in hebrew: מפא field in hebrew: להסב subject in english: mfa field in english: lhsb----------
+Next class_index: 28
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: להסב
+----------subject: להסב field: נצרך type: D8.2----------
+English Word: lhsb
+English Word: lhsb
+**********subject in hebrew: להסב field in hebrew: נצרך subject in english: lhsb field in english: ntzrkh----------
+Next class_index: 29
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: נצרך
+----------subject: נצרך field: לשפיץ type: D8.2----------
+English Word: ntzrkh
+English Word: ntzrkh
+**********subject in hebrew: נצרך field in hebrew: לשפיץ subject in english: ntzrkh field in english: lshfytz----------
+Next class_index: 30
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: לשפיץ
+Sentence num 78 : אם (צריכה השנה+צריכה_לפני_שנה)/2 הוא להלן (צריכה_ממוצעח)
+current word: אם
+----------subject: mainSubject field: (צריכה type: Long----------
+**********subject in hebrew: נושא_ראשי field in hebrew: (צריכה subject in english: main_class field in english: tzrykhh----------
+Next class_index: 31
+Next attribute_index: 16
+Next attribute_index: 16
+field not in KTATTRIBUT table - add to DB
+current word: (צריכה
+----------subject: (צריכה field: השנה+צריכה_לפני_שנה)/2 type: Long----------
+English Word: tzrykhh
+English Word: tzrykhh
+**********subject in hebrew: (צריכה field in hebrew: השנה+צריכה_לפני_שנה)/2 subject in english: tzrykhh field in english: hshnhtzrykhh_lfny_shnh----------
+Next class_index: 31
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: השנה+צריכה_לפני_שנה)/2
+current word: הוא
+current word: להלן
+current word: (צריכה_ממוצעח)
+Sentence num 79 : אם מלאי של מחסן הוא (מלאי1) * 10
+current word: אם
+current word: מלאי
+current word: של
+----------subject: מחסן field: מלאי type: Long----------
+English Word: mlay
+English Word: mlay
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: מלאי subject in english: mkhsn field in english: mlay----------
+Next class_index: 32
+Next attribute_index: 4
+Next attribute_index: 4
+current word: מחסן
+current word: הוא
+current word: (מלאי1)
+current word: *
+current word: 10
+Sentence num 80 : אם יחפ אינו נומירי
+current word: אם
+current word: יחפ
+current word: אינו
+----------subject: יחף field: נומירי type: D8.2----------
+English Word: ykhf
+English Word: ykhf
+**********subject in hebrew: יחף field in hebrew: נומירי subject in english: ykhf field in english: nvmyry----------
+Next class_index: 32
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: נומירי
+Sentence num 81 : אם יצרן_פדראלי אינו תקין
+current word: אם
+current word: יצרן_פדראלי
+current word: אינו
+----------subject: יצרן_פדראלי field: תקין type: D8.2----------
+**********subject in hebrew: יצרן_פדראלי field in hebrew: תקין subject in english: ytzrn_fdraly field in english: tkyn----------
+Next class_index: 33
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: תקין
+Sentence num 82 : אם ספרת בקורת של סימול מחסן אינה תקינה
+current word: אם
+----------subject: mainSubject field: ספרת type: D8.2----------
+**********subject in hebrew: נושא_ראשי field in hebrew: ספרת subject in english: main_class field in english: sfrt----------
+Next class_index: 34
+Next attribute_index: 17
+Next attribute_index: 17
+field not in KTATTRIBUT table - add to DB
+current word: ספרת
+----------subject: ספרת field: בקורת type: D8.2----------
+English Word: sfrt
+English Word: sfrt
+**********subject in hebrew: ספרת field in hebrew: בקורת subject in english: sfrt field in english: bkvrt----------
+Next class_index: 34
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: בקורת
+current word: של
+----------subject: סימול field: בקורת type: D8.2----------
+English Word: bkvrt
+English Word: bkvrt
+English Word: symvl
+English Word: symvl
+**********subject in hebrew: סימול field in hebrew: בקורת subject in english: symvl field in english: bkvrt----------
+Next class_index: 35
+Next attribute_index: 2
+Next attribute_index: 2
+field not in KTATTRIBUT table - add to DB
+current word: סימול
+----------subject: סימול field: מחסן type: D8.2----------
+English Word: mkhsn
+English Word: mkhsn
+English Word: symvl
+English Word: symvl
+**********subject in hebrew: סימול field in hebrew: מחסן subject in english: symvl field in english: mkhsn----------
+Next class_index: 35
+Next attribute_index: 3
+Next attribute_index: 3
+current word: מחסן
+current word: אינה
+current word: תקינה
+Sentence num 83 : אם תאריך_סטטוס איננו תאריכי
+current word: אם
+----------subject: mainSubject field: תאריך_סטטוס איננו תאריכי type: D8.2----------
+**********subject in hebrew: נושא_ראשי field in hebrew: תאריך_סטטוס איננו תאריכי subject in english: main_class field in english: tarykh_sttvsaynnvtarykhy----------
+Next class_index: 35
+Next attribute_index: 18
+Next attribute_index: 18
+field not in KTATTRIBUT table - add to DB
+current word: תאריך_סטטוס איננו תאריכי
+Sentence num 84 : אזי הסק ל- מחסן ש- מלאי הוא גדול מאד
+current word: אזי
+current word: הסק
+current word: ל-
+----------subject: מחסן field: null type: D8.2----------
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: null subject in english: mkhsn field in english: null----------
+Next class_index: 35
+Next attribute_index: 4
+Next attribute_index: 4
+current word: מחסן
+current word: ש-
+current word: מלאי
+current word: הוא
+current word: גדול
+current word: מאד
+Sentence num 85 : אזי בטל ל- מחסן ש- מלאי הוא גדול מאד
+current word: אזי
+current word: בטל
+current word: ל-
+----------subject: מחסן field: null type: D8.2----------
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: null subject in english: mkhsn field in english: null----------
+Next class_index: 35
+Next attribute_index: 4
+Next attribute_index: 4
+current word: מחסן
+current word: ש-
+current word: מלאי
+current word: הוא
+current word: גדול
+current word: מאד
+Sentence num 86 : אזי הסק ש- קיים חוסר תאימות בין יחפ לא שלם לסיווג שפיץ
+current word: אזי
+current word: הסק
+current word: ש-
+current word: קיים
+current word: חוסר
+----------subject: חוסר field: תאים type: D8.2----------
+English Word: taym
+English Word: taym
+English Word: khvsr
+English Word: khvsr
+**********subject in hebrew: חוסר field in hebrew: תאים subject in english: khvsr field in english: taym----------
+Next class_index: 35
+Next attribute_index: 2
+Next attribute_index: 2
+current word: תאימות
+current word: בין
+current word: יחפ
+current word: לא
+current word: שלם
+current word: לסיווג
+----------subject: לסיווג field: שפיץ type: D8.2----------
+English Word: shfytz
+English Word: shfytz
+English Word: lsyvvg
+English Word: lsyvvg
+**********subject in hebrew: לסיווג field in hebrew: שפיץ subject in english: lsyvvg field in english: shfytz----------
+Next class_index: 35
+Next attribute_index: 2
+Next attribute_index: 2
+current word: שפיץ
+Sentence num 87 : אזי בטל ש- קיים חוסר תאימות בין יחפ לא שלם לסיווג שפיץ
+current word: אזי
+current word: בטל
+current word: ש-
+current word: קיים
+current word: חוסר
+----------subject: חוסר field: תאים type: D8.2----------
+English Word: taym
+English Word: taym
+English Word: khvsr
+English Word: khvsr
+**********subject in hebrew: חוסר field in hebrew: תאים subject in english: khvsr field in english: taym----------
+Next class_index: 35
+Next attribute_index: 2
+Next attribute_index: 2
+current word: תאימות
+current word: בין
+current word: יחפ
+current word: לא
+current word: שלם
+current word: לסיווג
+----------subject: לסיווג field: שפיץ type: D8.2----------
+English Word: shfytz
+English Word: shfytz
+English Word: lsyvvg
+English Word: lsyvvg
+**********subject in hebrew: לסיווג field in hebrew: שפיץ subject in english: lsyvvg field in english: shfytz----------
+Next class_index: 35
+Next attribute_index: 2
+Next attribute_index: 2
+current word: שפיץ
+Sentence num 88 : אזי הסק ל- מחסנים ש- יש לבדוק כל המחסנים
+current word: אזי
+current word: הסק
+current word: ל-
+----------subject: מחסן field: null type: D8.2----------
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: null subject in english: mkhsn field in english: null----------
+Next class_index: 35
+Next attribute_index: 4
+Next attribute_index: 4
+current word: מחסנים
+current word: ש-
+current word: יש
+----------subject: יש field: לבדוק type: D8.2----------
+English Word: lbdvk
+English Word: lbdvk
+**********subject in hebrew: יש field in hebrew: לבדוק subject in english: ysh field in english: lbdvk----------
+Next class_index: 35
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: לבדוק
+current word: כל
+current word: המחסנים
+Sentence num 89 : אזי בטל ל- מחסנים ש- יש לבדוק כל המחסנים
+current word: אזי
+current word: בטל
+current word: ל-
+----------subject: מחסן field: null type: D8.2----------
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: null subject in english: mkhsn field in english: null----------
+Next class_index: 36
+Next attribute_index: 4
+Next attribute_index: 4
+current word: מחסנים
+current word: ש-
+current word: יש
+----------subject: יש field: לבדוק type: D8.2----------
+English Word: lbdvk
+English Word: lbdvk
+English Word: ysh
+English Word: ysh
+**********subject in hebrew: יש field in hebrew: לבדוק subject in english: ysh field in english: lbdvk----------
+Next class_index: 36
+Next attribute_index: 2
+Next attribute_index: 2
+current word: לבדוק
+current word: כל
+current word: המחסנים
+Sentence num 90 : אזי עדכן רממז של מחסן ל- (1.10 * מלאי של מחסן)
+current word: אזי
+current word: עדכן
+current word: רממז
+current word: של
+----------subject: מחסן field: רממז type: Long----------
+English Word: rmmz
+English Word: rmmz
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: רממז subject in english: mkhsn field in english: rmmz----------
+Next class_index: 36
+Next attribute_index: 4
+Next attribute_index: 4
+current word: מחסן
+current word: ל-
+----------subject: (1.10 field: null type: D8.2----------
+**********subject in hebrew: (1.10 field in hebrew: null subject in english:  field in english: null----------
+Next class_index: 36
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+current word: (1.10
+current word: *
+current word: מלאי
+current word: של
+----------subject: מחסן) field: מלאי type: Long----------
+English Word: mlay
+English Word: mlay
+**********subject in hebrew: מחסן) field in hebrew: מלאי subject in english: mkhsn field in english: mlay----------
+Next class_index: 37
+Next attribute_index: 4
+Next attribute_index: 4
+current word: מחסן)
+Sentence num 91 : אזי עדכן רממז של מחסן ל- 1.10 * מלאי של מחסן
+current word: אזי
+current word: עדכן
+current word: רממז
+current word: של
+----------subject: מחסן field: רממז type: Long----------
+English Word: rmmz
+English Word: rmmz
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: רממז subject in english: mkhsn field in english: rmmz----------
+Next class_index: 37
+Next attribute_index: 4
+Next attribute_index: 4
+current word: מחסן
+current word: ל-
+----------subject: 1.10 field: null type: D8.2----------
+**********subject in hebrew: 1.10 field in hebrew: null subject in english:  field in english: null----------
+Next class_index: 37
+Next attribute_index: 1
+Next attribute_index: 1
+current word: 1.10
+current word: *
+current word: מלאי
+current word: של
+----------subject: מחסן field: מלאי type: Long----------
+English Word: mlay
+English Word: mlay
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: מלאי subject in english: mkhsn field in english: mlay----------
+Next class_index: 37
+Next attribute_index: 4
+Next attribute_index: 4
+current word: מחסן
+Sentence num 92 : אני עדכן רממז של מחסן ל- 0
+current word: אני
+current word: עדכן
+current word: רממז
+current word: של
+----------subject: מחסן field: רממז type: Long----------
+English Word: rmmz
+English Word: rmmz
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: רממז subject in english: mkhsn field in english: rmmz----------
+Next class_index: 37
+Next attribute_index: 4
+Next attribute_index: 4
+current word: מחסן
+current word: ל-
+----------subject: 0 field: null type: D8.2----------
+**********subject in hebrew: 0 field in hebrew: null subject in english:  field in english: null----------
+Next class_index: 37
+Next attribute_index: 1
+Next attribute_index: 1
+current word: 0
+Sentence num 93 : אזי עדכן רממז של כל מחסן ל- 0
+current word: אזי
+current word: עדכן
+current word: רממז
+----------subject: מחסן field: רממז type: Long----------
+English Word: rmmz
+English Word: rmmz
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: רממז subject in english: mkhsn field in english: rmmz----------
+Next class_index: 37
+Next attribute_index: 4
+Next attribute_index: 4
+current word: של
+----------subject: מחסן field: רממז type: Long----------
+English Word: rmmz
+English Word: rmmz
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: רממז subject in english: mkhsn field in english: rmmz----------
+Next class_index: 37
+Next attribute_index: 4
+Next attribute_index: 4
+current word: כל
+current word: מחסן
+current word: ל-
+----------subject: 0 field: null type: D8.2----------
+**********subject in hebrew: 0 field in hebrew: null subject in english:  field in english: null----------
+Next class_index: 37
+Next attribute_index: 1
+Next attribute_index: 1
+current word: 0
+Sentence num 94 : אזי עדכן רממז של כל מחסן קריטי ל- 0
+current word: אזי
+current word: עדכן
+current word: רממז
+----------subject: מחסן field: רממז type: Long----------
+English Word: rmmz
+English Word: rmmz
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: רממז subject in english: mkhsn field in english: rmmz----------
+Next class_index: 37
+Next attribute_index: 4
+Next attribute_index: 4
+current word: של
+----------subject: מחסן field: רממז type: Long----------
+English Word: rmmz
+English Word: rmmz
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: רממז subject in english: mkhsn field in english: rmmz----------
+Next class_index: 37
+Next attribute_index: 4
+Next attribute_index: 4
+current word: כל
+current word: מחסן
+VAR_TYPE: Bool
+VAR_TYPE: Bool
+----------subject: מחסן field: קריטי type: Bool----------
+English Word: kryty
+English Word: kryty
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: קריטי subject in english: mkhsn field in english: kryty----------
+Next class_index: 37
+Next attribute_index: 4
+Next attribute_index: 4
+field not in KTATTRIBUT table - add to DB
+current word: קריטי
+current word: ל-
+----------subject: 0 field: null type: D8.2----------
+**********subject in hebrew: 0 field in hebrew: null subject in english:  field in english: null----------
+Next class_index: 37
+Next attribute_index: 1
+Next attribute_index: 1
+current word: 0
+Sentence num 95 : אזי הוסף 10 ל– מלאי של מחסן
+current word: אזי
+current word: הוסף
+current word: 10
+current word: ל–
+----------subject: ל– field: מלאי type: Long----------
+English Word: mlay
+English Word: mlay
+**********subject in hebrew: ל– field in hebrew: מלאי subject in english: l field in english: mlay----------
+Next class_index: 37
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: מלאי
+current word: של
+----------subject: מחסן field: מלאי type: Long----------
+English Word: mlay
+English Word: mlay
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: מלאי subject in english: mkhsn field in english: mlay----------
+Next class_index: 38
+Next attribute_index: 5
+Next attribute_index: 5
+current word: מחסן
+Sentence num 96 : אזי הוסף 60 אחוז ל- מלאי של מחסן
+current word: אזי
+current word: הוסף
+current word: 60
+current word: אחוז
+current word: ל-
+current word: מלאי
+current word: של
+----------subject: מחסן field: מלאי type: Long----------
+English Word: mlay
+English Word: mlay
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: מלאי subject in english: mkhsn field in english: mlay----------
+Next class_index: 38
+Next attribute_index: 5
+Next attribute_index: 5
+current word: מחסן
+Sentence num 97 : אזי החסר 20 מ- מלאי של מחסן
+current word: אזי
+current word: החסר
+current word: 20
+current word: מ-
+current word: מלאי
+current word: של
+----------subject: מחסן field: מלאי type: Long----------
+English Word: mlay
+English Word: mlay
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: מלאי subject in english: mkhsn field in english: mlay----------
+Next class_index: 38
+Next attribute_index: 5
+Next attribute_index: 5
+current word: מחסן
+Sentence num 98 : אזי החסר (פער1) מ- מלאי של מחסן
+current word: אזי
+current word: החסר
+current word: (פער1)
+current word: מ-
+current word: מלאי
+current word: של
+----------subject: מחסן field: מלאי type: Long----------
+English Word: mlay
+English Word: mlay
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: מלאי subject in english: mkhsn field in english: mlay----------
+Next class_index: 38
+Next attribute_index: 5
+Next attribute_index: 5
+current word: מחסן
+Sentence num 99 : אזי החסר 40 אחוז מ- מלאי של מחסן
+current word: אזי
+current word: החסר
+current word: 40
+current word: אחוז
+current word: מ-
+current word: מלאי
+current word: של
+----------subject: מחסן field: מלאי type: Long----------
+English Word: mlay
+English Word: mlay
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: מלאי subject in english: mkhsn field in english: mlay----------
+Next class_index: 38
+Next attribute_index: 5
+Next attribute_index: 5
+current word: מחסן
+Sentence num 100 : אזי הכפל ערך_צריכה_שנתית ב- 40
+current word: אזי
+current word: הכפל
+current word: ערך_צריכה_שנתית
+current word: ב-
+current word: 40
+Sentence num 101 : אזי חלק מחיר של כל יצרן ב- 15
+current word: אזי
+current word: חלק
+current word: מחיר
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 38
+Next attribute_index: 5
+Next attribute_index: 5
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 38
+Next attribute_index: 5
+Next attribute_index: 5
+current word: כל
+current word: יצרן
+current word: ב-
+current word: 15
+Sentence num 102 : אזי (צריכה_השנה + צריכה_לפני_שנה)/2 הוא להלן (צריכה_ממוצעת)
+current word: אזי
+current word: (צריכה_השנה
+current word: +
+current word: צריכה_לפני_שנה)/2
+current word: הוא
+current word: להלן
+current word: (צריכה_ממוצעת)
+Sentence num 103 : אזי יצרן הוא עדיף
+current word: אזי
+current word: יצרן
+current word: הוא
+----------subject: יצרן field: עדיף type: D8.2----------
+English Word: adyf
+English Word: adyf
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: עדיף subject in english: ytzrn field in english: adyf----------
+Next class_index: 38
+Next attribute_index: 5
+Next attribute_index: 5
+current word: עדיף
+Sentence num 104 : אזי יצרן הוא קריטי
+current word: אזי
+current word: יצרן
+current word: הוא
+VAR_TYPE: Bool
+VAR_TYPE: Bool
+----------subject: יצרן field: קריטי type: Bool----------
+English Word: kryty
+English Word: kryty
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: קריטי subject in english: ytzrn field in english: kryty----------
+Next class_index: 38
+Next attribute_index: 5
+Next attribute_index: 5
+current word: קריטי
+Sentence num 105 : אזי יצרן אינו קריטי
+current word: אזי
+current word: יצרן
+current word: אינו
+VAR_TYPE: Bool
+VAR_TYPE: Bool
+----------subject: יצרן field: קריטי type: Bool----------
+English Word: kryty
+English Word: kryty
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: קריטי subject in english: ytzrn field in english: kryty----------
+Next class_index: 38
+Next attribute_index: 5
+Next attribute_index: 5
+current word: קריטי
+Sentence num 106 : אזי הפעל חוקי מלאי
+current word: אזי
+current word: הפעל
+current word: מלאי
+Sentence num 107 : אזי הפעל צפצוף
+current word: אזי
+current word: הפעל
+Sentence num 108 : אזי הצג לבעיית המלאי יש מספר דרגות חומרה, ברר אחוז_הצלחה במטרה להחליט לפי האחוז אם יש לשקם את הפריט
+current word: אזי
+current word: הצג
+current word: לבעיית
+----------subject: לבעיית field: המלאי type: D8.2----------
+**********subject in hebrew: לבעיית field in hebrew: המלאי subject in english: lbayyt field in english: hmlay----------
+Next class_index: 38
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: המלאי
+----------subject: המלאי field: יש type: D8.2----------
+English Word: ysh
+English Word: ysh
+English Word: hmlay
+English Word: hmlay
+**********subject in hebrew: המלאי field in hebrew: יש subject in english: hmlay field in english: ysh----------
+Next class_index: 39
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: יש
+current word: מספר
+current word: דרגות
+----------subject: דרג field: חומרה, type: D8.2----------
+**********subject in hebrew: דרג field in hebrew: חומרה, subject in english: drg field in english: khvmrh----------
+Next class_index: 40
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: חומרה,
+current word: ברר
+current word: אחוז_הצלחה
+current word: במטרה
+current word: להחליט
+current word: לפי
+current word: האחוז
+current word: אם
+----------subject: mainSubject field: יש type: D8.2----------
+English Word: ysh
+English Word: ysh
+**********subject in hebrew: נושא_ראשי field in hebrew: יש subject in english: main_class field in english: ysh----------
+Next class_index: 41
+Next attribute_index: 19
+Next attribute_index: 19
+field not in KTATTRIBUT table - add to DB
+current word: יש
+----------subject: יש field: לשקם type: D8.2----------
+English Word: ysh
+English Word: ysh
+**********subject in hebrew: יש field in hebrew: לשקם subject in english: ysh field in english: lshkm----------
+Next class_index: 41
+Next attribute_index: 2
+Next attribute_index: 2
+field not in KTATTRIBUT table - add to DB
+current word: לשקם
+----------subject: לשקם field: את type: D8.2----------
+English Word: lshkm
+English Word: lshkm
+**********subject in hebrew: לשקם field in hebrew: את subject in english: lshkm field in english: at----------
+Next class_index: 41
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: את
+----------subject: את field: הפריט type: D8.2----------
+English Word: at
+English Word: at
+**********subject in hebrew: את field in hebrew: הפריט subject in english: at field in english: hfryt----------
+Next class_index: 42
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: הפריט
+Sentence num 109 : אזי הצג כמות בקשר של מכלול היא (כמות), ברר עצמת_בעיה של מכלול מתוך (קל, בינוני, כבד), במטרה להחליט לאיזה סוג פתרון להתנתב
+current word: אזי
+current word: הצג
+current word: כמות
+----------subject: כם field: בקשר type: D8.2----------
+**********subject in hebrew: כם field in hebrew: בקשר subject in english: khm field in english: bkshr----------
+Next class_index: 43
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: בקשר
+current word: של
+----------subject: מכלול field: בקשר type: D8.2----------
+English Word: bkshr
+English Word: bkshr
+**********subject in hebrew: מכלול field in hebrew: בקשר subject in english: mkhlvl field in english: bkshr----------
+Next class_index: 44
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: מכלול
+current word: היא
+----------subject: מכלול field: (כמות), type: D8.2----------
+English Word: mkhlvl
+English Word: mkhlvl
+**********subject in hebrew: מכלול field in hebrew: (כמות), subject in english: mkhlvl field in english: khmvt----------
+Next class_index: 45
+Next attribute_index: 2
+Next attribute_index: 2
+field not in KTATTRIBUT table - add to DB
+current word: (כמות),
+current word: ברר
+current word: עצמת_בעיה
+current word: של
+----------subject: מכלול field: עצמת_בעיה type: D8.2----------
+English Word: mkhlvl
+English Word: mkhlvl
+**********subject in hebrew: מכלול field in hebrew: עצמת_בעיה subject in english: mkhlvl field in english: atzmt_bayh----------
+Next class_index: 45
+Next attribute_index: 3
+Next attribute_index: 3
+field not in KTATTRIBUT table - add to DB
+current word: מכלול
+current word: מתוך
+current word: (קל,
+----------subject: (קל, field: בינוני, type: D8.2----------
+**********subject in hebrew: (קל, field in hebrew: בינוני, subject in english: kl field in english: bynvny----------
+Next class_index: 45
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: בינוני,
+----------subject: בינוני, field: כבד), type: D8.2----------
+English Word: bynvny
+English Word: bynvny
+**********subject in hebrew: בינוני, field in hebrew: כבד), subject in english: bynvny field in english: khbd----------
+Next class_index: 46
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: כבד),
+current word: במטרה
+current word: להחליט
+----------subject: להחליט field: לאיזה type: D8.2----------
+**********subject in hebrew: להחליט field in hebrew: לאיזה subject in english: lhkhlyt field in english: layzh----------
+Next class_index: 47
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: לאיזה
+----------subject: לאיזה field: סוג type: D8.2----------
+English Word: layzh
+English Word: layzh
+**********subject in hebrew: לאיזה field in hebrew: סוג subject in english: layzh field in english: svg----------
+Next class_index: 48
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: סוג
+----------subject: סוג field: פתרון type: D8.2----------
+English Word: svg
+English Word: svg
+**********subject in hebrew: סוג field in hebrew: פתרון subject in english: svg field in english: ftrvn----------
+Next class_index: 49
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: פתרון
+----------subject: פתרון field: להתנתב type: D8.2----------
+English Word: ftrvn
+English Word: ftrvn
+**********subject in hebrew: פתרון field in hebrew: להתנתב subject in english: ftrvn field in english: lhtntb----------
+Next class_index: 50
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: להתנתב
+Sentence num 110 : אזי קבע ל- מלאי של מחסן בעיית תקינות קלה, הודע בעיית תקינות המלץ לחקן את השדה.
+current word: אזי
+current word: קבע
+current word: ל-
+current word: מלאי
+current word: של
+----------subject: מחסן field: מלאי type: D8.2----------
+English Word: mlay
+English Word: mlay
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: מלאי subject in english: mkhsn field in english: mlay----------
+Next class_index: 51
+Next attribute_index: 5
+Next attribute_index: 5
+current word: מחסן
+current word: בעיית
+current word: תקינות
+----------subject: תקין field: קלה, type: D8.2----------
+English Word: tkyn
+English Word: tkyn
+**********subject in hebrew: תקין field in hebrew: קלה, subject in english: tkyn field in english: klh----------
+Next class_index: 51
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: קלה,
+current word: הודע
+current word: בעיית
+current word: תקינות
+current word: המלץ
+current word: לחקן
+----------subject: לחקן field: את type: D8.2----------
+English Word: at
+English Word: at
+**********subject in hebrew: לחקן field in hebrew: את subject in english: lkhkn field in english: at----------
+Next class_index: 52
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: את
+----------subject: את field: השדה. type: D8.2----------
+English Word: at
+English Word: at
+**********subject in hebrew: את field in hebrew: השדה. subject in english: at field in english: hshdh----------
+Next class_index: 53
+Next attribute_index: 2
+Next attribute_index: 2
+field not in KTATTRIBUT table - add to DB
+current word: השדה.
+Sentence num 111 : אזי קבע ל– מלאי של מחסן בעיית מלאי קלה, הודע מלאי של מחסן גדול מאד המלץ ואשר לווסת ממחסן (א) למחסן (ב) כמות 30
+current word: אזי
+current word: קבע
+current word: ל–
+----------subject: ל– field: מלאי type: Long----------
+English Word: mlay
+English Word: mlay
+English Word: l
+English Word: l
+**********subject in hebrew: ל– field in hebrew: מלאי subject in english: l field in english: mlay----------
+Next class_index: 53
+Next attribute_index: 2
+Next attribute_index: 2
+current word: מלאי
+current word: של
+----------subject: מחסן field: מלאי type: Long----------
+English Word: mlay
+English Word: mlay
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: מלאי subject in english: mkhsn field in english: mlay----------
+Next class_index: 53
+Next attribute_index: 5
+Next attribute_index: 5
+current word: מחסן
+current word: בעיית
+current word: מלאי
+----------subject: מלאי field: קלה, type: Long----------
+English Word: klh
+English Word: klh
+English Word: mlay
+English Word: mlay
+**********subject in hebrew: מלאי field in hebrew: קלה, subject in english: mlay field in english: klh----------
+Next class_index: 53
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: קלה,
+current word: הודע
+current word: מלאי
+current word: של
+----------subject: מחסן field: מלאי type: Long----------
+English Word: mlay
+English Word: mlay
+English Word: mkhsn
+English Word: mkhsn
+**********subject in hebrew: מחסן field in hebrew: מלאי subject in english: mkhsn field in english: mlay----------
+Next class_index: 53
+Next attribute_index: 5
+Next attribute_index: 5
+current word: מחסן
+current word: גדול
+current word: מאד
+current word: המלץ
+current word: ואשר
+current word: לווסת
+----------subject: לווסת field: ממחסן type: Long----------
+**********subject in hebrew: לווסת field in hebrew: ממחסן subject in english: lvvst field in english: mmkhsn----------
+Next class_index: 53
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: ממחסן
+----------subject: ממחסן field: (א) type: Long----------
+English Word: mmkhsn
+English Word: mmkhsn
+**********subject in hebrew: ממחסן field in hebrew: (א) subject in english: mmkhsn field in english: a----------
+Next class_index: 54
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: (א)
+----------subject: (א) field: למחסן type: Long----------
+English Word: a
+English Word: a
+**********subject in hebrew: (א) field in hebrew: למחסן subject in english: a field in english: lmkhsn----------
+Next class_index: 54
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: למחסן
+----------subject: למחסן field: (ב) type: Long----------
+English Word: lmkhsn
+English Word: lmkhsn
+**********subject in hebrew: למחסן field in hebrew: (ב) subject in english: lmkhsn field in english: b----------
+Next class_index: 55
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: (ב)
+----------subject: (ב) field: כם type: Long----------
+English Word: khm
+English Word: khm
+English Word: b
+English Word: b
+**********subject in hebrew: (ב) field in hebrew: כם subject in english: b field in english: khm----------
+Next class_index: 55
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: כמות
+----------subject: כם field: 30 type: Long----------
+English Word: khm
+English Word: khm
+**********subject in hebrew: כם field in hebrew: 30 subject in english: khm field in english: ----------
+Next class_index: 55
+Next attribute_index: 2
+Next attribute_index: 2
+field not in KTATTRIBUT table - add to DB
+current word: 30
+Sentence num 112 : אזי קבע ל- מחיר של יצרן בעיית טיוב חמורה, הודע בדואר מחיר של יצרן אינו סביר !!!, המלץ עם שינוי לעדכן מחיר של יצרן ל-30
+current word: אזי
+current word: קבע
+current word: ל-
+current word: מחיר
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 55
+Next attribute_index: 5
+Next attribute_index: 5
+current word: יצרן
+current word: בעיית
+current word: טיוב
+----------subject: טיוב field: חמורה, type: Long----------
+**********subject in hebrew: טיוב field in hebrew: חמורה, subject in english: tyvb field in english: khmvrh----------
+Next class_index: 55
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: חמורה,
+current word: הודע
+current word: בדואר
+current word: מחיר
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 56
+Next attribute_index: 5
+Next attribute_index: 5
+current word: יצרן
+current word: אינו
+----------subject: יצרן field: סביר type: Long----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: סביר subject in english: ytzrn field in english: sbyr----------
+Next class_index: 56
+Next attribute_index: 5
+Next attribute_index: 5
+field not in KTATTRIBUT table - add to DB
+current word: סביר
+----------subject: סביר field: !!!, type: Long----------
+English Word: sbyr
+English Word: sbyr
+**********subject in hebrew: סביר field in hebrew: !!!, subject in english: sbyr field in english: ----------
+Next class_index: 56
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+after levinshtain distance- not same
+Next attribute_index: 1
+Next attribute_index: 1
+field not in KTATTRIBUT table - add to DB
+current word: !!!,
+current word: המלץ
+current word: עם
+current word: שינוי
+current word: לעדכן
+current word: מחיר
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 57
+Next attribute_index: 6
+Next attribute_index: 6
+current word: יצרן
+----------subject: יצרן field: ל-30 type: Long----------
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: ל-30 subject in english: ytzrn field in english: l----------
+Next class_index: 57
+Next attribute_index: 6
+Next attribute_index: 6
+field not in KTATTRIBUT table - add to DB
+current word: ל-30
+Sentence num 113 : אזי קבע ל- מחיר של יצרן בעיית טיוב חמורה, הודע מחיר של יצרן אינו סביר !!!, המלץ ואשר לווסת ממחסן (א) למחסן (ב) כמות 30, והמלץ עם שינוי לעדכן מחיר של יצרן ל-30
+current word: אזי
+current word: קבע
+current word: ל-
+current word: מחיר
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 57
+Next attribute_index: 7
+Next attribute_index: 7
+current word: יצרן
+current word: בעיית
+current word: טיוב
+----------subject: טיוב field: חמורה, type: Long----------
+English Word: khmvrh
+English Word: khmvrh
+English Word: tyvb
+English Word: tyvb
+**********subject in hebrew: טיוב field in hebrew: חמורה, subject in english: tyvb field in english: khmvrh----------
+Next class_index: 57
+Next attribute_index: 2
+Next attribute_index: 2
+current word: חמורה,
+current word: הודע
+current word: מחיר
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 57
+Next attribute_index: 7
+Next attribute_index: 7
+current word: יצרן
+current word: אינו
+----------subject: יצרן field: סביר type: Long----------
+English Word: sbyr
+English Word: sbyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: סביר subject in english: ytzrn field in english: sbyr----------
+Next class_index: 57
+Next attribute_index: 7
+Next attribute_index: 7
+current word: סביר
+----------subject: סביר field: !!!, type: Long----------
+English Word:
+English Word:
+English Word: sbyr
+English Word: sbyr
+**********subject in hebrew: סביר field in hebrew: !!!, subject in english: sbyr field in english: ----------
+Next class_index: 57
+Next attribute_index: 2
+Next attribute_index: 2
+current word: !!!,
+current word: המלץ
+current word: ואשר
+current word: לווסת
+----------subject: לווסת field: ממחסן type: Long----------
+English Word: mmkhsn
+English Word: mmkhsn
+English Word: lvvst
+English Word: lvvst
+**********subject in hebrew: לווסת field in hebrew: ממחסן subject in english: lvvst field in english: mmkhsn----------
+Next class_index: 57
+Next attribute_index: 2
+Next attribute_index: 2
+current word: ממחסן
+----------subject: ממחסן field: (א) type: Long----------
+English Word: a
+English Word: a
+English Word: mmkhsn
+English Word: mmkhsn
+**********subject in hebrew: ממחסן field in hebrew: (א) subject in english: mmkhsn field in english: a----------
+Next class_index: 57
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+Next attribute_index: 2
+Next attribute_index: 2
+current word: (א)
+----------subject: (א) field: למחסן type: Long----------
+English Word: lmkhsn
+English Word: lmkhsn
+English Word: a
+English Word: a
+**********subject in hebrew: (א) field in hebrew: למחסן subject in english: a field in english: lmkhsn----------
+Next class_index: 57
+Next attribute_index: 2
+Next attribute_index: 2
+current word: למחסן
+----------subject: למחסן field: (ב) type: Long----------
+English Word: b
+English Word: b
+English Word: lmkhsn
+English Word: lmkhsn
+**********subject in hebrew: למחסן field in hebrew: (ב) subject in english: lmkhsn field in english: b----------
+Next class_index: 57
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+Next attribute_index: 2
+Next attribute_index: 2
+current word: (ב)
+----------subject: (ב) field: כם type: Long----------
+English Word: khm
+English Word: khm
+English Word: b
+English Word: b
+**********subject in hebrew: (ב) field in hebrew: כם subject in english: b field in english: khm----------
+Next class_index: 57
+subject not in KTCLASS table - add to DB
+before levinshtain distance
+Next attribute_index: 2
+Next attribute_index: 2
+current word: כמות
+----------subject: כם field: 30, type: Long----------
+English Word: khm
+English Word: khm
+**********subject in hebrew: כם field in hebrew: 30, subject in english: khm field in english: ----------
+Next class_index: 57
+Next attribute_index: 3
+Next attribute_index: 3
+current word: 30,
+current word: והמלץ
+current word: עם
+current word: שינוי
+current word: לעדכן
+current word: מחיר
+current word: של
+VAR_TYPE: Double
+VAR_TYPE: Double
+----------subject: יצרן field: מחיר type: Double----------
+English Word: mkhyr
+English Word: mkhyr
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: מחיר subject in english: ytzrn field in english: mkhyr----------
+Next class_index: 57
+Next attribute_index: 7
+Next attribute_index: 7
+current word: יצרן
+----------subject: יצרן field: ל-30 type: Long----------
+English Word: l
+English Word: l
+English Word: ytzrn
+English Word: ytzrn
+**********subject in hebrew: יצרן field in hebrew: ל-30 subject in english: ytzrn field in english: l----------
+Next class_index: 57
+Next attribute_index: 7
+Next attribute_index: 7
+current word: ל-30
+
+Process finished with exit code 0
