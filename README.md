@@ -32,11 +32,17 @@ To interface with the existing Logist system, the project will be developed usin
 ## The relevant files for the final version of the project:
 
 • ClassifySentenceWithoutInternet.java
+
 • GetType.java
+
 • HebrewSpellChecker.java
+
 • SaveToDatabase.java
+
 • TestTheProject.java
+
 • TranslateWithoutInternet.java
+
 
 First, to start, the following jar must be installed for connecting to SQL: sqljdbc.jar.
 
@@ -46,4 +52,4 @@ For the purpose of finding fields and subjects, they must be inserted into a txt
 
 Then run the Main function in the TestTheProject.java file.
 
-#good luck!
+## good luck!
