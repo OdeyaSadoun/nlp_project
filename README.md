@@ -25,3 +25,23 @@ NLP algorithms are potent tools applicable for various purposes, including ident
 Within this project, NLP algorithms will be adapted to handle intricate Hebrew textual patterns that involve elements like strings, operators, and lists of values. They will proficiently identify spelling errors, infer data field types, and facilitate database entry.
 The successful implementation of this project could potentially result in substantial enhancements in the efficiency and effectiveness of the Logist system.
 To interface with the existing Logist system, the project will be developed using the Java programming language. The Stanfordnlp library will be employed to identify sentence components and perform linguistic analysis. Data generated will be stored in a Microsoft SQL Server database.
+
+
+###The relevant files for the final version of the project:
+
+• ClassifySentenceWithoutInternet.java
+• GetType.java
+• HebrewSpellChecker.java
+• SaveToDatabase.java
+• TestTheProject.java
+• TranslateWithoutInternet.java
+
+First, to start, the following jar must be installed for connecting to SQL: sqljdbc.jar.
+
+After that, the main functions of the files GetType and TranslateWithoutInternet must be run in order to create the relevant tables in the database.
+
+For the purpose of finding fields and subjects, they must be inserted into a txt file and take care of the main change in the TestTheProject file so that it contains access to the new sentences file instead of sentences1.txt.
+
+Then run the Main function in the TestTheProject.java file.
+
+#good luck!
