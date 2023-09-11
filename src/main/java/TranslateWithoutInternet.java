@@ -25,7 +25,7 @@ public class TranslateWithoutInternet {
 
         Connection conn = null;
         Statement stmt = null;
-
+/////hjhjkhkhk
         try {
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
