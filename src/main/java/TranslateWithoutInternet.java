@@ -13,6 +13,7 @@ public class TranslateWithoutInternet {
 
     public static void main(String[] args) {
         createCopingTableIfNotExists();
+        System.out.println(retrieveEnglishValuesFromHebrewValues("אוריית"));
     }
 
     public static char[] breakWordIntoLetters(String word) {
@@ -184,7 +185,17 @@ public class TranslateWithoutInternet {
                             ///מכניסים i במקום i
                             wordBuilder.append('i');
                             ++i;
-
+                        }
+                        else{
+                            // Set the parameter value
+                            preparedStatement.setString(1, String.valueOf(letters[i]));
+                            // Execute the query
+                            rs = preparedStatement.executeQuery();
+                            // If the query returns a row, get the English value
+                            if (rs.next()) {
+                                String EnglishValue = rs.getString("English");
+                                wordBuilder.append(EnglishValue);
+                            }
                         }
                     }
 
@@ -199,14 +210,14 @@ public class TranslateWithoutInternet {
                     else if (letters[i] == 'א') {
                         if ((i != letters.length - 2) && (letters[i + 1] == 'ו')) {
                             ///מתעלמים מ- א
-                            break;
+                            continue;
                         }
                     }
 
                     else if (letters[i] == 'ע') {
                         if ((i != letters.length - 2) && (letters[i + 1] == 'ו')) {
                             ///מתעלמים מ- ע
-                            break;
+                            continue;
                         }
                     }
                     else {
@@ -221,7 +232,7 @@ public class TranslateWithoutInternet {
                         }
                     }
                 }
-                rs.close();
+//                rs.close();
                 stmt.close();
                 conn.close();
             }
