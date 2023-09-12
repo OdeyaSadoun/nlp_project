@@ -9,6 +9,8 @@ public class TranslateWithoutInternet {
     final static String USERNAME = "logistcourse1";
     final static String PASSWORD = "logistcourse1";
 
+
+
     public static void main(String[] args) {
         createCopingTableIfNotExists();
     }
@@ -21,11 +23,33 @@ public class TranslateWithoutInternet {
         return letters;
     }
 
+
+
+
+
+
+    public static char[] removeCharAtIndex(char[] array, int index) {
+        if (index < 0 || index >= array.length) {
+            // Index is out of bounds, return the original array
+            return array;
+        }
+
+        char[] result = new char[array.length - 1];
+
+        for (int i = 0, j = 0; i < array.length; i++) {
+            if (i != index) {
+                result[j++] = array[i];
+            }
+        }
+
+        return result;
+    }
+
+
     public static void createCopingTableIfNotExists() {
 
         Connection conn = null;
         Statement stmt = null;
-/////hjhjkhkhk
         try {
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
@@ -49,13 +73,13 @@ public class TranslateWithoutInternet {
                 hebrewToEnglishMapping.put("ג", "g");
                 hebrewToEnglishMapping.put("ד", "d");
                 hebrewToEnglishMapping.put("ה", "h");
-                hebrewToEnglishMapping.put("ו", "v");
+                hebrewToEnglishMapping.put("ו", "o");
                 hebrewToEnglishMapping.put("ז", "z");
-                hebrewToEnglishMapping.put("ח", "kh");
+                hebrewToEnglishMapping.put("ח", "ch");
                 hebrewToEnglishMapping.put("ט", "t");
                 hebrewToEnglishMapping.put("י", "y");
-                hebrewToEnglishMapping.put("כ", "k");
-                hebrewToEnglishMapping.put("ך", "kh");
+                hebrewToEnglishMapping.put("כ", "c");
+                hebrewToEnglishMapping.put("ך", "ch");
                 hebrewToEnglishMapping.put("ל", "l");
                 hebrewToEnglishMapping.put("מ", "m");
                 hebrewToEnglishMapping.put("ם", "m");
@@ -63,9 +87,9 @@ public class TranslateWithoutInternet {
                 hebrewToEnglishMapping.put("ן", "n");
                 hebrewToEnglishMapping.put("ס", "s");
                 hebrewToEnglishMapping.put("ע", "a");
-                hebrewToEnglishMapping.put("פ", "p");
-                hebrewToEnglishMapping.put("ף", "f");
-                hebrewToEnglishMapping.put("צ", "ts");
+                hebrewToEnglishMapping.put("פ", "f");
+                hebrewToEnglishMapping.put("ף", "ph");
+                hebrewToEnglishMapping.put("צ", "tz");
                 hebrewToEnglishMapping.put("ץ", "tz");
                 hebrewToEnglishMapping.put("ק", "k");
                 hebrewToEnglishMapping.put("ר", "r");
@@ -128,22 +152,73 @@ public class TranslateWithoutInternet {
                 conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
                 stmt = conn.createStatement();
 
+                if(letters[0]=='ב'){
+                    //b
+                    letters = removeCharAtIndex(letters, 0);
+                    wordBuilder.append('b');
+                }
+                else if(letters[0]=='כ'){
+                    //k
+                    letters = removeCharAtIndex(letters, 0);
+                    wordBuilder.append('k');
+                }
+                else if(letters[0]=='פ'){
+                    //p
+                    letters = removeCharAtIndex(letters, 0);
+                    wordBuilder.append('p');
+                }
+                else if(letters[0]=='ו'){
+                    //v
+                    letters = removeCharAtIndex(letters, 0);
+                    wordBuilder.append('v');
+                }
+
                 // Prepare the query
                 String selectQuery = "SELECT English FROM Copying WHERE Hebrew = ?";
                 PreparedStatement preparedStatement = conn.prepareStatement(selectQuery);
 
                 // Loop over the letters
-                for (char letter : letters) {
-                    // Set the parameter value
-                    preparedStatement.setString(1, String.valueOf(letter));
+                for (int i=0; i< letters.length; i++) {
+                    if (letters[i] == 'י') {
+                        if ((i != letters.length - 2) && (letters[i + 1] == 'י')) {
+                            ///מכניסים i במקום i
+                            wordBuilder.append('i');
+                            ++i;
 
-                    // Execute the query
-                    rs = preparedStatement.executeQuery();
+                        }
+                    }
 
-                    // If the query returns a row, get the English value
-                    if (rs.next()) {
-                        String EnglishValue = rs.getString("English");
-                        wordBuilder.append(EnglishValue);
+                    else if (letters[i] == 'פ') {
+                        if ((i != letters.length - 2) && (letters[i + 1] == 'ף')) {
+                            ///מכניסים p במקום i
+                            wordBuilder.append('p');
+                            ++i;
+
+                        }
+                    }
+                    else if (letters[i] == 'א') {
+                        if ((i != letters.length - 2) && (letters[i + 1] == 'ו')) {
+                            ///מתעלמים מ- א
+                            break;
+                        }
+                    }
+
+                    else if (letters[i] == 'ע') {
+                        if ((i != letters.length - 2) && (letters[i + 1] == 'ו')) {
+                            ///מתעלמים מ- ע
+                            break;
+                        }
+                    }
+                    else {
+                        // Set the parameter value
+                        preparedStatement.setString(1, String.valueOf(letters[i]));
+                        // Execute the query
+                        rs = preparedStatement.executeQuery();
+                        // If the query returns a row, get the English value
+                        if (rs.next()) {
+                            String EnglishValue = rs.getString("English");
+                            wordBuilder.append(EnglishValue);
+                        }
                     }
                 }
                 rs.close();
