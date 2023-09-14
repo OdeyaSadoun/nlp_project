@@ -12,7 +12,8 @@ public class TranslateWithoutInternet {
 
 
     public static void main(String[] args) {
-        createCopingTableIfNotExists();
+        //createCopingTableIfNotExists();
+        retrieveEnglishValuesFromHebrewValues("אור");
     }
 
     public static char[] breakWordIntoLetters(String word) {
