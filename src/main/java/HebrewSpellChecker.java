@@ -69,11 +69,12 @@ public class HebrewSpellChecker {
     public static boolean findSameWordFromKTATTRIBUTETable(String hebrewSubject, String hebrewField, int levenshteinThreshold) {
         List<String> classCodeNames = getClassCodeNames(hebrewSubject);
 
-        if (classCodeNames.isEmpty()) {
-            if (!findSameWordFromKTCLASSTable(hebrewSubject, levenshteinThreshold)) {
+        if (classCodeNames.isEmpty()) {//there is no class like this in db (or levinshtain or not exsist)
+            if (!findSameWordFromKTCLASSTable(hebrewSubject, levenshteinThreshold)) {//no exsist
                 return false; // No matching class code name found
             }
             else{
+                //there is levinshtain same to this word
                 String newHebrewSubjectFromDB = sameWordFromKTCLASSTable(hebrewSubject, levenshteinThreshold);
                 classCodeNames = getClassCodeNames(newHebrewSubjectFromDB);
             }
@@ -126,10 +127,9 @@ public class HebrewSpellChecker {
         for (String existingWord : database) {
             int distance = levenshteinDistance(hebrewField, existingWord);
             if (distance <= levenshteinThreshold) {
-//                if (isMatchInKTATTRIBUTE(hebrewField, classCodeName)) {
-//                    return true;
-//                }
-                return true;
+                if (isMatchInKTATTRIBUTE(existingWord, classCodeName)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -219,7 +219,10 @@ public class HebrewSpellChecker {
     }
 
     public static boolean isSameWordInDBInKTATTRIBUTETable(String hebrewSubject, String hebrewField, int levenshteinThreshold){
+        //field same:
         return findSameWordFromKTATTRIBUTETable(hebrewSubject, hebrewField, levenshteinThreshold);
+
+        //subject same:
     }
 
     public static void main(String[] args) {

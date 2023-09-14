@@ -9,12 +9,12 @@ public class SaveToDatabase {
     static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     static final String USERNAME = "logistcourse1";
     static final String PASSWORD = "logistcourse1";
-    static final boolean WITHLEVINSHTAINDISTANCE = false;
+    static final boolean WITHLEVINSHTAINDISTANCE = true;
     static final int LEVINSHTAINDISTANCE = 1;
 
 
     public static void main(String[] args) {
-         addSubjectToDatabase("אישח", "ishc", "חננית", "cananit", "Bool");
+         addSubjectToDatabase("בלהלבה", "blabla", "גדי", "gdi", "Bool");
     }
 
     public static String getDateWithMS() {
@@ -203,6 +203,7 @@ public class SaveToDatabase {
             //Find class index:
             classIndex = getClassIndex(englishSubject, stmt);
 
+/******************************************************************************************/
             //Check if subject is in KTCLASS table
             if (!isSubjectInKTCLASSTable(hebrewSubject, conn)) {
                 if(isSubjectInKTCLASSTable(englishSubject, conn))
@@ -226,12 +227,12 @@ public class SaveToDatabase {
                     }
                 }
             }
-
+/****************************************************************************************/
             //Find attribute index to sent to insert query
             if (getAttributeIndex(englishSubject, conn) != 0) {
                 attributeIndex = getAttributeIndex(englishSubject, conn);
             }
-
+/****************************************************************************************/
             //Check if subject is in KTATTRIBUTE table
             if (englishField != null && hebrewField != null) {
                 if (!isSubjectInKTATTRIBUTETable(englishSubject, hebrewField, conn)) {
@@ -258,7 +259,7 @@ public class SaveToDatabase {
                     }
                 }
             }
-
+/****************************************************************************************/
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
