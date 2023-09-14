@@ -9,9 +9,12 @@ public class SaveToDatabase {
     static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     static final String USERNAME = "logistcourse1";
     static final String PASSWORD = "logistcourse1";
+    static final boolean WITHLEVINSHTAINDISTANCE = true;
+    static final int LEVINSHTAINDISTANCE = 1;
+
 
     public static void main(String[] args) {
-        addSubjectToDatabase("א", "a", "אא", "aa", "Bool");
+         addSubjectToDatabase("אישו", "isho", "דננית", "dananit", "Bool");
     }
 
     public static String getDateWithMS() {
@@ -31,11 +34,10 @@ public class SaveToDatabase {
         ResultSet rs = stmt.executeQuery(queryClassIndex);
         int classIndex = 0;
         if (rs.next()) {
-            if(englishSubject == "mainSubject"){
+            if (englishSubject == "mainSubject") {
                 classIndex = 1;
                 System.out.println("main class_index: " + classIndex);
-            }
-            else{
+            } else {
                 classIndex = rs.getInt("next_index");
                 System.out.println("Next class_index: " + classIndex);
             }
@@ -47,13 +49,13 @@ public class SaveToDatabase {
     /**
      * Function with a query to check if subject is in KTCLASS table
      *
-     * @param englishSubject the subject that need to check if exist in DB
-     * @param conn for the connection to DB
+     * @param subject the subject that need to check if exist in DB
+     * @param conn           for the connection to DB
      */
-    private static boolean isSubjectInKTCLASSTable(String englishSubject, Connection conn) throws SQLException {
-        String checkSubjectInKTCLASSTableQuery = "SELECT CLASS_CODE_NAME FROM KTCLASS WHERE CLASS_CODE_NAME = ?";
+    private static boolean isSubjectInKTCLASSTable(String subject, Connection conn) throws SQLException {
+        String checkSubjectInKTCLASSTableQuery = "SELECT NAME FROM KTCLASS WHERE NAME = ?";
         PreparedStatement preparedStatement = conn.prepareStatement(checkSubjectInKTCLASSTableQuery);
-        preparedStatement.setString(1, englishSubject);
+        preparedStatement.setString(1, subject);
         ResultSet rs = preparedStatement.executeQuery();
 
         //return if the subject exists in the table
@@ -64,13 +66,13 @@ public class SaveToDatabase {
     /**
      * Function to insert subject to KTCLASS table
      *
-     * @param englishSubject the english subject
-     * @param hebrewSubject the hebrew subject
-     * @param logist for the table
+     * @param englishSubject  the english subject
+     * @param hebrewSubject   the hebrew subject
+     * @param logist          for the table
      * @param activationOrder for the table
-     * @param classIndex the index for this subject
-     * @param current_date for the date
-     * @param conn for the connection to DB
+     * @param classIndex      the index for this subject
+     * @param current_date    for the date
+     * @param conn            for the connection to DB
      */
     private static void insertSubject(String englishSubject, String hebrewSubject, String logist, int activationOrder, int classIndex, String current_date, Connection conn) throws SQLException {
         String insertSubjectQuery = "INSERT INTO KTCLASS (CLASS_CODE_NAME, NAME, OWNER, ACTIVATION_ORDER, CLASS_INDEX, CREATION_DATE, UPDATE_DATE) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -93,7 +95,7 @@ public class SaveToDatabase {
      * Function for query to find attribute index to sent to insert attribute query
      *
      * @param englishSubject the subject that need to find the last index of attribute
-     * @param conn for the connection to DB
+     * @param conn           for the connection to DB
      */
     private static int getAttributeIndex(String englishSubject, Connection conn) throws SQLException {
         String queryAttributeIndex = "SELECT COALESCE(MAX(ATTRIBUTE_INDEX), 0) + 1 AS next_index FROM KVATTRIBUTE WHERE CLASS_CODE_NAME = ?";
@@ -115,16 +117,16 @@ public class SaveToDatabase {
     /**
      * Function to check if the field is existed in the DB
      *
-     * @param englishSubject the subject that match to this field
-     * @param englishField the field we check if exist in the DB
-     * @param conn for the connection to DB
+     * @param ensubject the subject that match to this field
+     * @param field   the field we check if exist in the DB
+     * @param conn           for the connection to DB
      */
-    private static boolean isSubjectInKTATTRIBUTETable(String englishSubject, String englishField, Connection conn) throws SQLException {
-        String getClassIdQuery = "SELECT ATTR_CODE_NAME FROM KTATTRIBUTE WHERE CLASS_CODE_NAME = ? AND ATTR_CODE_NAME = ?";
+    private static boolean isSubjectInKTATTRIBUTETable(String ensubject, String field, Connection conn) throws SQLException {
+        String getClassIdQuery = "SELECT NAME FROM KTATTRIBUTE WHERE CLASS_CODE_NAME = ? AND NAME = ?";
         PreparedStatement preparedStatement = conn.prepareStatement(getClassIdQuery);
 
-        preparedStatement.setString(1, englishSubject);
-        preparedStatement.setString(2, englishField);
+        preparedStatement.setString(1, ensubject);
+        preparedStatement.setString(2, field);
         ResultSet rs = preparedStatement.executeQuery();
 
         return rs.next();
@@ -134,18 +136,18 @@ public class SaveToDatabase {
     /**
      * Function to insert field to KTATTRIBUTE table
      *
-     * @param englishSubject the english subject that match to the field
-     * @param englishField the english field
-     * @param attributeIndex the index for this field
-     * @param hebrewField the hebrew field
-     * @param ioMode for the table
-     * @param keyType for the table
+     * @param englishSubject  the english subject that match to the field
+     * @param englishField    the english field
+     * @param attributeIndex  the index for this field
+     * @param hebrewField     the hebrew field
+     * @param ioMode          for the table
+     * @param keyType         for the table
      * @param overlapPosition for the table
-     * @param sortDirection for the table
-     * @param sortNumber for the table
-     * @param type_name for the table
-     * @param current_date for the date
-     * @param conn for the connection to DB
+     * @param sortDirection   for the table
+     * @param sortNumber      for the table
+     * @param type_name       for the table
+     * @param current_date    for the date
+     * @param conn            for the connection to DB
      */
     private static void insertAttribute(String englishSubject, String englishField, String hebrewField, String type_name, int overlapPosition, int attributeIndex, String current_date, int keyType, int ioMode, int sortNumber, int sortDirection, Connection conn) throws SQLException {
         String insertSubjectQuery = "INSERT INTO KTATTRIBUTE (CLASS_CODE_NAME, ATTR_CODE_NAME, NAME, TYPE_NAME, OVERLAP_POSITION, ATTRIBUTE_INDEX, CREATION_DATE, UPDATE_DATE, KEY_TYPE, IO_MODE, SORT_NUMBER, SORT_DIRECTION) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -202,28 +204,57 @@ public class SaveToDatabase {
             classIndex = getClassIndex(englishSubject, stmt);
 
             //Check if subject is in KTCLASS table
-            if (!isSubjectInKTCLASSTable(englishSubject, conn)) {
-                System.out.println("subject not in KTCLASS table - add to DB");
-                System.out.println("before levinshtain distance");
-                if(!HebrewSpellChecker.isSameWordInDBInKTCLASSTable(hebrewSubject,1)) {
-                    System.out.println("after levinshtain distance- not same");
-                    insertSubject(englishSubject, hebrewSubject, LOGIST, ACTIVATION_ORDER, classIndex, CURRENT_DATE, conn);
+            if (!isSubjectInKTCLASSTable(hebrewSubject, conn)) {
+                if(isSubjectInKTCLASSTable(englishSubject, conn))
+                {
+                    String ex = "There is problem with english subject because there is same that saved in database with hebrew subject that not same!";
+                    System.out.println(ex);
+                    throw new SQLException(ex);
+                }
+                else {
+                    System.out.println("subject not in KTCLASS table - add to DB");
+                    System.out.println("before levinshtain distance");
+                    if (WITHLEVINSHTAINDISTANCE) {
+                        System.out.println("WITHLEVINSHTAINDISTANCE- class: " + WITHLEVINSHTAINDISTANCE);
+                        if (!HebrewSpellChecker.isSameWordInDBInKTCLASSTable(hebrewSubject, LEVINSHTAINDISTANCE)) {
+                            System.out.println("after levinshtain distance- not same");
+                            insertSubject(englishSubject, hebrewSubject, LOGIST, ACTIVATION_ORDER, classIndex, CURRENT_DATE, conn);
+                        }
+                    } else {
+                        System.out.println("not with lev sub");
+                        insertSubject(englishSubject, hebrewSubject, LOGIST, ACTIVATION_ORDER, classIndex, CURRENT_DATE, conn);
+                    }
                 }
             }
 
             //Find attribute index to sent to insert query
-            if (getAttributeIndex(englishSubject,conn) != 0) {
-                attributeIndex = getAttributeIndex(englishSubject,conn);
+            if (getAttributeIndex(englishSubject, conn) != 0) {
+                attributeIndex = getAttributeIndex(englishSubject, conn);
             }
 
             //Check if subject is in KTATTRIBUTE table
-            if(englishField != null && hebrewField != null) {
-                if (!isSubjectInKTATTRIBUTETable(englishSubject, englishField, conn)) {
-                    System.out.println("field not in KTATTRIBUT table - add to DB");
-                    if(!HebrewSpellChecker.isSameWordInDBInKTATTRIBUTETable(hebrewSubject,hebrewField,1)) {
+            if (englishField != null && hebrewField != null) {
+                if (!isSubjectInKTATTRIBUTETable(englishSubject, hebrewField, conn)) {
+                    if(isSubjectInKTATTRIBUTETable(englishSubject, englishField, conn))
+                    {
+                        String ex = "There is problem with english subject or filed because there is same that saved in database with hebrew subject or filed that not same!";
+                        System.out.println(ex);
+                        throw new SQLException(ex);
+                    }
+                    else {
+                        System.out.println("field not in KTATTRIBUT table - add to DB");
+                        if (WITHLEVINSHTAINDISTANCE) {
+                            System.out.println("WITHLEVINSHTAINDISTANCE - attr: " + WITHLEVINSHTAINDISTANCE);
+                            if (!HebrewSpellChecker.isSameWordInDBInKTATTRIBUTETable(hebrewSubject, hebrewField, LEVINSHTAINDISTANCE)) {
 
-                        insertAttribute(englishSubject, englishField, hebrewField, type_name, OVERLAP_POSITION,
-                                attributeIndex, CURRENT_DATE, keyType, IO_MODE, SORT_NUMBER, SORT_DIRECTION, conn);
+                                insertAttribute(englishSubject, englishField, hebrewField, type_name, OVERLAP_POSITION,
+                                        attributeIndex, CURRENT_DATE, keyType, IO_MODE, SORT_NUMBER, SORT_DIRECTION, conn);
+                            }
+                        } else {
+                            System.out.println("not with lev attr");
+                            insertAttribute(englishSubject, englishField, hebrewField, type_name, OVERLAP_POSITION,
+                                    attributeIndex, CURRENT_DATE, keyType, IO_MODE, SORT_NUMBER, SORT_DIRECTION, conn);
+                        }
                     }
                 }
             }

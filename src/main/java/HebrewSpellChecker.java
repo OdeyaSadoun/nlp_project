@@ -83,9 +83,10 @@ public class HebrewSpellChecker {
         for (String existingWord : database) {
             int distance = levenshteinDistance(hebrewField, existingWord);
             if (distance <= levenshteinThreshold) {
-                if (isMatchInKTATTRIBUTE(hebrewField, classCodeName)) {
-                    return true;
-                }
+//                if (isMatchInKTATTRIBUTE(hebrewField, classCodeName)) {
+//                    return true;
+//                }
+                return true;
             }
         }
         return false;
