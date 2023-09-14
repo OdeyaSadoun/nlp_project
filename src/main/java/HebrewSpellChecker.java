@@ -32,17 +32,60 @@ public class HebrewSpellChecker {
         List<String> words = getWORDColumnValues("KTCLASS");
         return isDuplicate(newWord, words, levenshteinThreshold);
     }
+    public static String sameWordFromKTCLASSTable(String newWord, int levenshteinThreshold) {
+        List<String> words = getWORDColumnValues("KTCLASS");
+        return isDuplicateReturnWord(newWord, words, levenshteinThreshold);
+    }
+
+
+    public static String getHebrewNameFromEnglish(String classCodeName) {
+        try {
+            Class.forName(JDBC_DRIVER);
+            Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+            String sql = "SELECT NAME FROM KTCLASS WHERE CLASS_CODE_NAME = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setString(1, classCodeName);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            String hebrewName = null;
+            if (rs.next()) {
+                hebrewName = rs.getString("NAME");
+            }
+
+            rs.close();
+            preparedStatement.close();
+            connection.close();
+
+            return hebrewName;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null; // Return null in case of an error
+    }
+
 
     public static boolean findSameWordFromKTATTRIBUTETable(String hebrewSubject, String hebrewField, int levenshteinThreshold) {
         List<String> classCodeNames = getClassCodeNames(hebrewSubject);
 
         if (classCodeNames.isEmpty()) {
-            return false; // No matching class code name found
+            if (!findSameWordFromKTCLASSTable(hebrewSubject, levenshteinThreshold)) {
+                return false; // No matching class code name found
+            }
+            else{
+                String newHebrewSubjectFromDB = sameWordFromKTCLASSTable(hebrewSubject, levenshteinThreshold);
+                classCodeNames = getClassCodeNames(newHebrewSubjectFromDB);
+            }
         }
 
         List<String> words = getWORDColumnValues("KTATTRIBUTE");
 
+
+
+
         for (String classCodeName : classCodeNames) {
+//            String hebrewSubjectFromEnglish = getHebrewNameFromEnglish(classCodeName);
             if (isDuplicateWithClassCode(hebrewField, classCodeName, words, levenshteinThreshold)) {
                 return true;
             }
@@ -161,7 +204,16 @@ public class HebrewSpellChecker {
         }
         return false;
     }
+    public static String isDuplicateReturnWord(String newWord, List<String> database, int levenshteinThreshold) {
+        for (String existingWord : database) {
+            int distance = levenshteinDistance(newWord, existingWord);
 
+            if (distance <= levenshteinThreshold) {
+                return existingWord;
+            }
+        }
+        return null;
+    }
     public static boolean isSameWordInDBInKTCLASSTable(String newWord, int levenshteinThreshold){
         return findSameWordFromKTCLASSTable(newWord,levenshteinThreshold);
     }
