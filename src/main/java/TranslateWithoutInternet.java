@@ -13,7 +13,7 @@ public class TranslateWithoutInternet {
 
     public static void main(String[] args) {
         createCopingTableIfNotExists();
-        System.out.println(retrieveEnglishValuesFromHebrewValues("ציון"));
+        System.out.println(retrieveEnglishValuesFromHebrewValues("כלב"));
     }
 
     public static char[] breakWordIntoLetters(String word) {
@@ -235,6 +235,19 @@ public class TranslateWithoutInternet {
                             continue;
                         }
                     }
+
+                    else if (letters[i] == 'ב') {
+                        if (i == letters.length - 1) {
+                            ///מכניסים v במקום i
+                            wordBuilder.append('v');
+                            ++i;
+                        }
+                        else{
+                            continue;
+                        }
+                    }
+
+
                     else {
                         // Set the parameter value
                         preparedStatement.setString(1, String.valueOf(letters[i]));
