@@ -1,2 +1,9 @@
 lib/
 .idea/
+/target/classes/ClassifySentenceWithoutInternet.class
+/target/classes/FieldNameExtractor.class
+/target/classes/HebrewSpellChecker.class
+/target/classes/NLPTemplate.class
+/target/classes/TestTheProject.class
+/target/classes/TextAnalyzer.class
+/target/classes/TranslateWithoutInternet.class
