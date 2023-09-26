@@ -14,6 +14,8 @@ public class ClassifySentenceWithoutInternet {
     final static String USERNAME = "logistcourse1";
     final static String PASSWORD = "logistcourse1";
 
+    public static String temp = "אם סכום_מבוקש של הלוואה קטן מ-1000 אזי הלוואה היא מאושרת אזי עדכן ציון_כולל של לקוח ל- ציון כולל של כל ה- דרוגים";
+
     public static void readTemplate(String sentence){
         String[] template = sentence.split(" ");
         List<String> lstTemplate = Arrays.asList(template);
@@ -84,11 +86,17 @@ public class ClassifySentenceWithoutInternet {
                 continue;
             }
             if(word.equals("של") && i + 1 < lstTemplate.size() && i != 0){
+                if(isSaveWordInTLXTable(lstTemplate.get(i-1)))
+                    continue;
                 field = changePluralSubjectToSingle(lstTemplate.get(i-1));
                 if(lstTemplate.get(i+1).equals("כל") && i + 2 < lstTemplate.size()){
+                    if(isSaveWordInTLXTable(lstTemplate.get(i+2)))
+                        continue;
                     subject = changePluralSubjectToSingle(lstTemplate.get(i+2));
                 }
                 else{
+                    if(isSaveWordInTLXTable(lstTemplate.get(i+1)))
+                        continue;
                     subject = changePluralSubjectToSingle(lstTemplate.get(i+1));
                 }
                 dataType = GetType.getLabel(field, sentence, false);
@@ -97,7 +105,7 @@ public class ClassifySentenceWithoutInternet {
                 continue;
             }
             //option2
-            if (i != 0 && (word.equals("איננו") || word.equals("אינו") || word.equals("הוא") || word.equals("היא"))) {
+            if (i != 0 && (word.equals("איננו") || word.equals("אינו") ||  word.equals("היא"))) {
                 isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i - 1));
                 if(!isSaveWord && i + 1 < lstTemplate.size()){
                     subject = changePluralSubjectToSingle(lstTemplate.get(i-1));
@@ -361,5 +369,6 @@ public class ClassifySentenceWithoutInternet {
     }
 
     public static void main(String[] args) {
+        readTemplate(temp);
     }
 }
