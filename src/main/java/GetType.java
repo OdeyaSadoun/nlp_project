@@ -7,7 +7,7 @@ public class GetType {
     final static String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     final static String USERNAME = "logistcourse1";
     final static String PASSWORD = "logistcourse1";
-    final static String DEFAULT_TYPE = "D8.2";
+    final static String DEFAULT_TYPE = "Double";
 
     public static String getLabel(String word, String sentence, Boolean pluralWord) {
 
