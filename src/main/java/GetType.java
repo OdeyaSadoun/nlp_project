@@ -152,6 +152,7 @@ public class GetType {
                 knownWords.put("כוכב", "Char");
                 knownWords.put("סטטוס", "Char");
                 knownWords.put("קריטי", "Bool");
+                knownWords.put("מאושרת", "Bool");
                 knownWords.put("מספר_קטלוגי", "Long");
 
 
