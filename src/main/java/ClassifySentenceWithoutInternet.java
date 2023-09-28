@@ -14,7 +14,7 @@ public class ClassifySentenceWithoutInternet {
     final static String USERNAME = "logistcourse1";
     final static String PASSWORD = "logistcourse1";
 
-    public static String temp = "אם סכום_מבוקש של הלוואה קטן מ-1000 אזי הלוואה היא מאושרת אזי עדכן ציון_כולל של לקוח ל- ציון כולל של כל ה- דרוגים";
+    public static String temp = "אם גיל של לקוח גדול מ- 18 אזי הסק ש- לקוח הוא בוגר";
 
     public static void readTemplate(String sentence){
         String[] template = sentence.split(" ");
@@ -36,6 +36,11 @@ public class ClassifySentenceWithoutInternet {
 
             boolean isSaveWord = isSaveWordInTLXTable(word);
 
+            boolean isQuoted = word.startsWith("\"") && word.endsWith("\"");
+            if (isQuoted) {
+                // Skip the word
+                continue;
+            }
 
             if(word.equals("הפעל") || word.equals("חוקי")){
                 i++;
@@ -221,7 +226,7 @@ public class ClassifySentenceWithoutInternet {
             //option11
             if (i + 1 < lstTemplate.size() && (word.equals("ה-") || word.equals("ל-"))) {
                 isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+1));
-                if(!isSaveWord){
+                if(!isSaveWord && !lstTemplate.get(i+1).startsWith("\"") && !lstTemplate.get(i+1).endsWith("\"")){
                     subject = changePluralSubjectToSingle(lstTemplate.get(i+1));
                     field = null;
                     dataType = GetType.getLabel(field, sentence, false);
@@ -231,7 +236,7 @@ public class ClassifySentenceWithoutInternet {
                 }
             }
             //option12
-            if (i + 1 < lstTemplate.size() && word.equals("ו-")) {
+            if (i + 1 < lstTemplate.size() && (word.equals("ו-") || word.equals("וגם"))) {
                 isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+1));
                 if(!isSaveWord){
                     subject = mainSubject;
