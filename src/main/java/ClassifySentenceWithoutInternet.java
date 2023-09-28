@@ -225,14 +225,29 @@ public class ClassifySentenceWithoutInternet {
             }
             //option11
             if (i + 1 < lstTemplate.size() && (word.equals("ה-") || word.equals("ל-"))) {
-                isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+1));
-                if(!isSaveWord && !lstTemplate.get(i+1).startsWith("\"") && !lstTemplate.get(i+1).endsWith("\"")){
-                    subject = changePluralSubjectToSingle(lstTemplate.get(i+1));
-                    field = null;
-                    dataType = GetType.getLabel(field, sentence, false);
-                    System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
-                    checkFieldAndSubjectInDB(subject, field, dataType);
-                    continue;
+                if(word.equals("ל-")){
+                    if(i - 1 < lstTemplate.size() && i - 2 < lstTemplate.size()){
+                        isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i-1));
+                        if(!isSaveWord && lstTemplate.get(i-2).equals("עדכן")){
+                            subject = mainSubject;
+                            field = lstTemplate.get(i-1);
+                            dataType = GetType.getLabel(field, sentence, false);
+                            System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
+                            checkFieldAndSubjectInDB(subject, field, dataType);
+                            continue;
+                        }
+                    }
+                }
+                if(!isNumericNumber(lstTemplate.get(i + 1))) {
+                    isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 1));
+                    if (!isSaveWord && !lstTemplate.get(i + 1).startsWith("\"") && !lstTemplate.get(i + 1).endsWith("\"")) {
+                        subject = changePluralSubjectToSingle(lstTemplate.get(i + 1));
+                        field = null;
+                        dataType = GetType.getLabel(field, sentence, false);
+                        System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
+                        checkFieldAndSubjectInDB(subject, field, dataType);
+                        continue;
+                    }
                 }
             }
             //option12

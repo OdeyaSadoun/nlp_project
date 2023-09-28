@@ -181,10 +181,12 @@ public class TranslateWithoutInternet {
                 // Loop over the letters
                 for (int i=0; i< letters.length; i++) {
                     if (letters[i] == 'י') {
-                        if ((i != letters.length - 2) && (letters[i + 1] == 'י')) {
-                            ///מכניסים i במקום i
-                            wordBuilder.append('i');
-                            ++i;
+                        if (i != letters.length - 2) {
+                            if (i + 1 < letters.length && (letters[i + 1] == 'י')) {
+                                ///מכניסים i במקום i
+                                wordBuilder.append('i');
+                                ++i;
+                            }
                         }
                         else{
 
@@ -201,10 +203,12 @@ public class TranslateWithoutInternet {
                     }
 
                     else if (letters[i] == 'פ') {
-                        if ((i != letters.length - 2) && (letters[i + 1] == 'ף')) {
-                            ///מכניסים p במקום i
-                            wordBuilder.append('p');
-                            ++i;
+                        if (i != letters.length - 2) {
+                            if (i + 1 < letters.length && (letters[i + 1] == 'ף')) {
+                                ///מכניסים p במקום i
+                                wordBuilder.append('p');
+                                ++i;
+                            }
                         }
                         else{
                             // Set the parameter value
@@ -223,16 +227,20 @@ public class TranslateWithoutInternet {
                         }
                     }
                     else if (letters[i] == 'א') {
-                        if ((i != letters.length - 2) && (letters[i + 1] == 'ו')) {
-                            ///מתעלמים מ- א
-                            continue;
+                        if (i != letters.length - 2) {
+                            if (i + 1 < letters.length && (letters[i + 1] == 'ו')) {
+                                ///מתעלמים מ- א
+                                continue;
+                            }
                         }
                     }
 
                     else if (letters[i] == 'ע') {
-                        if ((i != letters.length - 2) && (letters[i + 1] == 'ו')) {
-                            ///מתעלמים מ- ע
-                            continue;
+                        if (i != letters.length - 2) {
+                            if (i + 1 < letters.length && (letters[i + 1] == 'ו')) {
+                                ///מתעלמים מ- ע
+                                continue;
+                            }
                         }
                     }
 
