@@ -1,10 +1,12 @@
 import java.io.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TestTheProject {
 
     public static void main(String[] args) {
+        //updateTables();
         // Read sentences from a text file.
         List<String> sentences = readSentences("sentences28_09_2023.txt");
         String sentenceAfterAddUnderscoreInQuotes = "";
@@ -16,6 +18,16 @@ public class TestTheProject {
             counterForPrint++;
             ClassifySentenceWithoutInternet.readTemplate(sentenceAfterAddUnderscoreInQuotes);
         }
+    }
+
+    private static void updateTables() {
+        try {
+            GetType.deleteVARTYPETable();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        GetType.createVARTYPETableIfNotExists();
+        TranslateWithoutInternet.createCopingTableIfNotExists();
     }
 
     public static String removeQuotes(String sentence) {

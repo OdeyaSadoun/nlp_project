@@ -77,6 +77,24 @@ public class GetType {
         }
     }
 
+    public static void deleteVARTYPETable() throws SQLException {
+
+        Connection conn = null;
+        Statement stmt = null;
+
+        // יצירת השאילתה למחיקת הטבלה
+        String deleteTableQuery = "DROP TABLE VARTYPE";
+
+        // ביצוע השאילתה
+        conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+        stmt = conn.createStatement();
+
+        stmt.execute(deleteTableQuery);
+
+        // סגירת השאילתה והחיבור
+        stmt.close();
+    }
+
     public static void createVARTYPETableIfNotExists() {
 
         Connection conn = null;
