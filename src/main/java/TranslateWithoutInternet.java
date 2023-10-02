@@ -13,7 +13,7 @@ public class TranslateWithoutInternet {
 
     public static void main(String[] args) {
         createCopingTableIfNotExists();
-        System.out.println(retrieveEnglishValuesFromHebrewValues("כלב"));
+        System.out.println(retrieveEnglishValuesFromHebrewValues("אחוז_בלון_ממחיר_בטוחה"));
     }
 
     public static char[] breakWordIntoLetters(String word) {
