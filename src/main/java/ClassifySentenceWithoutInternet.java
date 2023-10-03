@@ -189,19 +189,24 @@ public class ClassifySentenceWithoutInternet {
 
                         //option4
                         //4.  אם מילהלאשמורה{[הוא] /מילהשמורה}  (למשל אופרטור) – אזי הראשון הוא שדה בתוך נושא מרכזי
-                        if (i + 2 < lstTemplate.size() && (lstTemplate.get(i + 2).equals("היא") || lstTemplate.get(i + 2).equals("אינו") || lstTemplate.get(i + 2).equals("הוא"))) {
-                            continue;
+//                        if (i + 2 < lstTemplate.size() && (lstTemplate.get(i + 2).equals("היא") || lstTemplate.get(i + 2).equals("אינו") || lstTemplate.get(i + 2).equals("הוא"))) {
+//                            continue;
+//                        }
+
+                        if (i + 2 < lstTemplate.size()){
+                            isSaveWord = isSaveWordInTLXTableORConstes(lstTemplate.get(i + 2));
+                            if(isSaveWord){
+                                /**update values:*/
+                                subject = mainSubject;
+                                field = changePluralSubjectToSingle(lstTemplate.get(i + 1));
+                                dataType = GetType.getLabel(field, sentence, false);
+                                System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
+                                /*****************/
+
+                                checkFieldAndSubjectInDB(subject, field, dataType);
+                                continue;
+                            }
                         }
-
-                        /**update values:*/
-                        subject = mainSubject;
-                        field = changePluralSubjectToSingle(lstTemplate.get(i + 1));
-                        dataType = GetType.getLabel(field, sentence, false);
-                        System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
-                        /*****************/
-
-                        checkFieldAndSubjectInDB(subject, field, dataType);
-                        continue;
                     }
                     else {
                         //option9-10
