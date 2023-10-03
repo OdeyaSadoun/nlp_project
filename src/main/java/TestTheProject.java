@@ -1,10 +1,37 @@
 import java.io.*;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TestTheProject {
 
+    final static String JDBC_URL = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
+    final static String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    final static String USERNAME = "logistcourse1";
+    final static String PASSWORD = "logistcourse1";
+
     public static void main(String[] args) {
+        Connection conn = null;
+        Statement stmt = null;
+
+        //Connect to the database
+        ResultSet rs = null;
+
+        try {
+            Class.forName(JDBC_DRIVER);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            stmt = conn.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         // Read sentences from a text file.
         List<String> sentences = readSentences("sentences28_09_2023.txt");
         String sentenceAfterAddUnderscoreInQuotes = "";
@@ -14,7 +41,7 @@ public class TestTheProject {
             sentenceAfterAddUnderscoreInQuotes = replaceSpacesWithUnderscoresInQuotes(sentence);
             System.out.println("Sentence num " + counterForPrint + " : " +sentenceAfterAddUnderscoreInQuotes);
             counterForPrint++;
-            ClassifySentenceWithoutInternet.readTemplate(sentenceAfterAddUnderscoreInQuotes);
+            ClassifySentenceWithoutInternet.readTemplate(sentenceAfterAddUnderscoreInQuotes, conn, stmt, rs);
         }
     }
 
