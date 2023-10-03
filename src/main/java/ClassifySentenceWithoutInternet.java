@@ -1,8 +1,6 @@
 import java.sql.*;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ClassifySentenceWithoutInternet {
 
@@ -15,6 +13,29 @@ public class ClassifySentenceWithoutInternet {
     final static String PASSWORD = "logistcourse1";
 
     public static String temp = "אם גיל של לקוח גדול מ- 18 אזי הסק ש- לקוח הוא בוגר";
+
+    public static List<String> operators = Arrays.asList(
+            "@",
+            "!",
+            "+",
+            "-",
+            "*",
+            "/",
+            "(",
+            ")",
+            ",",
+            ">",
+            ">=",
+            "<",
+            "<=",
+            "==",
+            "גדול שווה",
+            "קטן שווה",
+            "קטן",
+            "גדול",
+            "שווה"
+    );
+
 
     public static void readTemplate(String sentence){
         String[] template = sentence.split(" ");
@@ -34,7 +55,8 @@ public class ClassifySentenceWithoutInternet {
             String word = lstTemplate.get(i);
             System.out.println("current word: " + word);
 
-            boolean isSaveWord = isSaveWordInTLXTable(word);
+            boolean isSaveWord = isSaveWordInTLXTableORConstes(word);
+            boolean isSaveWord2;
 
             boolean isQuoted = word.startsWith("\"") && word.endsWith("\"");
             if (isQuoted) {
@@ -46,8 +68,33 @@ public class ClassifySentenceWithoutInternet {
                 i++;
                 continue;
             }
+
             if(isNumericNumber(word) || GetType.getNumericWord(word)){
                 continue;
+            }
+            if(i + 2 < lstTemplate.size()) { //תוספת על הענין של אופרטורים 2 מילים לא שמורות ובינהן אופרטור שתיהן שדות בנושא ראשי
+                isSaveWord2 = isSaveWordInTLXTableORConstes(lstTemplate.get(i + 2));
+
+                if (!isSaveWord && isOperator(lstTemplate.get(i + 1)) && !isSaveWord2) {
+                    /**update values: (first word) */
+                    subject = mainSubject;
+                    field = changePluralSubjectToSingle(word);
+                    dataType = GetType.getLabel(field, sentence, false);
+                    System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
+                    /*****************/
+
+                    checkFieldAndSubjectInDB(subject, field, dataType);
+
+                    /**update values: (second word)*/
+                    subject = mainSubject;
+                    field = changePluralSubjectToSingle(lstTemplate.get(i + 2));
+                    dataType = GetType.getLabel(field, sentence, false);
+                    System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
+                    /*****************/
+
+                    checkFieldAndSubjectInDB(subject, field, dataType);
+                    continue;
+                }
             }
             if (i + 1 < lstTemplate.size() && !isSaveWord){
                 //option5-6
@@ -61,7 +108,7 @@ public class ClassifySentenceWithoutInternet {
                     continue;
                 }
                 //option7
-                isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+1)); //the next word
+                isSaveWord = isSaveWordInTLXTableORConstes(lstTemplate.get(i+1)); //the next word
                 if(!isSaveWord && !( lstTemplate.get(i + 1).equals("הוא") ||  lstTemplate.get(i + 1).equals("אינו") || lstTemplate.get(i + 1).equals("היא") ||  lstTemplate.get(i + 1).equals("איננו"))){
                     subject = changePluralSubjectToSingle(word);
                     field = changePluralSubjectToSingle(lstTemplate.get(i+1));
@@ -74,7 +121,7 @@ public class ClassifySentenceWithoutInternet {
                 //מילהלאשמורה [טקסט שמור] של כל מילהלאשמורה -  שדה והשני זה נושא
                 if (lstTemplate.get(i + 1).equals("של") && i + 2 < lstTemplate.size() && lstTemplate.get(i + 2).equals("כל")) {
                     if(i + 3 < lstTemplate.size()) {
-                        isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 3));
+                        isSaveWord = isSaveWordInTLXTableORConstes(lstTemplate.get(i + 3));
                         if (!isSaveWord) {
                             subject = changePluralSubjectToSingle(lstTemplate.get(i + 3));
                             field = changePluralSubjectToSingle(word);
@@ -86,21 +133,25 @@ public class ClassifySentenceWithoutInternet {
                     }
                 }
             }
+
             //option1
-            if (i + 1 < lstTemplate.size() && lstTemplate.get(i + 1).equals("של") || i + 2 < lstTemplate.size() && lstTemplate.get(i + 2).equals("של")) {
+            if (i + 1 < lstTemplate.size() && lstTemplate.get(i + 1).equals("של")
+                    || i + 2 < lstTemplate.size() && lstTemplate.get(i + 2).equals("של")) {
                 continue;
             }
+
+
             if(word.equals("של") && i + 1 < lstTemplate.size() && i != 0){
-                if(isSaveWordInTLXTable(lstTemplate.get(i-1)))
+                if(isSaveWordInTLXTableORConstes(lstTemplate.get(i-1)))
                     continue;
                 field = changePluralSubjectToSingle(lstTemplate.get(i-1));
                 if(lstTemplate.get(i+1).equals("כל") && i + 2 < lstTemplate.size()){
-                    if(isSaveWordInTLXTable(lstTemplate.get(i+2)))
+                    if(isSaveWordInTLXTableORConstes(lstTemplate.get(i+2)))
                         continue;
                     subject = changePluralSubjectToSingle(lstTemplate.get(i+2));
                 }
                 else{
-                    if(isSaveWordInTLXTable(lstTemplate.get(i+1)))
+                    if(isSaveWordInTLXTableORConstes(lstTemplate.get(i+1)))
                         continue;
                     subject = changePluralSubjectToSingle(lstTemplate.get(i+1));
                 }
@@ -109,12 +160,13 @@ public class ClassifySentenceWithoutInternet {
                 checkFieldAndSubjectInDB(subject, field, dataType);
                 continue;
             }
+
             //option2
             if (i != 0 && (word.equals("איננו") || word.equals("אינו") ||  word.equals("היא"))) {
-                isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i - 1));
+                isSaveWord = isSaveWordInTLXTableORConstes(lstTemplate.get(i - 1));
                 if(!isSaveWord && i + 1 < lstTemplate.size()){
                     subject = changePluralSubjectToSingle(lstTemplate.get(i-1));
-                    isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 1));
+                    isSaveWord = isSaveWordInTLXTableORConstes(lstTemplate.get(i + 1));
                     if(!isSaveWord && !isNumericNumber(subject) && !isNumericNumber( lstTemplate.get(i+1))){
                         field = changePluralSubjectToSingle(lstTemplate.get(i+1));
                         dataType = GetType.getLabel(field, sentence, false);
@@ -124,144 +176,229 @@ public class ClassifySentenceWithoutInternet {
                     }
                 }
             }
+
             //option3
             //3. אם מילהלאשמורה  אינו/הוא  מילהשמורה  -  אזי הראשון הוא שדה  בתוך נושא מרכזי
             //4.  אם מילהלאשמורה{[הוא] /מילהשמורה}  (למשל אופרטור) – אזי הראשון הוא שדה בתוך נושא מרכזי
-            if (word.equals("אם") && i + 1 < lstTemplate.size()) {
-                isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 1));
-                if (!isSaveWord) {
-                    if (i + 2 < lstTemplate.size() && ( lstTemplate.get(i + 2).equals("הוא") ||  lstTemplate.get(i + 2).equals("אינו") || lstTemplate.get(i + 2).equals("היא") ||  lstTemplate.get(i + 2).equals("איננו"))) {
-                        if(i + 3 < lstTemplate.size()) {
-                            isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 3));
-                            if (isSaveWord) {
+            if ((word.equals("אם") || word.equals("וגם") || word.equals("או") || word.equals("עדכן"))
+                    && i + 2 < lstTemplate.size()) {
+                isSaveWord = isSaveWordInTLXTableORConstes(lstTemplate.get(i + 1));
+                isSaveWord2 = isSaveWordInTLXTableORConstes(lstTemplate.get(i + 2));
+                if (lstTemplate.size() == 3) { //תיקון עבור משפט 3 מילים אם מילה לא שמורה מילה שמורה, הלא שמורה שדה בנושא מרכזי
+                    if (!isSaveWord && isSaveWord2) {
+
+                        /**update values:*/
+                        subject = mainSubject;
+                        field = changePluralSubjectToSingle(lstTemplate.get(i + 1));
+                        dataType = GetType.getLabel(field, sentence, false);
+                        System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
+                        /*****************/
+
+                        checkFieldAndSubjectInDB(subject, field, dataType);
+                        continue;
+                    }
+                } else {
+                    //עבור התיקון מילה לא שמורה מילה שמורה מילה שמורה, הלא שמורה שדה בנושא מרכזי
+                    if (!isSaveWord) {
+                        if (i + 3 < lstTemplate.size()) {
+                            Boolean isSaveWord3 = isSaveWordInTLXTableORConstes(lstTemplate.get(i + 3));
+
+                            if (isSaveWord2 && isSaveWord3) {
+                                /**update values:*/
                                 subject = mainSubject;
                                 field = lstTemplate.get(i + 1);
                                 dataType = GetType.getLabel(field, sentence, false);
                                 System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
+                                /*****************/
+
                                 checkFieldAndSubjectInDB(subject, field, dataType);
                                 continue;
                             }
                         }
-                    }
-                    //option8b
-                    //מילהלאשמורה [טקסט שמור] של כל מילהלאשמורה -  שדה והשני זה נושא  (אם)8
-                    if (i + 2 < lstTemplate.size() && lstTemplate.get(i + 2).equals("של") && i + 3 < lstTemplate.size() && lstTemplate.get(i + 3).equals("כל")) {
-                        if(i + 4 < lstTemplate.size()) {
-                            isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 4));
-                            if (!isSaveWord) {
-                                subject = lstTemplate.get(i + 4);
-                                field = lstTemplate.get(i + 1);
+
+                        //option8b
+                        //מילהלאשמורה [טקסט שמור] של כל מילהלאשמורה -  שדה והשני זה נושא  (אם)8
+                        if (i + 2 < lstTemplate.size() && lstTemplate.get(i + 2).equals("של") && i + 3 < lstTemplate.size() && lstTemplate.get(i + 3).equals("כל")) {
+                            if (i + 4 < lstTemplate.size()) {
+                                isSaveWord = isSaveWordInTLXTableORConstes(lstTemplate.get(i + 4));
+                                if (!isSaveWord) {
+                                    /**update values:*/
+                                    subject = lstTemplate.get(i + 4);
+                                    field = lstTemplate.get(i + 1);
+                                    dataType = GetType.getLabel(field, sentence, false);
+                                    System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
+                                    /*****************/
+
+                                    checkFieldAndSubjectInDB(subject, field, dataType);
+                                    continue;
+                                }
+                            }
+                        }
+
+                        //option4
+                        //4.  אם מילהלאשמורה{[הוא] /מילהשמורה}  (למשל אופרטור) – אזי הראשון הוא שדה בתוך נושא מרכזי
+//                        if (i + 2 < lstTemplate.size() && (lstTemplate.get(i + 2).equals("היא") || lstTemplate.get(i + 2).equals("אינו") || lstTemplate.get(i + 2).equals("הוא"))) {
+//                            continue;
+//                        }
+
+                        if (i + 2 < lstTemplate.size()){
+                            isSaveWord = isSaveWordInTLXTableORConstes(lstTemplate.get(i + 2));
+                            if(isSaveWord){
+                                /**update values:*/
+                                subject = mainSubject;
+                                field = changePluralSubjectToSingle(lstTemplate.get(i + 1));
                                 dataType = GetType.getLabel(field, sentence, false);
                                 System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
+                                /*****************/
+
                                 checkFieldAndSubjectInDB(subject, field, dataType);
                                 continue;
                             }
                         }
                     }
-                    //option4
-                    //4.  אם מילהלאשמורה{[הוא] /מילהשמורה}  (למשל אופרטור) – אזי הראשון הוא שדה בתוך נושא מרכזי
-                    if(i + 2 < lstTemplate.size() && (lstTemplate.get(i + 2).equals("היא") || lstTemplate.get(i + 2).equals("אינו") || lstTemplate.get(i + 2).equals("הוא"))){
-                        continue;
-                    }
-                    subject = mainSubject;
-                    field = changePluralSubjectToSingle(lstTemplate.get(i+1));
-                    dataType = GetType.getLabel(field, sentence, false);
-                    System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
-                    checkFieldAndSubjectInDB(subject, field, dataType);
-                    continue;
-                } else {
-                    //option9-10
-                    //  אם מילהשמורה טקסט שמור של כל ה-  מילהלא שמורה [מילהלאשמורה]  -  הראשון שדה השני נושא ברבים אחריו שדה לוואי
-                    if (i + 2 < lstTemplate.size() && lstTemplate.get(i + 2).equals("של")
-                            && i + 3 < lstTemplate.size() && lstTemplate.get(i + 3).equals("כל")
-                            && i + 4 < lstTemplate.size() && lstTemplate.get(i + 4).equals("ה-")) {
-                        if (i + 5 < lstTemplate.size()) {
-                            pluralSubject = lstTemplate.get(i + 5);
-                            subject = changePluralSubjectToSingle(pluralSubject);
-                            field = changePluralSubjectToSingle(lstTemplate.get(i + 1));
-                            dataType = GetType.getLabel(field, sentence, true);
-                            System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
-                            checkFieldAndSubjectInDB(subject, field, dataType);
-
-                            if (i + 6 < lstTemplate.size()) {
-                                isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 6));
-                                if (!isSaveWord) {
-                                    field = changePluralSubjectToSingle(lstTemplate.get(i + 6));
+                    else {
+                        //option9-10
+                        //  אם מילהשמורה טקסט שמור של כל ה-  מילהלא שמורה [מילהלאשמורה]  -  הראשון שדה השני נושא ברבים אחריו שדה לוואי
+                        if (i + 2 < lstTemplate.size() && lstTemplate.get(i + 2).equals("של")
+                                && i + 3 < lstTemplate.size() && lstTemplate.get(i + 3).equals("כל")) {
+                            if(i + 4 < lstTemplate.size() && lstTemplate.get(i + 4).equals("ה-")) {
+                                if (i + 5 < lstTemplate.size()) {
+                                    /**update values:*/
+                                    pluralSubject = lstTemplate.get(i + 5);
+                                    subject = changePluralSubjectToSingle(pluralSubject);
+                                    field = changePluralSubjectToSingle(lstTemplate.get(i + 1));
                                     dataType = GetType.getLabel(field, sentence, true);
                                     System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
+                                    /*****************/
+
                                     checkFieldAndSubjectInDB(subject, field, dataType);
-                                }
-                            }
-                            continue;
-                        }
-                    }
-                    //10 אם מילהשמורה טקסט שמור [מספר בעברית]   מילהלאשמורה [מילהלאשמורה]   -  הראשון שדה השני נושא ברבים אחריו שדה לוואי ו
-                    if (i + 2 < lstTemplate.size() && isNumericNumber(lstTemplate.get(i + 2))) {
-                        if (i + 3 < lstTemplate.size()) {
-                            isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 3));
-                            if (!isSaveWord) {
-                                pluralSubject = lstTemplate.get(i + 3);
-                                subject = changePluralSubjectToSingle(changePluralSubjectToSingle(pluralSubject));
-                                field = changePluralSubjectToSingle(lstTemplate.get(i + 1));
-                                dataType = GetType.getLabel(field, sentence, true);
-                                System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
-                                checkFieldAndSubjectInDB(subject, field, dataType);
 
-                                if (i + 4 < lstTemplate.size()) {
-                                    isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 4));
-                                    if (!isSaveWord) {
-                                        field = changePluralSubjectToSingle(lstTemplate.get(i + 4));
-                                        dataType = GetType.getLabel(field, sentence, true);
-                                        System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
-                                        checkFieldAndSubjectInDB(subject, field, dataType);
+                                    if (i + 6 < lstTemplate.size()) {
+                                        isSaveWord = isSaveWordInTLXTableORConstes(lstTemplate.get(i + 6));
+                                        if (!isSaveWord) {
+                                            field = changePluralSubjectToSingle(lstTemplate.get(i + 6));
+                                            dataType = GetType.getLabel(field, sentence, true);
+                                            System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
+                                            checkFieldAndSubjectInDB(subject, field, dataType);
+                                        }
                                     }
+                                    continue;
                                 }
-                                continue;
+                            }
+                            else{
+                                if (i + 4 < lstTemplate.size()) {
+                                    /**update values:*/
+                                    pluralSubject = lstTemplate.get(i + 4);
+                                    subject = changePluralSubjectToSingle(pluralSubject);
+                                    field = changePluralSubjectToSingle(lstTemplate.get(i + 1));
+                                    dataType = GetType.getLabel(field, sentence, true);
+                                    System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
+                                    /*****************/
+
+                                    checkFieldAndSubjectInDB(subject, field, dataType);
+
+                                    if (i + 5 < lstTemplate.size()) {
+                                        isSaveWord = isSaveWordInTLXTableORConstes(lstTemplate.get(i + 5));
+                                        if (!isSaveWord) {
+                                            field = changePluralSubjectToSingle(lstTemplate.get(i + 5));
+                                            dataType = GetType.getLabel(field, sentence, true);
+                                            System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
+                                            checkFieldAndSubjectInDB(subject, field, dataType);
+                                        }
+                                    }
+                                    continue;
+                                }
                             }
                         }
-                    }
+                        //10 אם מילהשמורה טקסט שמור [מספר בעברית]   מילהלאשמורה [מילהלאשמורה]   -  הראשון שדה השני נושא ברבים אחריו שדה לוואי ו
+                        if (i + 2 < lstTemplate.size() && isNumericNumber(lstTemplate.get(i + 2))) {
+                            if (i + 3 < lstTemplate.size()) {
+                                isSaveWord = isSaveWordInTLXTableORConstes(lstTemplate.get(i + 3));
+                                if (!isSaveWord) {
+                                    /**update values:*/
+                                    pluralSubject = lstTemplate.get(i + 3);
+                                    subject = changePluralSubjectToSingle(changePluralSubjectToSingle(pluralSubject));
+                                    field = changePluralSubjectToSingle(lstTemplate.get(i + 1));
+                                    dataType = GetType.getLabel(field, sentence, true);
+                                    System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
+                                    /*****************/
 
+                                    checkFieldAndSubjectInDB(subject, field, dataType);
+
+                                    if (i + 4 < lstTemplate.size()) {
+                                        isSaveWord = isSaveWordInTLXTableORConstes(lstTemplate.get(i + 4));
+                                        if (!isSaveWord) {
+                                            field = changePluralSubjectToSingle(lstTemplate.get(i + 4));
+                                            dataType = GetType.getLabel(field, sentence, true);
+                                            System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
+                                            checkFieldAndSubjectInDB(subject, field, dataType);
+                                        }
+                                    }
+                                    continue;
+                                }
+                            }
+                        }
+
+                    }
                 }
             }
+
             //option11
             if (i + 1 < lstTemplate.size() && (word.equals("ה-") || word.equals("ל-"))) {
                 if(word.equals("ל-")){
                     if(i - 1 < lstTemplate.size() && i - 2 < lstTemplate.size()){
-                        isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i-1));
+                        isSaveWord = isSaveWordInTLXTableORConstes(lstTemplate.get(i-1));
                         if(!isSaveWord && lstTemplate.get(i-2).equals("עדכן")){
+                            /**update values:*/
                             subject = mainSubject;
                             field = lstTemplate.get(i-1);
                             dataType = GetType.getLabel(field, sentence, false);
                             System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
+                            /*****************/
+
                             checkFieldAndSubjectInDB(subject, field, dataType);
-                            continue;
+                            isSaveWord = isSaveWordInTLXTableORConstes(lstTemplate.get(i+1));
+                            if(isSaveWord) {
+                                continue;
+                            }
                         }
                     }
                 }
                 if(!isNumericNumber(lstTemplate.get(i + 1))) {
-                    isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i + 1));
+                    isSaveWord = isSaveWordInTLXTableORConstes(lstTemplate.get(i + 1));
                     if (!isSaveWord && !lstTemplate.get(i + 1).startsWith("\"") && !lstTemplate.get(i + 1).endsWith("\"")) {
+                        /**update values:*/
                         subject = changePluralSubjectToSingle(lstTemplate.get(i + 1));
                         field = null;
                         dataType = GetType.getLabel(field, sentence, false);
                         System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
+                        /*****************/
+
                         checkFieldAndSubjectInDB(subject, field, dataType);
                         continue;
                     }
                 }
             }
+
             //option12
             if (i + 1 < lstTemplate.size() && (word.equals("ו-") || word.equals("וגם"))) {
-                isSaveWord = isSaveWordInTLXTable(lstTemplate.get(i+1));
+                isSaveWord = isSaveWordInTLXTableORConstes(lstTemplate.get(i+1));
                 if(!isSaveWord){
+                    /**update values:*/
                     subject = mainSubject;
                     field = changePluralSubjectToSingle(lstTemplate.get(i+1));
                     dataType = GetType.getLabel(field, sentence, false);
                     System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
+                    /*****************/
+
                     checkFieldAndSubjectInDB(subject, field, dataType);
                 }
             }
         }
+    }
+
+    private static boolean isOperator(String s) {
+       return operators.contains(s);
     }
 
     private static boolean isNumericNumber(String s) {
@@ -278,12 +415,12 @@ public class ClassifySentenceWithoutInternet {
         }
 
         // Check if the string is a Hebrew number or contains only digits.
-        if (s.equals("אחת") || s.equals("שתיים") || s.equals("שלוש") || s.equals("ארבע") || s.equals("חמש")
-                || s.equals("שש") || s.equals("שבע") || s.equals("שמונה") || s.equals("תשע") || s.equals("עשר")
-                || s.equals("אחד") || s.equals("שניים") || s.equals("שלושה") || s.equals("ארבעה") || s.equals("חמישה")
-                || s.equals("שישה") || s.equals("שיבעה") || s.equals("תשעה") || s.equals("עשרה")) {
-            return true;
-        }
+//        if (s.equals("אחת") || s.equals("שתיים") || s.equals("שלוש") || s.equals("ארבע") || s.equals("חמש")
+//                || s.equals("שש") || s.equals("שבע") || s.equals("שמונה") || s.equals("תשע") || s.equals("עשר")
+//                || s.equals("אחד") || s.equals("שניים") || s.equals("שלושה") || s.equals("ארבעה") || s.equals("חמישה")
+//                || s.equals("שישה") || s.equals("שיבעה") || s.equals("תשעה") || s.equals("עשרה")) {
+//            return true;
+//        }
 
         // If the string is not empty and does not represent a numeric value, return false.
         return false;
@@ -345,7 +482,15 @@ public class ClassifySentenceWithoutInternet {
         return output;
     }
 
-    private static boolean isSaveWordInTLXTable(String token) throws SQLException {
+    private static boolean isSaveWordInTLXTableORConstes(String token) throws SQLException {
+
+        if(token.startsWith("\"") && token.endsWith("\"")){
+            return true;
+        }
+
+        if(isNumericNumber(token)){
+            return true;
+        }
 
         Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
 
@@ -366,15 +511,30 @@ public class ClassifySentenceWithoutInternet {
         // Check if the word is in the table.
         return resultSet.next();
     }
+    public static String removeParenthesis(String word) {
+
+        // בודק אם התו הראשון הוא "("
+        if ((word.charAt(0) == '(') || (word.charAt(0) == ')')) {
+            word = word.substring(1);
+        }
+
+        // בודק אם התו האחרון הוא ")"
+        if ((word.charAt(word.length() - 1) == ')') || (word.charAt(word.length() - 1) == '(')) {
+            word = word.substring(0, word.length() - 1);
+        }
+
+        return word;
+    }
 
     private static void checkFieldAndSubjectInDB(String subject, String field, String dataType) {
         String hebrewField = field;
         String englishField;
-        String hebrewSubject = subject;
+        String hebrewSubject = removeParenthesis(subject);
         String englishSubject;
         if (hebrewField == null) {
             englishField = null;
         } else {
+            hebrewField = removeParenthesis(field);
             englishField = TranslateWithoutInternet.retrieveEnglishValuesFromHebrewValues(hebrewField);
         }
         if(subject == "mainSubject"){

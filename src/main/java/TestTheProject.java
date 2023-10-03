@@ -1,5 +1,6 @@
 import java.io.*;
 import java.sql.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class TestTheProject {
     final static String PASSWORD = "logistcourse1";
 
     public static void main(String[] args) {
+        //updateTables();
         Connection conn = null;
         Statement stmt = null;
 
@@ -41,8 +43,18 @@ public class TestTheProject {
             sentenceAfterAddUnderscoreInQuotes = replaceSpacesWithUnderscoresInQuotes(sentence);
             System.out.println("Sentence num " + counterForPrint + " : " +sentenceAfterAddUnderscoreInQuotes);
             counterForPrint++;
-            ClassifySentenceWithoutInternet.readTemplate(sentenceAfterAddUnderscoreInQuotes, conn, stmt, rs);
+            ClassifySentenceWithoutInternet.readTemplate(sentenceAfterAddUnderscoreInQuotes);
         }
+    }
+
+    private static void updateTables() {
+        try {
+            GetType.deleteVARTYPETable();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        GetType.createVARTYPETableIfNotExists();
+        TranslateWithoutInternet.createCopingTableIfNotExists();
     }
 
     public static String removeQuotes(String sentence) {
