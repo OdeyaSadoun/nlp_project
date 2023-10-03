@@ -12,8 +12,8 @@ public class TranslateWithoutInternet {
 
 
     public static void main(String[] args) {
-        createCopingTableIfNotExists();
-        System.out.println(retrieveEnglishValuesFromHebrewValues("אחוז_בלון_ממחיר_בטוחה"));
+        //createCopingTableIfNotExists(conn, rs);
+        //System.out.println(retrieveEnglishValuesFromHebrewValues("אחוז_בלון_ממחיר_בטוחה", conn, stmt, rs));
     }
 
     public static char[] breakWordIntoLetters(String word) {
@@ -47,20 +47,18 @@ public class TranslateWithoutInternet {
     }
 
 
-    public static void createCopingTableIfNotExists() {
+    public static void createCopingTableIfNotExists(Connection conn, Statement stmt, ResultSet rs) {
 
-        Connection conn = null;
-        Statement stmt = null;
         try {
-            Class.forName(JDBC_DRIVER);
-            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-            stmt = conn.createStatement();
+           // Class.forName(JDBC_DRIVER);
+            //conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+            //stmt = conn.createStatement();
 
             // SQL query to check if the table exists
             String checkTableQuery = "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'Copying'";
-            ResultSet resultSet = stmt.executeQuery(checkTableQuery);
-            resultSet.next();
-            int tableCount = resultSet.getInt(1);
+            rs = stmt.executeQuery(checkTableQuery);
+            rs.next();
+            int tableCount = rs.getInt(1);
 
             if (tableCount == 0) {
                 // Create the table if it doesn't exist
@@ -101,47 +99,37 @@ public class TranslateWithoutInternet {
                 for (Map.Entry<String, String> entry : hebrewToEnglishMapping.entrySet()) {
                     String hebrew = entry.getKey();
                     String english = entry.getValue();
-                    insertToDatabase(hebrew, english);
+                    insertToDatabase(hebrew, english, conn,stmt);
                 }
             }
-            stmt.close();
-            conn.close();
+
 
         }
-        catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+
         catch (SQLException e) {
             e.printStackTrace();
         }
-        finally {
-            try {
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+//        finally {
+//            try {
+//                if (stmt != null) stmt.close();
+//                if (conn != null) conn.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
-    public static String retrieveEnglishValuesFromHebrewValues(String word) {
-
-        // Database credentials
-        Connection conn = null;
-        Statement stmt = null;
-
-        //Connect to the database
-        ResultSet rs = null;
+    public static String retrieveEnglishValuesFromHebrewValues(String word, Connection conn, Statement stmt, ResultSet rs) {
 
         String translateWord = "";
 
         //check if the hebrew word exist in database or in ktclass or in ktattribute:
         //if yes, we take the translate from the database
-        if(isWordExistInKTCLASSTable(word) != null){
-            translateWord = isWordExistInKTCLASSTable(word);
+        if(isWordExistInKTCLASSTable(word, conn, stmt, rs)!= null){
+            translateWord = isWordExistInKTCLASSTable(word, conn, stmt, rs);
         }
-        else if(isWordExistInKTATTRIBUTETable(word) != null){
-            translateWord = isWordExistInKTATTRIBUTETable(word);
+        else if(isWordExistInKTATTRIBUTETable(word, conn, stmt, rs)!= null){
+            translateWord = isWordExistInKTATTRIBUTETable(word, conn, stmt, rs);
         }
         //if not, we use this function:
         else{
@@ -149,9 +137,9 @@ public class TranslateWithoutInternet {
             StringBuilder wordBuilder = new StringBuilder();
 
             try {
-                Class.forName(JDBC_DRIVER);
-                conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-                stmt = conn.createStatement();
+//                Class.forName(JDBC_DRIVER);
+//                conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+//                stmt = conn.createStatement();
 
                 if(letters[0]=='ב'){
                     //b
@@ -269,112 +257,110 @@ public class TranslateWithoutInternet {
                     }
                 }
 //                rs.close();
-                stmt.close();
-                conn.close();
-            }
-            catch (ClassNotFoundException e) {
-                e.printStackTrace();
+//                stmt.close();
+//                conn.close();
             } catch (SQLException e) {
                 e.printStackTrace();
-            } finally {
-                try {
-                    if (rs != null) rs.close();
-                    if (stmt != null) stmt.close();
-                    if (conn != null) conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
             }
+//            finally {
+//                try {
+//                    if (rs != null) rs.close();
+//                    if (stmt != null) stmt.close();
+//                    if (conn != null) conn.close();
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+//            }
             return wordBuilder.toString();
         }
         return translateWord;
     }
 
-    private static String isWordExistInKTATTRIBUTETable(String word) {
-        Connection conn = null;
+    private static String isWordExistInKTATTRIBUTETable(String word, Connection conn, Statement stmt, ResultSet rs) {
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
+
 
         try {
-            Class.forName(JDBC_DRIVER);
-            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+//            Class.forName(JDBC_DRIVER);
+//            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
 
             String selectQuery = "SELECT ATTR_CODE_NAME FROM KTATTRIBUTE WHERE NAME = ?";
             preparedStatement = conn.prepareStatement(selectQuery);
             preparedStatement.setString(1, word);
 
-            resultSet = preparedStatement.executeQuery();
+            rs = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
+            if (rs.next()) {
                 // Word exists in the table
-                String englishWord = resultSet.getString("ATTR_CODE_NAME");
+                String englishWord = rs.getString("ATTR_CODE_NAME");
                 System.out.println("English Word: " + englishWord);
                 return englishWord;
             }
 
             return null;
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return null;
-        } finally {
+        }
+        finally {
             try {
-                if (resultSet != null) resultSet.close();
+                //if (rs != null) rs.close();
                 if (preparedStatement != null) preparedStatement.close();
-                if (conn != null) conn.close();
+                //if (conn != null) conn.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private static String isWordExistInKTCLASSTable(String word) {
+    private static String isWordExistInKTCLASSTable(String word, Connection conn, Statement stmt, ResultSet rs) {
 
-        Connection conn = null;
+
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
+
 
         try {
-            Class.forName(JDBC_DRIVER);
-            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+//            Class.forName(JDBC_DRIVER);
+//            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
 
             String selectQuery = "SELECT CLASS_CODE_NAME FROM KTCLASS WHERE NAME = ?";
             preparedStatement = conn.prepareStatement(selectQuery);
             preparedStatement.setString(1, word);
 
-            resultSet = preparedStatement.executeQuery();
+            rs = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
+            if (rs.next()) {
                 // Word exists in the table
-                String englishWord = resultSet.getString("CLASS_CODE_NAME");
+                String englishWord = rs.getString("CLASS_CODE_NAME");
                 System.out.println("English Word: " + englishWord);
                 return englishWord;
             }
 
             return null;
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return null;
         } finally {
             try {
-                if (resultSet != null) resultSet.close();
+                //if (rs != null) rs.close();
                 if (preparedStatement != null) preparedStatement.close();
-                if (conn != null) conn.close();
+                //if (conn != null) conn.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public static void insertToDatabase(String hebrew, String english){
+    public static void insertToDatabase(String hebrew, String english, Connection conn, Statement stmt){
 
         // Database credentials
-        Connection conn = null;
-        Statement stmt = null;
+//        Connection conn = null;
+//        Statement stmt = null;
         //Connect to the database
 
         try{
-            Class.forName(JDBC_DRIVER);
-            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+//            Class.forName(JDBC_DRIVER);
+//            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
             String insertQuery = "INSERT INTO Copying (Hebrew, English) VALUES (?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(insertQuery);
 
@@ -384,20 +370,17 @@ public class TranslateWithoutInternet {
             preparedStatement.executeUpdate();
             preparedStatement.close();
 
-            conn.close();
-        }
-        catch (ClassNotFoundException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                //if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
+//        finally {
+//            try {
+//                //if (rs != null) rs.close();
+//                if (stmt != null) stmt.close();
+//                if (conn != null) conn.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 }

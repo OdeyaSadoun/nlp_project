@@ -9,14 +9,14 @@ public class GetType {
     final static String PASSWORD = "logistcourse1";
     final static String DEFAULT_TYPE = "Double";
 
-    public static String getLabel(String word, String sentence, Boolean pluralWord) {
+    public static String getLabel(String word, String sentence, Boolean pluralWord, Connection conn, Statement stmt, ResultSet rs) {
 
         if(word == null){
             return DEFAULT_TYPE;
         }
         //check if the word exist in the type table:
-        if(isWordExistInVARTYPETable(word) != null){
-            return isWordExistInVARTYPETable(word);
+        if(isWordExistInVARTYPETable(word, conn, stmt, rs) != null){
+            return isWordExistInVARTYPETable(word, conn, stmt, rs);
         }
         if(pluralWord){
             return "Bool"; // boolean type value
@@ -44,14 +44,11 @@ public class GetType {
         return false;
     }
 
-    public static void insertToDatabase(String hebrewWord, String type){
+    public static void insertToDatabase(String hebrewWord, String type, Connection conn, Statement stmt){
 
-        Connection conn = null;
-        Statement stmt = null;
+
 
         try{
-            Class.forName(JDBC_DRIVER);
-            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
             String insertQuery = "INSERT INTO VARTYPE (HEBREW_WORD, VAR_TYPE) VALUES (?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(insertQuery);
 
@@ -61,55 +58,35 @@ public class GetType {
             preparedStatement.executeUpdate();
             preparedStatement.close();
 
-            conn.close();
-        }
-        catch (ClassNotFoundException e) {
-            e.printStackTrace();
+
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
+
     }
 
-    public static void deleteVARTYPETable() throws SQLException {
+    public static void deleteVARTYPETable(Connection conn, Statement stmt) throws SQLException {
 
-        Connection conn = null;
-        Statement stmt = null;
 
         // יצירת השאילתה למחיקת הטבלה
         String deleteTableQuery = "DROP TABLE VARTYPE";
 
         // ביצוע השאילתה
-        conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-        stmt = conn.createStatement();
-
         stmt.execute(deleteTableQuery);
 
         // סגירת השאילתה והחיבור
-        stmt.close();
     }
 
-    public static void createVARTYPETableIfNotExists() {
+    public static void createVARTYPETableIfNotExists(Connection conn, Statement stmt, ResultSet rs) {
 
-        Connection conn = null;
-        Statement stmt = null;
 
         try {
-            Class.forName(JDBC_DRIVER);
-            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-            stmt = conn.createStatement();
 
             // SQL query to check if the table exists
             String checkTableQuery = "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'VARTYPE'";
-            ResultSet resultSet = stmt.executeQuery(checkTableQuery);
-            resultSet.next();
-            int tableCount = resultSet.getInt(1);
+            rs = stmt.executeQuery(checkTableQuery);
+            rs.next();
+            int tableCount = rs.getInt(1);
 
             if (tableCount == 0) {
                 // Create the table if it doesn't exist
@@ -178,61 +155,54 @@ public class GetType {
                 for (Map.Entry<String, String> entry : knownWords.entrySet()) {
                     String hebrewWord = entry.getKey();
                     String type = entry.getValue();
-                    insertToDatabase(hebrewWord, type);
+                    insertToDatabase(hebrewWord, type, conn, stmt);
                 }
             }
-            stmt.close();
-            conn.close();
 
 
-        }
-        catch (ClassNotFoundException e) {
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+//        finally {
+//            try {
+//                if (stmt != null) stmt.close();
+//                if (conn != null) conn.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
-    private static String isWordExistInVARTYPETable(String word) {
-        Connection conn = null;
+    private static String isWordExistInVARTYPETable(String word, Connection conn, Statement stmt, ResultSet rs) {
+
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
 
         try {
-            Class.forName(JDBC_DRIVER);
-            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
 
             String selectQuery = "SELECT VAR_TYPE FROM VARTYPE WHERE HEBREW_WORD = ?";
             preparedStatement = conn.prepareStatement(selectQuery);
             preparedStatement.setString(1, word);
 
-            resultSet = preparedStatement.executeQuery();
+            rs = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
+            if (rs.next()) {
                 // Word exists in the table
-                String type = resultSet.getString("VAR_TYPE");
+                String type = rs.getString("VAR_TYPE");
                 System.out.println("VAR_TYPE: " + type);
                 return type;
             }
 
             return null;
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return null;
-        } finally {
+        }
+        finally {
             try {
-                if (resultSet != null) resultSet.close();
+                //if (rs != null) resultSet.close();
                 if (preparedStatement != null) preparedStatement.close();
-                if (conn != null) conn.close();
+                //if (conn != null) conn.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -240,6 +210,6 @@ public class GetType {
     }
 
     public static void main(String[] args) {
-        createVARTYPETableIfNotExists();
+       // createVARTYPETableIfNotExists();
     }
 }

@@ -14,7 +14,7 @@ public class SaveToDatabase {
 
 
     public static void main(String[] args) {
-         addSubjectToDatabase("בלהלבה", "blabla", "גדי", "gdi", "Bool");
+    //     addSubjectToDatabase("בלהלבה", "blabla", "גדי", "gdi", "Bool", conn, stmt, rs);
     }
 
     public static String getDateWithMS() {
@@ -28,10 +28,11 @@ public class SaveToDatabase {
      * Function with a query to find class index to sent to insert class query
      *
      * @param englishSubject for check if the class index need to be 1
+     * @param rs
      */
-    private static int getClassIndex(String englishSubject, Statement stmt) throws SQLException {
+    private static int getClassIndex(String englishSubject, Statement stmt, ResultSet rs) throws SQLException {
         String queryClassIndex = "SELECT MAX(CLASS_INDEX) + 1 AS next_index FROM KVCLASS";
-        ResultSet rs = stmt.executeQuery(queryClassIndex);
+        rs = stmt.executeQuery(queryClassIndex);
         int classIndex = 0;
         if (rs.next()) {
             if (englishSubject == "mainSubject") {
@@ -48,15 +49,16 @@ public class SaveToDatabase {
 
     /**
      * Function with a query to check if subject is in KTCLASS table
-     *
-     * @param subject the subject that need to check if exist in DB
+     *  @param subject the subject that need to check if exist in DB
      * @param conn           for the connection to DB
+     * @param rs
      */
-    private static boolean isSubjectInKTCLASSTable(String subject, Connection conn) throws SQLException {
+    private static boolean
+    isSubjectInKTCLASSTable(String subject, Connection conn, ResultSet rs) throws SQLException {
         String checkSubjectInKTCLASSTableQuery = "SELECT NAME FROM KTCLASS WHERE NAME = ?";
         PreparedStatement preparedStatement = conn.prepareStatement(checkSubjectInKTCLASSTableQuery);
         preparedStatement.setString(1, subject);
-        ResultSet rs = preparedStatement.executeQuery();
+        rs = preparedStatement.executeQuery();
 
         //return if the subject exists in the table
         return rs.next();
@@ -93,16 +95,16 @@ public class SaveToDatabase {
 
     /**
      * Function for query to find attribute index to sent to insert attribute query
-     *
-     * @param englishSubject the subject that need to find the last index of attribute
+     *  @param englishSubject the subject that need to find the last index of attribute
      * @param conn           for the connection to DB
+     * @param rs
      */
-    private static int getAttributeIndex(String englishSubject, Connection conn) throws SQLException {
+    private static int getAttributeIndex(String englishSubject, Connection conn, ResultSet rs) throws SQLException {
         String queryAttributeIndex = "SELECT COALESCE(MAX(ATTRIBUTE_INDEX), 0) + 1 AS next_index FROM KVATTRIBUTE WHERE CLASS_CODE_NAME = ?";
 
         PreparedStatement preparedStatement = conn.prepareStatement(queryAttributeIndex);
         preparedStatement.setString(1, englishSubject);
-        ResultSet rs = preparedStatement.executeQuery();
+        rs = preparedStatement.executeQuery();
 
         int attributeIndex = 0;
         if (rs.next()) {
@@ -116,18 +118,18 @@ public class SaveToDatabase {
 
     /**
      * Function to check if the field is existed in the DB
-     *
-     * @param ensubject the subject that match to this field
+     *  @param ensubject the subject that match to this field
      * @param field   the field we check if exist in the DB
      * @param conn           for the connection to DB
+     * @param rs
      */
-    private static boolean isSubjectInKTATTRIBUTETable(String ensubject, String field, Connection conn) throws SQLException {
+    private static boolean isSubjectInKTATTRIBUTETable(String ensubject, String field, Connection conn, ResultSet rs) throws SQLException {
         String getClassIdQuery = "SELECT NAME FROM KTATTRIBUTE WHERE CLASS_CODE_NAME = ? AND NAME = ?";
         PreparedStatement preparedStatement = conn.prepareStatement(getClassIdQuery);
 
         preparedStatement.setString(1, ensubject);
         preparedStatement.setString(2, field);
-        ResultSet rs = preparedStatement.executeQuery();
+        rs = preparedStatement.executeQuery();
 
         return rs.next();
     }
@@ -170,10 +172,10 @@ public class SaveToDatabase {
         preparedStatement.executeUpdate();
         preparedStatement.close();
 
-        conn.close();
+
     }
 
-    public static void addSubjectToDatabase(String hebrewField, String englishField, String hebrewSubject, String englishSubject, String type_name) {
+    public static void addSubjectToDatabase(String hebrewField, String englishField, String hebrewSubject, String englishSubject, String type_name, Connection conn, Statement stmt, ResultSet rs) {
 
         // Define constants for the field names in the KTCLASS and KTATTRIBUTE tables
         final String CURRENT_DATE = getDateWithMS();
@@ -185,9 +187,7 @@ public class SaveToDatabase {
         final int SORT_DIRECTION = 0;
 
         // Database credentials
-        ResultSet rs = null;
-        Connection conn = null;
-        Statement stmt = null;
+
 
         // More variables:
         int classIndex = 0;
@@ -196,17 +196,17 @@ public class SaveToDatabase {
 
         try {
             //Connect to the database
-            Class.forName(JDBC_DRIVER);
-            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-            stmt = conn.createStatement();
+//            Class.forName(JDBC_DRIVER);
+//            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+//            stmt = conn.createStatement();
 
             //Find class index:
-            classIndex = getClassIndex(englishSubject, stmt);
+            classIndex = getClassIndex(englishSubject, stmt, rs);
 
 /******************************************************************************************/
             //Check if subject is in KTCLASS table
-            if (!isSubjectInKTCLASSTable(hebrewSubject, conn)) {
-                if(isSubjectInKTCLASSTable(englishSubject, conn))
+            if (!isSubjectInKTCLASSTable(hebrewSubject, conn, rs)) {
+                if(isSubjectInKTCLASSTable(englishSubject, conn, rs))
                 {
                     String ex = "There is problem with english subject because there is same that saved in database with hebrew subject that not same!";
                     System.out.println(ex);
@@ -229,14 +229,14 @@ public class SaveToDatabase {
             }
 /****************************************************************************************/
             //Find attribute index to sent to insert query
-            if (getAttributeIndex(englishSubject, conn) != 0) {
-                attributeIndex = getAttributeIndex(englishSubject, conn);
+            if (getAttributeIndex(englishSubject, conn, rs) != 0) {
+                attributeIndex = getAttributeIndex(englishSubject, conn, rs);
             }
 /****************************************************************************************/
             //Check if subject is in KTATTRIBUTE table
             if (englishField != null && hebrewField != null) {
-                if (!isSubjectInKTATTRIBUTETable(englishSubject, hebrewField, conn)) {
-                    if(isSubjectInKTATTRIBUTETable(englishSubject, englishField, conn))
+                if (!isSubjectInKTATTRIBUTETable(englishSubject, hebrewField, conn, rs)) {
+                    if(isSubjectInKTATTRIBUTETable(englishSubject, englishField, conn, rs))
                     {
                         String ex = "There is problem with english subject or filed because there is same that saved in database with hebrew subject or filed that not same!";
                         System.out.println(ex);
@@ -260,18 +260,17 @@ public class SaveToDatabase {
                 }
             }
 /****************************************************************************************/
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
+//        finally {
+//            try {
+//                if (rs != null) rs.close();
+//                if (stmt != null) stmt.close();
+//                if (conn != null) conn.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 }

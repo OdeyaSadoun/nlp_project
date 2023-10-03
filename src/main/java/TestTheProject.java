@@ -12,6 +12,7 @@ public class TestTheProject {
     final static String PASSWORD = "logistcourse1";
 
     public static void main(String[] args) {
+
         //updateTables();
         Connection conn = null;
         Statement stmt = null;
@@ -34,27 +35,44 @@ public class TestTheProject {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        // Read sentences from a text file.
-        List<String> sentences = readSentences("sentences28_09_2023.txt");
-        String sentenceAfterAddUnderscoreInQuotes = "";
-        int counterForPrint = 1;
-        // For each sentence, call the readTemplate function from the static class AAA and pass the sentence to the function.
-        for (String sentence : sentences) {
-            sentenceAfterAddUnderscoreInQuotes = replaceSpacesWithUnderscoresInQuotes(sentence);
-            System.out.println("Sentence num " + counterForPrint + " : " +sentenceAfterAddUnderscoreInQuotes);
-            counterForPrint++;
-            ClassifySentenceWithoutInternet.readTemplate(sentenceAfterAddUnderscoreInQuotes, conn, stmt, rs);
+        //System.out.println(TranslateWithoutInternet.retrieveEnglishValuesFromHebrewValues("אחוז_בלון_ממחיר_בטוחה", conn, stmt, rs));
+        try {
+            // Read sentences from a text file.
+            List<String> sentences = readSentences("sentences28_09_2023.txt");
+            String sentenceAfterAddUnderscoreInQuotes = "";
+            int counterForPrint = 1;
+            // For each sentence, call the readTemplate function from the static class AAA and pass the sentence to the function.
+            for (String sentence : sentences) {
+                sentenceAfterAddUnderscoreInQuotes = replaceSpacesWithUnderscoresInQuotes(sentence);
+                System.out.println("Sentence num " + counterForPrint + " : " + sentenceAfterAddUnderscoreInQuotes);
+                counterForPrint++;
+                ClassifySentenceWithoutInternet.readTemplate(sentenceAfterAddUnderscoreInQuotes, conn, stmt, rs);
+            }
         }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally{
+                try {
+                    if (rs != null) rs.close();
+                    if (stmt != null) stmt.close();
+                    if (conn != null) conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+        }
+
     }
 
-    private static void updateTables() {
+    private static void updateTables(Connection conn, Statement stmt, ResultSet rs) {
         try {
-            GetType.deleteVARTYPETable();
+            GetType.deleteVARTYPETable(conn, stmt);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        GetType.createVARTYPETableIfNotExists();
-        TranslateWithoutInternet.createCopingTableIfNotExists();
+        GetType.createVARTYPETableIfNotExists(conn, stmt, rs);
+        TranslateWithoutInternet.createCopingTableIfNotExists(conn, stmt, rs);
     }
 
     public static String removeQuotes(String sentence) {
@@ -127,6 +145,7 @@ public class TestTheProject {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
         // Return the list of sentences.
         return sentences;
