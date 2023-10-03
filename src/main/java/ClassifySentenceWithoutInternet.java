@@ -14,6 +14,29 @@ public class ClassifySentenceWithoutInternet {
 
     public static String temp = "אם גיל של לקוח גדול מ- 18 אזי הסק ש- לקוח הוא בוגר";
 
+    public static List<String> operators = Arrays.asList(
+            "@",
+            "!",
+            "+",
+            "-",
+            "*",
+            "/",
+            "(",
+            ")",
+            ",",
+            ">",
+            ">=",
+            "<",
+            "<=",
+            "==",
+            "גדול שווה",
+            "קטן שווה",
+            "קטן",
+            "גדול",
+            "שווה"
+    );
+
+
     public static void readTemplate(String sentence){
         String[] template = sentence.split(" ");
         List<String> lstTemplate = Arrays.asList(template);
@@ -33,6 +56,7 @@ public class ClassifySentenceWithoutInternet {
             System.out.println("current word: " + word);
 
             boolean isSaveWord = isSaveWordInTLXTableORConstes(word);
+            boolean isSaveWord2;
 
             boolean isQuoted = word.startsWith("\"") && word.endsWith("\"");
             if (isQuoted) {
@@ -48,7 +72,30 @@ public class ClassifySentenceWithoutInternet {
             if(isNumericNumber(word) || GetType.getNumericWord(word)){
                 continue;
             }
+            if(i + 2 < lstTemplate.size()) { //תוספת על הענין של אופרטורים 2 מילים לא שמורות ובינהן אופרטור שתיהן שדות בנושא ראשי
+                isSaveWord2 = isSaveWordInTLXTableORConstes(lstTemplate.get(i + 2));
 
+                if (!isSaveWord && isOperator(lstTemplate.get(i + 1)) && !isSaveWord2) {
+                    /**update values: (first word) */
+                    subject = mainSubject;
+                    field = changePluralSubjectToSingle(word);
+                    dataType = GetType.getLabel(field, sentence, false);
+                    System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
+                    /*****************/
+
+                    checkFieldAndSubjectInDB(subject, field, dataType);
+
+                    /**update values: (second word)*/
+                    subject = mainSubject;
+                    field = changePluralSubjectToSingle(lstTemplate.get(i + 2));
+                    dataType = GetType.getLabel(field, sentence, false);
+                    System.out.println("----------subject: " + subject + " field: " + field + " type: " + dataType + "----------");
+                    /*****************/
+
+                    checkFieldAndSubjectInDB(subject, field, dataType);
+                    continue;
+                }
+            }
             if (i + 1 < lstTemplate.size() && !isSaveWord){
                 //option5-6
                 if(lstTemplate.get(i+1).equals("קיים") ||
@@ -93,6 +140,7 @@ public class ClassifySentenceWithoutInternet {
                 continue;
             }
 
+
             if(word.equals("של") && i + 1 < lstTemplate.size() && i != 0){
                 if(isSaveWordInTLXTableORConstes(lstTemplate.get(i-1)))
                     continue;
@@ -135,7 +183,7 @@ public class ClassifySentenceWithoutInternet {
             if ((word.equals("אם") || word.equals("וגם") || word.equals("או") || word.equals("עדכן"))
                     && i + 2 < lstTemplate.size()) {
                 isSaveWord = isSaveWordInTLXTableORConstes(lstTemplate.get(i + 1));
-                boolean isSaveWord2 = isSaveWordInTLXTableORConstes(lstTemplate.get(i + 2));
+                isSaveWord2 = isSaveWordInTLXTableORConstes(lstTemplate.get(i + 2));
                 if (lstTemplate.size() == 3) { //תיקון עבור משפט 3 מילים אם מילה לא שמורה מילה שמורה, הלא שמורה שדה בנושא מרכזי
                     if (!isSaveWord && isSaveWord2) {
 
@@ -347,6 +395,10 @@ public class ClassifySentenceWithoutInternet {
                 }
             }
         }
+    }
+
+    private static boolean isOperator(String s) {
+       return operators.contains(s);
     }
 
     private static boolean isNumericNumber(String s) {
