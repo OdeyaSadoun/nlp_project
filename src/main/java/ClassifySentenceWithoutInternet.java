@@ -309,7 +309,10 @@ public class ClassifySentenceWithoutInternet {
                             /*****************/
 
                             checkFieldAndSubjectInDB(subject, field, dataType);
-                            continue;
+                            isSaveWord = isSaveWordInTLXTableORConstes(lstTemplate.get(i+1));
+                            if(isSaveWord) {
+                                continue;
+                            }
                         }
                     }
                 }
@@ -456,15 +459,30 @@ public class ClassifySentenceWithoutInternet {
         // Check if the word is in the table.
         return resultSet.next();
     }
+    public static String removeParenthesis(String word) {
+
+        // בודק אם התו הראשון הוא "("
+        if ((word.charAt(0) == '(') || (word.charAt(0) == ')')) {
+            word = word.substring(1);
+        }
+
+        // בודק אם התו האחרון הוא ")"
+        if ((word.charAt(word.length() - 1) == ')') || (word.charAt(word.length() - 1) == '(')) {
+            word = word.substring(0, word.length() - 1);
+        }
+
+        return word;
+    }
 
     private static void checkFieldAndSubjectInDB(String subject, String field, String dataType) {
         String hebrewField = field;
         String englishField;
-        String hebrewSubject = subject;
+        String hebrewSubject = removeParenthesis(subject);
         String englishSubject;
         if (hebrewField == null) {
             englishField = null;
         } else {
+            hebrewField = removeParenthesis(field);
             englishField = TranslateWithoutInternet.retrieveEnglishValuesFromHebrewValues(hebrewField);
         }
         if(subject == "mainSubject"){
