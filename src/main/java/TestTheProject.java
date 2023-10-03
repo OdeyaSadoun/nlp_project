@@ -43,7 +43,9 @@ public class TestTheProject {
             sentenceAfterAddUnderscoreInQuotes = replaceSpacesWithUnderscoresInQuotes(sentence);
             System.out.println("Sentence num " + counterForPrint + " : " +sentenceAfterAddUnderscoreInQuotes);
             counterForPrint++;
-            ClassifySentenceWithoutInternet.readTemplate(sentenceAfterAddUnderscoreInQuotes, conn, stmt, rs);
+//            ClassifySentenceWithoutInternet.readTemplate(sentenceAfterAddUnderscoreInQuotes, conn, stmt, rs);
+             ClassifySentenceWithoutInternet.readTemplate(sentenceAfterAddUnderscoreInQuotes);
+
         }
     }
 
