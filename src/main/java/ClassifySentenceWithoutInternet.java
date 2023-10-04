@@ -428,20 +428,22 @@ public class ClassifySentenceWithoutInternet {
 
     private static boolean isNumericNumber(String s, Connection conn, Statement stmt, ResultSet rs) {
 
-        // Check if the string is empty or null.
-        if (s == null || s.isEmpty()) {
-            return false;
-        }
-
-        // Check if the string contains any non-numeric characters.
-        for (char c : s.toCharArray()) {
-            if (!Character.isDigit(c)) {
+            // Check if the string is empty or null.
+            if (s == null || s.isEmpty()) {
                 return false;
             }
-        }
 
-        // If the string contains only digits, return true.
-        return true;
+            // Check if the string contains any non-numeric characters.
+            for (char c : s.toCharArray()) {
+                if (!Character.isDigit(c) && c != '.') {
+                    return false;
+                }
+            }
+
+            // If the string contains only digits, return true.
+            return true;
+
+
     }
 
     public static String changePluralSubjectToSingle(String pluralSubject) {
