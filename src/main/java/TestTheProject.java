@@ -13,7 +13,6 @@ public class TestTheProject {
 
     public static void main(String[] args) {
 
-        //updateTables();
         Connection conn = null;
         Statement stmt = null;
 
@@ -37,9 +36,11 @@ public class TestTheProject {
         }
         //System.out.println(TranslateWithoutInternet.retrieveEnglishValuesFromHebrewValues("אחוז_בלון_ממחיר_בטוחה", conn, stmt, rs));
         try {
+            updateTables(conn, stmt,  rs);
+
             // Read sentences from a text file.
-            List<String> sentences = readSentences("sentences14_10_2023.txt");
-            String sentenceAfterAddUnderscoreInQuotes = "";
+            List<String> sentences = readSentences("sentencesForDEB_RULES.txt");
+            String sentenceAfterAddUnderscoreInQuotes;
             int counterForPrint = 1;
             // For each sentence, call the readTemplate function from the static class AAA and pass the sentence to the function.
             for (String sentence : sentences) {
@@ -64,31 +65,22 @@ public class TestTheProject {
         }
 
     }
-
-    private static void updateTables(Connection conn, Statement stmt, ResultSet rs) {
+    private static void updateCopingTable(Connection conn, Statement stmt, ResultSet rs) {
         try {
-            GetType.deleteVARTYPETable(conn, stmt);
+            TranslateWithoutInternet.deleteCopyingTable(conn, stmt, rs);
+            TranslateWithoutInternet.createCopyingTableIfNotExists(conn, stmt, rs);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        GetType.createVARTYPETableIfNotExists(conn, stmt, rs);
-        TranslateWithoutInternet.createCopingTableIfNotExists(conn, stmt, rs);
     }
-
-    public static String removeQuotes(String sentence) {
-        // Create a new string to store the output.
-        String output = "";
-
-        // Iterate over the characters in the sentence.
-        for (int i = 0; i < sentence.length(); i++) {
-            // If the character is not a quote, add it to the output string.
-            if (sentence.charAt(i) != '"') {
-                output += sentence.charAt(i);
-            }
-        }
-
-        // Return the output string.
-        return output;
+    private static void updateTables(Connection conn, Statement stmt, ResultSet rs) {
+//        try {
+//            GetType.deleteVARTYPETable(conn, stmt);
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        GetType.createVARTYPETableIfNotExists(conn, stmt, rs);
+        updateCopingTable(conn,stmt, rs);
     }
 
     public static String replaceSpacesWithUnderscoresInQuotes(String sentence) {
@@ -118,7 +110,7 @@ public class TestTheProject {
         quotePart = quotePart.replaceAll(" ", "_");
 
         // מוסיפים את המחרוזת החדשה למחרוזת התוצאה הסופית.
-        result.append(sentence.substring(0, startQuoteIndex + 1));
+        result.append(sentence, 0, startQuoteIndex + 1);
         result.append(quotePart);
         result.append('"');
         result.append(sentence.substring(endQuoteIndex + 1));
