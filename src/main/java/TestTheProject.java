@@ -38,7 +38,7 @@ public class TestTheProject {
         //System.out.println(TranslateWithoutInternet.retrieveEnglishValuesFromHebrewValues("אחוז_בלון_ממחיר_בטוחה", conn, stmt, rs));
         try {
             // Read sentences from a text file.
-            List<String> sentences = readSentences("sentencesForDEB_RULES.txt");
+            List<String> sentences = readSentences("sentences14_10_2023.txt");
             String sentenceAfterAddUnderscoreInQuotes = "";
             int counterForPrint = 1;
             // For each sentence, call the readTemplate function from the static class AAA and pass the sentence to the function.

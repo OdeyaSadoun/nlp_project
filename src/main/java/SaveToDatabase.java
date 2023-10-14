@@ -9,7 +9,7 @@ public class SaveToDatabase {
     static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     static final String USERNAME = "logistcourse1";
     static final String PASSWORD = "logistcourse1";
-    static final boolean WITHLEVINSHTAINDISTANCE = true;
+    static final boolean WITHLEVINSHTAINDISTANCE =  false;
     static final int LEVINSHTAINDISTANCE = 1;
 
 
