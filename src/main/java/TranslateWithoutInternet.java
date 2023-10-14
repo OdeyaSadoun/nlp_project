@@ -1,5 +1,7 @@
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TranslateWithoutInternet {
@@ -24,7 +26,35 @@ public class TranslateWithoutInternet {
         return letters;
     }
 
+    public static String[] createNewArray(char[] inputArray) {
+        List<String> outputList = new ArrayList<>();
+        StringBuilder wordBuilder = new StringBuilder();
 
+        for (char c : inputArray) {
+            if (c == '_') {
+                outputList.add(wordBuilder.toString());
+                wordBuilder = new StringBuilder();
+            } else {
+                wordBuilder.append(c);
+            }
+        }
+        outputList.add(wordBuilder.toString()); // Add the last word after the last underscore
+
+        String[] outputArray = new String[outputList.size()];
+        outputArray = outputList.toArray(outputArray);
+        return outputArray;
+    }
+
+    public static String removeUnderscore(String word) {
+        // Check if the last character is an underscore
+        if (word.endsWith("_")) {
+            // Remove the trailing underscore and return the corrected word
+            return word.substring(0, word.length() - 1);
+        } else {
+            // If the last character is not an underscore, return the word as it is
+            return word;
+        }
+    }
 
 
 
@@ -149,162 +179,162 @@ public class TranslateWithoutInternet {
 //        }
     }
 
-    public static String retrieveEnglishValuesFromHebrewValues(String word, Connection conn, Statement stmt, ResultSet rs) {
-
-        String translateWord = "";
-
-        //check if the hebrew word exist in database or in ktclass or in ktattribute:
-        //if yes, we take the translate from the database
-        if(isWordExistInKTCLASSTable(word, conn, stmt, rs)!= null){
-            translateWord = isWordExistInKTCLASSTable(word, conn, stmt, rs);
-        }
-        else if(isWordExistInKTATTRIBUTETable(word, conn, stmt, rs)!= null){
-            translateWord = isWordExistInKTATTRIBUTETable(word, conn, stmt, rs);
-        }
-        //if not, we use this function:
-        else{
-            char[] letters=breakWordIntoLetters(word);
-            StringBuilder wordBuilder = new StringBuilder();
-
-            try {
-//                Class.forName(JDBC_DRIVER);
-//                conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-//                stmt = conn.createStatement();
-
-                if(letters[0]=='ב'){
-                    //b
-                    letters = removeCharAtIndex(letters, 0);
-                    wordBuilder.append('b');
-                }
-                else if(letters[0]=='כ'){
-                    //k
-                    letters = removeCharAtIndex(letters, 0);
-                    wordBuilder.append('k');
-                }
-                else if(letters[0]=='פ'){
-                    //p
-                    letters = removeCharAtIndex(letters, 0);
-                    wordBuilder.append('p');
-                }
-                else if(letters[0]=='ו'){
-                    //v
-                    letters = removeCharAtIndex(letters, 0);
-                    wordBuilder.append('v');
-                }
-
-                // Prepare the query
-                String selectQuery = "SELECT English FROM Copying WHERE Hebrew = ?";
-                PreparedStatement preparedStatement = conn.prepareStatement(selectQuery);
-
-                // Loop over the letters
-                for (int i=0; i< letters.length; i++) {
-                    if (letters[i] == 'י') {
-                        if (i != letters.length - 2) {
-                            if (i + 1 < letters.length && (letters[i + 1] == 'י')) {
-                                ///מכניסים i במקום i
-                                wordBuilder.append('i');
-                                ++i;
-                            }
-                        }
-                        else{
-
-                            // Set the parameter value
-                            preparedStatement.setString(1, String.valueOf(letters[i]));
-                            // Execute the query
-                            rs = preparedStatement.executeQuery();
-                            // If the query returns a row, get the English value
-                            if (rs.next()) {
-                                String EnglishValue = rs.getString("English");
-                                wordBuilder.append(EnglishValue);
-                            }
-                        }
-                    }
-
-                    else if (letters[i] == 'פ') {
-                        if (i != letters.length - 2) {
-                            if (i + 1 < letters.length && (letters[i + 1] == 'ף')) {
-                                ///מכניסים p במקום i
-                                wordBuilder.append('p');
-                                ++i;
-                            }
-                        }
-                        else{
-                            // Set the parameter value
-                            if(letters[i] == 'ף')
-                                System.out.println("זהים!!!");
-                            System.out.println(letters[i]);
-
-                            preparedStatement.setString(1, String.valueOf(letters[i]));
-                            // Execute the query
-                            rs = preparedStatement.executeQuery();
-                            // If the query returns a row, get the English value
-                            if (rs.next()) {
-                                String EnglishValue = rs.getString("English");
-                                wordBuilder.append(EnglishValue);
-                            }
-                        }
-                    }
-                    else if (letters[i] == 'א') {
-                        if (i != letters.length - 2) {
-                            if (i + 1 < letters.length && (letters[i + 1] == 'ו')) {
-                                ///מתעלמים מ- א
-                                continue;
-                            }
-                        }
-                    }
-
-                    else if (letters[i] == 'ע') {
-                        if (i != letters.length - 2) {
-                            if (i + 1 < letters.length && (letters[i + 1] == 'ו')) {
-                                ///מתעלמים מ- ע
-                                continue;
-                            }
-                        }
-                    }
-
-                    else if (letters[i] == 'ב') {
-                        if (i == letters.length - 1) {
-                            ///מכניסים v במקום i
-                            wordBuilder.append('v');
-                            ++i;
-                        }
-                        else{
-                            continue;
-                        }
-                    }
-
-
-                    else {
-                        // Set the parameter value
-                        preparedStatement.setString(1, String.valueOf(letters[i]));
-                        // Execute the query
-                        rs = preparedStatement.executeQuery();
-                        // If the query returns a row, get the English value
-                        if (rs.next()) {
-                            String EnglishValue = rs.getString("English");
-                            wordBuilder.append(EnglishValue);
-                        }
-                    }
-                }
-//                rs.close();
-//                stmt.close();
-//                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-//            finally {
-//                try {
-//                    if (rs != null) rs.close();
-//                    if (stmt != null) stmt.close();
-//                    if (conn != null) conn.close();
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
+//    public static String retrieveEnglishValuesFromHebrewValues(String word, Connection conn, Statement stmt, ResultSet rs) {
+//
+//        String translateWord = "";
+//
+//        //check if the hebrew word exist in database or in ktclass or in ktattribute:
+//        //if yes, we take the translate from the database
+//        if(isWordExistInKTCLASSTable(word, conn, stmt, rs)!= null){
+//            translateWord = isWordExistInKTCLASSTable(word, conn, stmt, rs);
+//        }
+//        else if(isWordExistInKTATTRIBUTETable(word, conn, stmt, rs)!= null){
+//            translateWord = isWordExistInKTATTRIBUTETable(word, conn, stmt, rs);
+//        }
+//        //if not, we use this function:
+//        else{
+//            char[] letters=breakWordIntoLetters(word);
+//            StringBuilder wordBuilder = new StringBuilder();
+//
+//            try {
+////                Class.forName(JDBC_DRIVER);
+////                conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+////                stmt = conn.createStatement();
+//
+//                if(letters[0]=='ב'){
+//                    //b
+//                    letters = removeCharAtIndex(letters, 0);
+//                    wordBuilder.append('b');
 //                }
+//                else if(letters[0]=='כ'){
+//                    //k
+//                    letters = removeCharAtIndex(letters, 0);
+//                    wordBuilder.append('k');
+//                }
+//                else if(letters[0]=='פ'){
+//                    //p
+//                    letters = removeCharAtIndex(letters, 0);
+//                    wordBuilder.append('p');
+//                }
+//                else if(letters[0]=='ו'){
+//                    //v
+//                    letters = removeCharAtIndex(letters, 0);
+//                    wordBuilder.append('v');
+//                }
+//
+//                // Prepare the query
+//                String selectQuery = "SELECT English FROM Copying WHERE Hebrew = ?";
+//                PreparedStatement preparedStatement = conn.prepareStatement(selectQuery);
+//
+//                // Loop over the letters
+//                for (int i=0; i< letters.length; i++) {
+//                    if (letters[i] == 'י') {
+//                        if (i != letters.length - 2) {
+//                            if (i + 1 < letters.length && (letters[i + 1] == 'י')) {
+//                                ///מכניסים i במקום i
+//                                wordBuilder.append('i');
+//                                ++i;
+//                            }
+//                        }
+//                        else{
+//
+//                            // Set the parameter value
+//                            preparedStatement.setString(1, String.valueOf(letters[i]));
+//                            // Execute the query
+//                            rs = preparedStatement.executeQuery();
+//                            // If the query returns a row, get the English value
+//                            if (rs.next()) {
+//                                String EnglishValue = rs.getString("English");
+//                                wordBuilder.append(EnglishValue);
+//                            }
+//                        }
+//                    }
+//
+//                    else if (letters[i] == 'פ') {
+//                        if (i != letters.length - 2) {
+//                            if (i + 1 < letters.length && (letters[i + 1] == 'ף')) {
+//                                ///מכניסים p במקום i
+//                                wordBuilder.append('p');
+//                                ++i;
+//                            }
+//                        }
+//                        else{
+//                            // Set the parameter value
+//                            if(letters[i] == 'ף')
+//                                System.out.println("זהים!!!");
+//                            System.out.println(letters[i]);
+//
+//                            preparedStatement.setString(1, String.valueOf(letters[i]));
+//                            // Execute the query
+//                            rs = preparedStatement.executeQuery();
+//                            // If the query returns a row, get the English value
+//                            if (rs.next()) {
+//                                String EnglishValue = rs.getString("English");
+//                                wordBuilder.append(EnglishValue);
+//                            }
+//                        }
+//                    }
+//                    else if (letters[i] == 'א') {
+//                        if (i != letters.length - 2) {
+//                            if (i + 1 < letters.length && (letters[i + 1] == 'ו')) {
+//                                ///מתעלמים מ- א
+//                                continue;
+//                            }
+//                        }
+//                    }
+//
+//                    else if (letters[i] == 'ע') {
+//                        if (i != letters.length - 2) {
+//                            if (i + 1 < letters.length && (letters[i + 1] == 'ו')) {
+//                                ///מתעלמים מ- ע
+//                                continue;
+//                            }
+//                        }
+//                    }
+//
+//                    else if (letters[i] == 'ב') {
+//                        if (i == letters.length - 1) {
+//                            ///מכניסים v במקום i
+//                            wordBuilder.append('v');
+//                            ++i;
+//                        }
+//                        else{
+//                            continue;
+//                        }
+//                    }
+//
+//
+//                    else {
+//                        // Set the parameter value
+//                        preparedStatement.setString(1, String.valueOf(letters[i]));
+//                        // Execute the query
+//                        rs = preparedStatement.executeQuery();
+//                        // If the query returns a row, get the English value
+//                        if (rs.next()) {
+//                            String EnglishValue = rs.getString("English");
+//                            wordBuilder.append(EnglishValue);
+//                        }
+//                    }
+//                }
+////                rs.close();
+////                stmt.close();
+////                conn.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
 //            }
-            return wordBuilder.toString();
-        }
-        return translateWord;
-    }
+////            finally {
+////                try {
+////                    if (rs != null) rs.close();
+////                    if (stmt != null) stmt.close();
+////                    if (conn != null) conn.close();
+////                } catch (SQLException e) {
+////                    e.printStackTrace();
+////                }
+////            }
+//            return wordBuilder.toString();
+//        }
+//        return translateWord;
+//    }
 
     private static String isWordExistInKTATTRIBUTETable(String word, Connection conn, Statement stmt, ResultSet rs) {
         PreparedStatement preparedStatement = null;
@@ -412,5 +442,159 @@ public class TranslateWithoutInternet {
 //                e.printStackTrace();
 //            }
 //        }
+    }
+
+
+
+    public static String retrieveEnglishValuesFromHebrewValues(String word, Connection conn, Statement stmt, ResultSet rs) {
+
+        String translateWord = "";
+        StringBuilder finalWordBuilder = new StringBuilder();
+
+        //check if the hebrew word exist in database or in ktclass or in ktattribute:
+        //if yes, we take the translate from the database
+        if (isWordExistInKTCLASSTable(word, conn, stmt, rs) != null) {
+            translateWord = isWordExistInKTCLASSTable(word, conn, stmt, rs);
+        } else if (isWordExistInKTATTRIBUTETable(word, conn, stmt, rs) != null) {
+            translateWord = isWordExistInKTATTRIBUTETable(word, conn, stmt, rs);
+        }
+        //if not, we use this function:
+        else {
+            char[] myLetters = breakWordIntoLetters(word);
+            String[] arrString = createNewArray(myLetters);
+
+
+            for (int j = 0; j < arrString.length; j++) {
+                char[] letters = breakWordIntoLetters(arrString[j]);
+                StringBuilder wordBuilder = new StringBuilder();
+
+                try {
+                    Class.forName(JDBC_DRIVER);
+                    conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+                    stmt = conn.createStatement();
+
+                    if (letters[0] == 'ב') {
+                        //b
+                        letters = removeCharAtIndex(letters, 0);
+                        wordBuilder.append('b');
+                    } else if (letters[0] == 'כ') {
+                        //k
+                        letters = removeCharAtIndex(letters, 0);
+                        wordBuilder.append('k');
+                    } else if (letters[0] == 'פ') {
+                        //p
+                        letters = removeCharAtIndex(letters, 0);
+                        wordBuilder.append('p');
+                    } else if (letters[0] == 'ו') {
+                        //v
+                        letters = removeCharAtIndex(letters, 0);
+                        wordBuilder.append('v');
+                    }
+
+                    // Prepare the query
+                    String selectQuery = "SELECT English FROM Copying WHERE Hebrew = ?";
+                    PreparedStatement preparedStatement = conn.prepareStatement(selectQuery);
+
+                    // Loop over the letters
+                    for (int i = 0; i < letters.length; i++) {
+                        if (letters[i] == 'י') {
+                            if (i != letters.length - 2) {
+                                if (i + 1 < letters.length && (letters[i + 1] == 'י')) {
+                                    ///מכניסים i במקום i
+                                    wordBuilder.append('i');
+                                    ++i;
+                                }
+                            } else {
+
+                                // Set the parameter value
+                                preparedStatement.setString(1, String.valueOf(letters[i]));
+                                // Execute the query
+                                rs = preparedStatement.executeQuery();
+                                // If the query returns a row, get the English value
+                                if (rs.next()) {
+                                    String EnglishValue = rs.getString("English");
+                                    wordBuilder.append(EnglishValue);
+                                }
+                            }
+                        } else if (letters[i] == 'פ') {
+                            if (i != letters.length - 2) {
+                                if (i + 1 < letters.length && (letters[i + 1] == 'ף')) {
+                                    ///מכניסים p במקום i
+                                    wordBuilder.append('p');
+                                    ++i;
+                                }
+                            } else {
+                                // Set the parameter value
+                                if (letters[i] == 'ף')
+                                    System.out.println("זהים!!!");
+                                System.out.println(letters[i]);
+
+                                preparedStatement.setString(1, String.valueOf(letters[i]));
+                                // Execute the query
+                                rs = preparedStatement.executeQuery();
+                                // If the query returns a row, get the English value
+                                if (rs.next()) {
+                                    String EnglishValue = rs.getString("English");
+                                    wordBuilder.append(EnglishValue);
+                                }
+                            }
+                        } else if (letters[i] == 'א') {
+                            if (i != letters.length - 2) {
+                                if (i + 1 < letters.length && (letters[i + 1] == 'ו')) {
+                                    ///מתעלמים מ- א
+                                    continue;
+                                }
+                            }
+                        } else if (letters[i] == 'ע') {
+                            if (i != letters.length - 2) {
+                                if (i + 1 < letters.length && (letters[i + 1] == 'ו')) {
+                                    ///מתעלמים מ- ע
+                                    continue;
+                                }
+                            }
+                        } else if (letters[i] == 'ב') {
+                            if (i == letters.length - 1) {
+                                ///מכניסים v במקום i
+                                wordBuilder.append('v');
+                                ++i;
+                            } else {
+                                continue;
+                            }
+                        } else {
+                            // Set the parameter value
+                            preparedStatement.setString(1, String.valueOf(letters[i]));
+                            // Execute the query
+                            rs = preparedStatement.executeQuery();
+                            // If the query returns a row, get the English value
+                            if (rs.next()) {
+                                String EnglishValue = rs.getString("English");
+                                wordBuilder.append(EnglishValue);
+                            }
+                        }
+                    }
+                    finalWordBuilder.append(wordBuilder);
+                    finalWordBuilder.append('_');
+
+
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return removeUnderscore(finalWordBuilder.toString());
+        }
+
+        try {
+            if (rs != null) rs.close();
+            if (stmt != null) stmt.close();
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return translateWord;
     }
 }
