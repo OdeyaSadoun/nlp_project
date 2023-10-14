@@ -46,17 +46,17 @@ public class TranslateWithoutInternet {
         return result;
     }
 
-    public static void deleteCopingTable(Connection conn, Statement stmt , ResultSet rs) throws SQLException {
+    public static void deleteCopyingTable(Connection conn, Statement stmt , ResultSet rs) throws SQLException {
         try {
             // SQL query to check if the table exists
-            String checkTableQuery = "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'Coping'";
+            String checkTableQuery = "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'Copying'";
             rs = stmt.executeQuery(checkTableQuery);
             rs.next();
             int tableCount = rs.getInt(1);
 
             if (tableCount != 0) {
                 // delete the table if it exist
-                String deleteTableQuery = "DROP TABLE Coping";
+                String deleteTableQuery = "DROP TABLE Copying FROM information_schema.tables";
                 stmt.execute(deleteTableQuery);
             }
 
@@ -67,7 +67,7 @@ public class TranslateWithoutInternet {
     }
 
 
-    public static void createCopingTableIfNotExists(Connection conn, Statement stmt, ResultSet rs) {
+    public static void createCopyingTableIfNotExists(Connection conn, Statement stmt, ResultSet rs) {
 
         try {
            // Class.forName(JDBC_DRIVER);
@@ -124,6 +124,7 @@ public class TranslateWithoutInternet {
                 hebrewToEnglishMapping.put("7", "7");
                 hebrewToEnglishMapping.put("8", "8");
                 hebrewToEnglishMapping.put("9", "9");
+                hebrewToEnglishMapping.put("10", "10");
                 hebrewToEnglishMapping.put("_", "_");
 
                 for (Map.Entry<String, String> entry : hebrewToEnglishMapping.entrySet()) {
