@@ -382,6 +382,7 @@ public class TranslateWithoutInternet {
                                     ///מתעלמים מ- א
                                     continue;
                                 }
+                                wordBuilder.append('a');
                             }
                         } else if (letters[i] == 'ע') {
                             if (i != letters.length - 2) {
