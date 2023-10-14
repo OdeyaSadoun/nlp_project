@@ -46,6 +46,27 @@ public class TranslateWithoutInternet {
         return result;
     }
 
+    public static void deleteCopingTable(Connection conn, Statement stmt , ResultSet rs) throws SQLException {
+        try {
+            // SQL query to check if the table exists
+            String checkTableQuery = "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'Coping'";
+            rs = stmt.executeQuery(checkTableQuery);
+            rs.next();
+            int tableCount = rs.getInt(1);
+
+            if (tableCount != 0) {
+                // delete the table if it exist
+                String deleteTableQuery = "DROP TABLE Coping";
+                // ביצוע השאילתה
+                stmt.execute(deleteTableQuery);
+            }
+
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static void createCopingTableIfNotExists(Connection conn, Statement stmt, ResultSet rs) {
 
@@ -94,6 +115,16 @@ public class TranslateWithoutInternet {
                 hebrewToEnglishMapping.put("ר", "r");
                 hebrewToEnglishMapping.put("ש", "sh");
                 hebrewToEnglishMapping.put("ת", "t");
+                hebrewToEnglishMapping.put("0", "0");
+                hebrewToEnglishMapping.put("1", "1");
+                hebrewToEnglishMapping.put("2", "2");
+                hebrewToEnglishMapping.put("3", "3");
+                hebrewToEnglishMapping.put("4", "4");
+                hebrewToEnglishMapping.put("5", "5");
+                hebrewToEnglishMapping.put("6", "6");
+                hebrewToEnglishMapping.put("7", "7");
+                hebrewToEnglishMapping.put("8", "8");
+                hebrewToEnglishMapping.put("9", "9");
                 hebrewToEnglishMapping.put("_", "_");
 
                 for (Map.Entry<String, String> entry : hebrewToEnglishMapping.entrySet()) {
