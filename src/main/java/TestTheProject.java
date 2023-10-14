@@ -6,141 +6,145 @@ import java.util.List;
 
 public class TestTheProject {
 
-    final static String JDBC_URL = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
-    final static String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    final static String USERNAME = "logistcourse1";
-    final static String PASSWORD = "logistcourse1";
+  static final String JDBC_URL =
+      "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
+  static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+  static final String USERNAME = "logistcourse1";
+  static final String PASSWORD = "logistcourse1";
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 
-        Connection conn = null;
-        Statement stmt = null;
+    Connection conn = null;
+    Statement stmt = null;
 
-        //Connect to the database
-        ResultSet rs = null;
+    // Connect to the database
+    ResultSet rs = null;
 
-        try {
-            Class.forName(JDBC_DRIVER);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-            stmt = conn.createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        //System.out.println(TranslateWithoutInternet.retrieveEnglishValuesFromHebrewValues("אחוז_בלון_ממחיר_בטוחה", conn, stmt, rs));
-        try {
-            updateTables(conn, stmt,  rs);
-
-            // Read sentences from a text file.
-            List<String> sentences = readSentences("sentencesForDEB_RULES.txt");
-            String sentenceAfterAddUnderscoreInQuotes;
-            int counterForPrint = 1;
-            // For each sentence, call the readTemplate function from the static class AAA and pass the sentence to the function.
-            for (String sentence : sentences) {
-                sentenceAfterAddUnderscoreInQuotes = replaceSpacesWithUnderscoresInQuotes(sentence);
-                System.out.println("Sentence num " + counterForPrint + " : " + sentenceAfterAddUnderscoreInQuotes);
-                counterForPrint++;
-                ClassifySentenceWithoutInternet.readTemplate(sentenceAfterAddUnderscoreInQuotes, conn, stmt, rs);
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally{
-                try {
-                    if (rs != null) rs.close();
-                    if (stmt != null) stmt.close();
-                    if (conn != null) conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-
-        }
-
+    try {
+      Class.forName(JDBC_DRIVER);
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
     }
-    private static void updateCopingTable(Connection conn, Statement stmt, ResultSet rs) {
-        try {
-            TranslateWithoutInternet.deleteCopyingTable(conn, stmt, rs);
-            TranslateWithoutInternet.createCopyingTableIfNotExists(conn, stmt, rs);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    try {
+      conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
-    private static void updateTables(Connection conn, Statement stmt, ResultSet rs) {
-//        try {
-//            GetType.deleteVARTYPETable(conn, stmt);
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        GetType.createVARTYPETableIfNotExists(conn, stmt, rs);
-        updateCopingTable(conn,stmt, rs);
+    try {
+      stmt = conn.createStatement();
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
+    // System.out.println(TranslateWithoutInternet.retrieveEnglishValuesFromHebrewValues("אחוז_בלון_ממחיר_בטוחה", conn, stmt, rs));
+    try {
+      updateTables(conn, stmt, rs);
 
-    public static String replaceSpacesWithUnderscoresInQuotes(String sentence) {
-        // תחילה, נבנה מחרוזת חדשה שתתקבל את התוצאה הסופית.
-        StringBuilder result = new StringBuilder();
+      // Read sentences from a text file.
+      List<String> sentences = readSentences("sentencesForDEB_RULES.txt");
+      String sentenceAfterAddUnderscoreInQuotes;
+      int counterForPrint = 1;
+      // For each sentence, call the readTemplate function from the static class AAA and pass the
+      // sentence to the function.
+      for (String sentence : sentences) {
+        sentenceAfterAddUnderscoreInQuotes = replaceSpacesWithUnderscoresInQuotes(sentence);
+        System.out.println(
+            "Sentence num " + counterForPrint + " : " + sentenceAfterAddUnderscoreInQuotes);
+        counterForPrint++;
+        ClassifySentenceWithoutInternet.readTemplate(
+            sentenceAfterAddUnderscoreInQuotes, conn, stmt, rs);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        if (rs != null) rs.close();
+        if (stmt != null) stmt.close();
+        if (conn != null) conn.close();
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    }
+  }
 
-        // נמצא את המקום הראשון שבו יש גרש פותח.
-        int startQuoteIndex = sentence.indexOf('\"');
+  private static void updateCopingTable(Connection conn, Statement stmt, ResultSet rs) {
+    try {
+      TranslateWithoutInternet.deleteCopyingTable(conn, stmt, rs);
+      TranslateWithoutInternet.createCopyingTableIfNotExists(conn, stmt, rs);
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+  }
 
-        // אם לא נמצא גרש פותח, התוצאה היא המחרוזת המקורית.
-        if (startQuoteIndex == -1) {
-            return sentence;
-        }
+  private static void updateVARTYPETable(Connection conn, Statement stmt, ResultSet rs) {
+    try {
+      GetType.deleteVARTYPETable(conn, stmt, rs);
+      GetType.createVARTYPETableIfNotExists(conn, stmt, rs);
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+  }
 
-        // נמצא את המקום האחרון שבו יש גרש סגור.
-        int endQuoteIndex = sentence.lastIndexOf('\"');
+  private static void updateTables(Connection conn, Statement stmt, ResultSet rs) {
+    updateCopingTable(conn, stmt, rs);
+    updateVARTYPETable(conn, stmt, rs);
+  }
 
-        // אם לא נמצא גרש סגור, התוצאה היא המחרוזת המקורית.
-        if (endQuoteIndex == -1) {
-            return sentence;
-        }
+  public static String replaceSpacesWithUnderscoresInQuotes(String sentence) {
+    // תחילה, נבנה מחרוזת חדשה שתתקבל את התוצאה הסופית.
+    StringBuilder result = new StringBuilder();
 
-        // נבנה מחרוזת חדשה מהחלק בין הגרשיים.
-        String quotePart = sentence.substring(startQuoteIndex + 1, endQuoteIndex);
+    // נמצא את המקום הראשון שבו יש גרש פותח.
+    int startQuoteIndex = sentence.indexOf('\"');
 
-        // מחליפים את כל הרווחים במחרוזת החדשה בקו תחתון.
-        quotePart = quotePart.replaceAll(" ", "_");
-
-        // מוסיפים את המחרוזת החדשה למחרוזת התוצאה הסופית.
-        result.append(sentence, 0, startQuoteIndex + 1);
-        result.append(quotePart);
-        result.append('"');
-        result.append(sentence.substring(endQuoteIndex + 1));
-
-        // נחזור את המחרוזת התוצאה הסופית.
-        return result.toString();
+    // אם לא נמצא גרש פותח, התוצאה היא המחרוזת המקורית.
+    if (startQuoteIndex == -1) {
+      return sentence;
     }
 
-    public static List<String> readSentences(String filename) {
-        // Create a list to store the sentences.
-        List<String> sentences = new ArrayList<>();
+    // נמצא את המקום האחרון שבו יש גרש סגור.
+    int endQuoteIndex = sentence.lastIndexOf('\"');
 
-        // Open the file.
-        File file = new File(filename);
-        try (FileReader reader = new FileReader(file)) {
-            // Read the sentences from the file.
-            BufferedReader bufferedReader = new BufferedReader(reader);
-            String sentence;
-            while ((sentence = bufferedReader.readLine()) != null) {
-                sentences.add(sentence);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        // Return the list of sentences.
-        return sentences;
+    // אם לא נמצא גרש סגור, התוצאה היא המחרוזת המקורית.
+    if (endQuoteIndex == -1) {
+      return sentence;
     }
 
+    // נבנה מחרוזת חדשה מהחלק בין הגרשיים.
+    String quotePart = sentence.substring(startQuoteIndex + 1, endQuoteIndex);
+
+    // מחליפים את כל הרווחים במחרוזת החדשה בקו תחתון.
+    quotePart = quotePart.replaceAll(" ", "_");
+
+    // מוסיפים את המחרוזת החדשה למחרוזת התוצאה הסופית.
+    result.append(sentence, 0, startQuoteIndex + 1);
+    result.append(quotePart);
+    result.append('"');
+    result.append(sentence.substring(endQuoteIndex + 1));
+
+    // נחזור את המחרוזת התוצאה הסופית.
+    return result.toString();
+  }
+
+  public static List<String> readSentences(String filename) {
+    // Create a list to store the sentences.
+    List<String> sentences = new ArrayList<>();
+
+    // Open the file.
+    File file = new File(filename);
+    try (FileReader reader = new FileReader(file)) {
+      // Read the sentences from the file.
+      BufferedReader bufferedReader = new BufferedReader(reader);
+      String sentence;
+      while ((sentence = bufferedReader.readLine()) != null) {
+        sentences.add(sentence);
+      }
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    // Return the list of sentences.
+    return sentences;
+  }
 }
