@@ -56,7 +56,7 @@ public class TranslateWithoutInternet {
 
             if (tableCount != 0) {
                 // delete the table if it exist
-                String deleteTableQuery = "DROP TABLE Copying FROM information_schema.tables";
+                String deleteTableQuery = "DROP TABLE Copying";
                 stmt.execute(deleteTableQuery);
             }
 
@@ -124,7 +124,6 @@ public class TranslateWithoutInternet {
                 hebrewToEnglishMapping.put("7", "7");
                 hebrewToEnglishMapping.put("8", "8");
                 hebrewToEnglishMapping.put("9", "9");
-                hebrewToEnglishMapping.put("10", "10");
                 hebrewToEnglishMapping.put("_", "_");
 
                 for (Map.Entry<String, String> entry : hebrewToEnglishMapping.entrySet()) {
