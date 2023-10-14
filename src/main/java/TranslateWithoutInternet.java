@@ -57,7 +57,6 @@ public class TranslateWithoutInternet {
             if (tableCount != 0) {
                 // delete the table if it exist
                 String deleteTableQuery = "DROP TABLE Coping";
-                // ביצוע השאילתה
                 stmt.execute(deleteTableQuery);
             }
 
