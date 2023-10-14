@@ -76,7 +76,7 @@ public class GetType {
             int tableCount = rs.getInt(1);
 
             if (tableCount != 0) {
-                // delete the table if it exist
+                // delete the table if it exists
                 String deleteTableQuery = "DROP TABLE VARTYPE";
                 stmt.execute(deleteTableQuery);
             }
