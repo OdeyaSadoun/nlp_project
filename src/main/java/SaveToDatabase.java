@@ -119,19 +119,19 @@ public class SaveToDatabase {
 
   /**
    * Function to check if the field is existed in the DB
-   *  @param ensubject the subject that match to this field
-   * @param field   the field we check if exist in the DB
-   * @param conn           for the connection to DB
-   * @param rs
+   *
+   * @param ensubject the subject that match to this field
+   * @param field     the field we check if exist in the DB
+   * @param conn      for the connection to DB
    */
   private static boolean isSubjectInKTATTRIBUTETable(
-      String ensubject, String field, Connection conn, ResultSet rs) throws SQLException {
+      String ensubject, String field, Connection conn) throws SQLException {
     String getClassIdQuery = "SELECT NAME FROM KTATTRIBUTE WHERE CLASS_CODE_NAME = ? AND NAME = ?";
     PreparedStatement preparedStatement = conn.prepareStatement(getClassIdQuery);
 
     preparedStatement.setString(1, ensubject);
     preparedStatement.setString(2, field);
-    rs = preparedStatement.executeQuery();
+    ResultSet rs = preparedStatement.executeQuery();
 
     return rs.next();
   }
@@ -187,7 +187,6 @@ public class SaveToDatabase {
       String type_name,
       Connection conn,
       Statement stmt,
-      ResultSet rs,
       boolean APPROVE_PRINTING) {
     // Define constants for the field names in the KTCLASS and KTATTRIBUTE tables
     final String CURRENT_DATE = getDateWithMS();
@@ -250,8 +249,8 @@ public class SaveToDatabase {
 
       // Check if subject is in KTATTRIBUTE table
       if (englishField != null && hebrewField != null) {
-        if (!isSubjectInKTATTRIBUTETable(englishSubject, hebrewField, conn, rs)) {
-          if (isSubjectInKTATTRIBUTETable(englishSubject, englishField, conn, rs)) {
+        if (!isSubjectInKTATTRIBUTETable(englishSubject, hebrewField, conn)) {
+          if (isSubjectInKTATTRIBUTETable(englishSubject, englishField, conn)) {
             if (APPROVE_PRINTING) {
               String ex =
                   "There is problem with english subject or filed because there is same that saved in database with hebrew subject or filed that not same!";

@@ -877,8 +877,7 @@ public class ClassifySentenceWithoutInternet {
         dataType,
         conn,
         stmt,
-        rs,
-        APPROVE_PRINTING);
+            APPROVE_PRINTING);
   }
 
   public static void main(String[] args) {}

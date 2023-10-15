@@ -10,7 +10,7 @@ public class TestTheProject {
   static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
   static final String USERNAME = "logistcourse1";
   static final String PASSWORD = "logistcourse1";
-  static final boolean APPROVE_PRINTING = false;
+  static final boolean APPROVE_PRINTING = true;
 
   public static void main(String[] args) {
 
@@ -80,7 +80,7 @@ public class TestTheProject {
   private static void updateVARTYPETable(Connection conn, Statement stmt, ResultSet rs) {
     try {
       GetType.deleteVARTYPETable(stmt);
-      GetType.createVARTYPETableIfNotExists(conn, stmt, rs);
+      GetType.createVARTYPETableIfNotExists(conn, stmt);
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
@@ -140,8 +140,6 @@ public class TestTheProject {
       while ((sentence = bufferedReader.readLine()) != null) {
         sentences.add(sentence);
       }
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
     } catch (IOException e) {
       e.printStackTrace();
     }
