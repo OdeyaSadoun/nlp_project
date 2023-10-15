@@ -41,7 +41,7 @@ public class GetType {
   }
 
   public static void insertToDatabase(
-      String hebrewWord, String type, Connection conn, Statement stmt) {
+      String hebrewWord, String type, Connection conn) {
     try {
       String insertQuery = "INSERT INTO VARTYPE (HEBREW_WORD, VAR_TYPE) VALUES (?, ?)";
       PreparedStatement preparedStatement = conn.prepareStatement(insertQuery);
@@ -76,12 +76,12 @@ public class GetType {
     }
   }
 
-  public static void createVARTYPETableIfNotExists(Connection conn, Statement stmt, ResultSet rs) {
+  public static void createVARTYPETableIfNotExists(Connection conn, Statement stmt) {
     try {
       // SQL query to check if the table exists
       String checkTableQuery =
           "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'VARTYPE'";
-      rs = stmt.executeQuery(checkTableQuery);
+      ResultSet rs = stmt.executeQuery(checkTableQuery);
       rs.next();
       int tableCount = rs.getInt(1);
 
@@ -151,7 +151,7 @@ public class GetType {
         for (Map.Entry<String, String> entry : knownWords.entrySet()) {
           String hebrewWord = entry.getKey();
           String type = entry.getValue();
-          insertToDatabase(hebrewWord, type, conn, stmt);
+          insertToDatabase(hebrewWord, type, conn);
         }
       }
 
