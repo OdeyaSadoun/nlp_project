@@ -71,10 +71,9 @@ public class ClassifySentenceWithoutInternet {
       if (isNumericNumber(word, conn, stmt, rs)) {
         continue;
       }
-      if (i + 2
-          < lstTemplate
-              .size()) { // תוספת על הענין של אופרטורים 2 מילים לא שמורות ובינהן אופרטור שתיהן שדות
-                         // בנושא ראשי
+      if (i + 2 < lstTemplate.size()) {
+        // תוספת על הענין של אופרטורים 2 מילים לא שמורות ובינהן אופרטור שתיהן שדות
+        // בנושא ראשי
         isSaveWord2 =
             isSaveWordInTLXTableORConstes(
                 removeParenthesis(lstTemplate.get(i + 2)), conn, stmt, rs);
@@ -301,7 +300,7 @@ public class ClassifySentenceWithoutInternet {
                 removeParenthesis(lstTemplate.get(i + 2)), conn, stmt, rs);
         if (lstTemplate.size()
             == 3) { // תיקון עבור משפט 3 מילים אם מילה לא שמורה מילה שמורה, הלא שמורה שדה בנושא
-                    // מרכזי
+          // מרכזי
           if (!isSaveWord && isSaveWord2) {
 
             // **update values:*/
@@ -332,7 +331,7 @@ public class ClassifySentenceWithoutInternet {
               if (isSaveWord2 && isSaveWord3) {
                 // **update values:*/
                 subject = mainSubject;
-                field = lstTemplate.get(i + 1);
+                field = changePluralSubjectToSingle(lstTemplate.get(i + 1));
                 dataType = GetType.getLabel(field, sentence, false, conn, stmt, rs);
                 System.out.println(
                     "----------subject: "
@@ -361,8 +360,8 @@ public class ClassifySentenceWithoutInternet {
                         removeParenthesis(lstTemplate.get(i + 4)), conn, stmt, rs);
                 if (!isSaveWord) {
                   // **update values:*/
-                  subject = lstTemplate.get(i + 4);
-                  field = lstTemplate.get(i + 1);
+                  subject = changePluralSubjectToSingle(lstTemplate.get(i + 4));
+                  field = changePluralSubjectToSingle(lstTemplate.get(i + 1));
                   dataType = GetType.getLabel(field, sentence, false, conn, stmt, rs);
                   System.out.println(
                       "----------subject: "
@@ -562,7 +561,7 @@ public class ClassifySentenceWithoutInternet {
             if (!isSaveWord && lstTemplate.get(i - 2).equals("עדכן")) {
               // update values:
               subject = mainSubject;
-              field = lstTemplate.get(i - 1);
+              field = changePluralSubjectToSingle(lstTemplate.get(i - 1));
               dataType = GetType.getLabel(field, sentence, false, conn, stmt, rs);
               System.out.println(
                   "----------subject: "
