@@ -9,8 +9,6 @@ public class ClassifySentenceWithoutInternet {
   static String field;
   static String mainSubject = "mainSubject";
 
-  public static String temp = "אם גיל של לקוח גדול מ- 18 אזי הסק ש- לקוח הוא בוגר";
-
   public static List<String> operators =
       Arrays.asList(
           "@",
@@ -68,7 +66,7 @@ public class ClassifySentenceWithoutInternet {
         continue;
       }
 
-      if (isNumericNumber(word, conn, stmt, rs)) {
+      if (isNumericNumber(word)) {
         continue;
       }
       if (i + 2 < lstTemplate.size()) {
@@ -269,8 +267,8 @@ public class ClassifySentenceWithoutInternet {
               isSaveWordInTLXTableORConstes(
                   removeParenthesis(lstTemplate.get(i + 1)), conn, stmt, rs);
           if (!isSaveWord
-              && !isNumericNumber(subject, conn, stmt, rs)
-              && !isNumericNumber(lstTemplate.get(i + 1), conn, stmt, rs)) {
+              && !isNumericNumber(subject)
+              && !isNumericNumber(lstTemplate.get(i + 1))) {
             field = changePluralSubjectToSingle(lstTemplate.get(i + 1));
             dataType = GetType.getLabel(field, sentence, false, conn, stmt, rs);
             System.out.println(
@@ -382,11 +380,6 @@ public class ClassifySentenceWithoutInternet {
             // option4
             // 4.  אם מילהלאשמורה{[הוא] /מילהשמורה}  (למשל אופרטור) – אזי הראשון הוא שדה בתוך נושא
             // מרכזי
-            //                        if (i + 2 < lstTemplate.size() && (lstTemplate.get(i +
-            // 2).equals("היא") || lstTemplate.get(i + 2).equals("אינו") || lstTemplate.get(i +
-            // 2).equals("הוא"))) {
-            //                            continue;
-            //                        }
 
             if (i + 2 < lstTemplate.size()) {
               isSaveWord =
@@ -502,7 +495,7 @@ public class ClassifySentenceWithoutInternet {
             // 10 אם מילהשמורה טקסט שמור [מספר בעברית]   מילהלאשמורה [מילהלאשמורה]   -  הראשון שדה
             // השני נושא ברבים אחריו שדה לוואי ו
             if (i + 2 < lstTemplate.size()
-                && isNumericNumber(removeParenthesis(lstTemplate.get(i + 2)), conn, stmt, rs)) {
+                && isNumericNumber(removeParenthesis(lstTemplate.get(i + 2)))) {
               if (i + 3 < lstTemplate.size()) {
                 isSaveWord =
                     isSaveWordInTLXTableORConstes(
@@ -583,7 +576,7 @@ public class ClassifySentenceWithoutInternet {
             }
           }
         }
-        if (!isNumericNumber(lstTemplate.get(i + 1), conn, stmt, rs)) {
+        if (!isNumericNumber(lstTemplate.get(i + 1))) {
           isSaveWord =
               isSaveWordInTLXTableORConstes(
                   removeParenthesis(lstTemplate.get(i + 1)), conn, stmt, rs);
@@ -640,7 +633,7 @@ public class ClassifySentenceWithoutInternet {
     return operators.contains(s);
   }
 
-  private static boolean isNumericNumber(String s, Connection conn, Statement stmt, ResultSet rs) {
+  private static boolean isNumericNumber(String s) {
 
     // Check if the string is empty or null.
     if (s == null || s.isEmpty()) {
@@ -725,13 +718,9 @@ public class ClassifySentenceWithoutInternet {
       return true;
     }
 
-    if (isNumericNumber(token, conn, stmt, rs)) {
+    if (isNumericNumber(token)) {
       return true;
     }
-
-    // Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-
-    // Create a statement.
 
     // the tokens in the database is revers
     String reversToken = reverseString(token);
@@ -810,7 +799,5 @@ public class ClassifySentenceWithoutInternet {
         hebrewField, englishField, hebrewSubject, englishSubject, dataType, conn, stmt, rs);
   }
 
-  public static void main(String[] args) {
-    //   readTemplate(temp, conn, stmt, rs);
-  }
+  public static void main(String[] args) {}
 }
