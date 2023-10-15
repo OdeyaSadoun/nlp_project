@@ -2,11 +2,6 @@ import java.sql.*;
 import java.util.*;
 
 public class GetType {
-
-    final static String JDBC_URL = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
-    final static String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    final static String USERNAME = "logistcourse1";
-    final static String PASSWORD = "logistcourse1";
     final static String DEFAULT_TYPE = "Double";
 
     public static String getLabel(String word, String sentence, Boolean pluralWord, Connection conn, Statement stmt, ResultSet rs) {
@@ -45,9 +40,6 @@ public class GetType {
     }
 
     public static void insertToDatabase(String hebrewWord, String type, Connection conn, Statement stmt){
-
-
-
         try{
             String insertQuery = "INSERT INTO VARTYPE (HEBREW_WORD, VAR_TYPE) VALUES (?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(insertQuery);
@@ -62,7 +54,6 @@ public class GetType {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
 
@@ -88,8 +79,6 @@ public class GetType {
     }
 
     public static void createVARTYPETableIfNotExists(Connection conn, Statement stmt, ResultSet rs) {
-
-
         try {
 
             // SQL query to check if the table exists
@@ -169,23 +158,12 @@ public class GetType {
                 }
             }
 
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-//        finally {
-//            try {
-//                if (stmt != null) stmt.close();
-//                if (conn != null) conn.close();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
     }
 
     private static String isWordExistInVARTYPETable(String word, Connection conn, Statement stmt, ResultSet rs) {
-
         PreparedStatement preparedStatement = null;
 
         try {
