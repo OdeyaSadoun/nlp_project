@@ -56,13 +56,11 @@ public class GetType {
         }
     }
 
-
-
-    public static void deleteVARTYPETable(Connection conn, Statement stmt , ResultSet rs) throws SQLException {
+    public static void deleteVARTYPETable(Statement stmt) throws SQLException {
         try {
             // SQL query to check if the table exists
             String checkTableQuery = "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'VARTYPE'";
-            rs = stmt.executeQuery(checkTableQuery);
+            ResultSet rs = stmt.executeQuery(checkTableQuery);
             rs.next();
             int tableCount = rs.getInt(1);
 

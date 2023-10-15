@@ -1,13 +1,9 @@
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class HebrewSpellChecker {
-    final static String JDBC_URL = "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
-    final static String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    final static String USERNAME = "logistcourse1";
-    final static String PASSWORD = "logistcourse1";
-
     public static int levenshteinDistance(String word1, String word2) {
         int[][] dp = new int[word1.length() + 1][word2.length() + 1];
 
@@ -28,66 +24,40 @@ public class HebrewSpellChecker {
         return dp[word1.length()][word2.length()];
     }
 
-    public static boolean findSameWordFromKTCLASSTable(String newWord, int levenshteinThreshold) {
-        List<String> words = getWORDColumnValues("KTCLASS");
+    public static boolean findSameWordFromKTCLASSTable(String newWord, int levenshteinThreshold, Connection connection) {
+        List<String> words = getWORDColumnValues("KTCLASS", connection);
+
         return isDuplicate(newWord, words, levenshteinThreshold);
     }
-    public static String sameWordFromKTCLASSTable(String newWord, int levenshteinThreshold) {
-        List<String> words = getWORDColumnValues("KTCLASS");
+
+    public static String sameWordFromKTCLASSTable(String newWord, int levenshteinThreshold , Connection connection) {
+        List<String> words = getWORDColumnValues("KTCLASS", connection);
+
         return isDuplicateReturnWord(newWord, words, levenshteinThreshold);
     }
 
+    public static boolean findSameWordFromKTATTRIBUTETable(String hebrewSubject, String hebrewField, int levenshteinThreshold, Connection conn) {
+        List<String> classCodeNames = getClassCodeNames(hebrewSubject, conn);
 
-    public static String getHebrewNameFromEnglish(String classCodeName) {
-        try {
-            Class.forName(JDBC_DRIVER);
-            Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-            String sql = "SELECT NAME FROM KTCLASS WHERE CLASS_CODE_NAME = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        if (classCodeNames.isEmpty()) {
+            //there is no class like this in db (or levenshtein or not exist)
 
-            preparedStatement.setString(1, classCodeName);
-
-            ResultSet rs = preparedStatement.executeQuery();
-
-            String hebrewName = null;
-            if (rs.next()) {
-                hebrewName = rs.getString("NAME");
-            }
-
-            rs.close();
-            preparedStatement.close();
-            connection.close();
-
-            return hebrewName;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null; // Return null in case of an error
-    }
-
-
-    public static boolean findSameWordFromKTATTRIBUTETable(String hebrewSubject, String hebrewField, int levenshteinThreshold) {
-        List<String> classCodeNames = getClassCodeNames(hebrewSubject);
-
-        if (classCodeNames.isEmpty()) {//there is no class like this in db (or levinshtain or not exsist)
-            if (!findSameWordFromKTCLASSTable(hebrewSubject, levenshteinThreshold)) {//no exsist
+            if (!findSameWordFromKTCLASSTable(hebrewSubject, levenshteinThreshold, conn)) {//no exist
                 return false; // No matching class code name found
             }
             else{
-                //there is levinshtain same to this word
-                String newHebrewSubjectFromDB = sameWordFromKTCLASSTable(hebrewSubject, levenshteinThreshold);
-                classCodeNames = getClassCodeNames(newHebrewSubjectFromDB);
+                //there is levenshtein same to this word
+                String newHebrewSubjectFromDB = sameWordFromKTCLASSTable(hebrewSubject, levenshteinThreshold, conn);
+                classCodeNames = getClassCodeNames(newHebrewSubjectFromDB, conn);
             }
         }
 
-        List<String> words = getWORDColumnValues("KTATTRIBUTE");
-
-
-
+        List<String> words = getWORDColumnValues("KTATTRIBUTE", conn);
 
         for (String classCodeName : classCodeNames) {
 //            String hebrewSubjectFromEnglish = getHebrewNameFromEnglish(classCodeName);
-            if (isDuplicateWithClassCode(hebrewField, classCodeName, words, levenshteinThreshold)) {
+
+            if (isDuplicateWithClassCode(hebrewField, classCodeName, words, levenshteinThreshold, conn)) {
                 return true;
             }
         }
@@ -95,17 +65,13 @@ public class HebrewSpellChecker {
         return false;
     }
 
-    public static List<String> getClassCodeNames(String hebrewSubject) {
+    public static List<String> getClassCodeNames(String hebrewSubject, Connection connection) {
         List<String> classCodeNames = new ArrayList<>();
 
         try {
-            Class.forName(JDBC_DRIVER);
-            Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-
             String getClassCodeNameQuery = "SELECT CLASS_CODE_NAME FROM KTCLASS WHERE NAME = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(getClassCodeNameQuery);
             preparedStatement.setString(1, hebrewSubject);
-
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -115,7 +81,7 @@ public class HebrewSpellChecker {
 
             resultSet.close();
             preparedStatement.close();
-            connection.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -123,11 +89,11 @@ public class HebrewSpellChecker {
         return classCodeNames;
     }
 
-    public static boolean isDuplicateWithClassCode(String hebrewField, String classCodeName, List<String> database, int levenshteinThreshold) {
+    public static boolean isDuplicateWithClassCode(String hebrewField, String classCodeName, List<String> database, int levenshteinThreshold , Connection connection) {
         for (String existingWord : database) {
             int distance = levenshteinDistance(hebrewField, existingWord);
             if (distance <= levenshteinThreshold) {
-                if (isMatchInKTATTRIBUTE(existingWord, classCodeName)) {
+                if (isMatchInKTATTRIBUTE(existingWord, classCodeName, connection)) {
                     return true;
                 }
             }
@@ -135,11 +101,8 @@ public class HebrewSpellChecker {
         return false;
     }
 
-    public static boolean isMatchInKTATTRIBUTE(String hebrewField, String classCodeName) {
+    public static boolean isMatchInKTATTRIBUTE(String hebrewField, String classCodeName, Connection connection) {
         try {
-            Class.forName(JDBC_DRIVER);
-            Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-
             String query = "SELECT * FROM KTATTRIBUTE WHERE NAME = ? AND CLASS_CODE_NAME = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, hebrewField);
@@ -151,7 +114,6 @@ public class HebrewSpellChecker {
 
             resultSet.close();
             preparedStatement.close();
-            connection.close();
 
             return isMatch;
         } catch (Exception e) {
@@ -161,22 +123,20 @@ public class HebrewSpellChecker {
         return false;
     }
 
-    public static List<String> getWORDColumnValues(String tableName) {
+    public static List<String> getWORDColumnValues(String tableName, Connection connection) {
         List<String> columnValues = new ArrayList<>();
 
         try {
-            Class.forName(JDBC_DRIVER);
-            Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
             String sql = "";
 
-            if(tableName == "KTCLASS"){
+            if(tableName.equals("KTCLASS")){
                 sql = "SELECT NAME FROM KTCLASS";
             }
-            else if(tableName == "KTATTRIBUTE"){
+            else if(tableName.equals("KTATTRIBUTE")){
                 sql = "SELECT NAME,CLASS_CODE_NAME FROM KTATTRIBUTE";
             }
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -186,7 +146,6 @@ public class HebrewSpellChecker {
 
             resultSet.close();
             preparedStatement.close();
-            connection.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -202,8 +161,10 @@ public class HebrewSpellChecker {
                 return true;
             }
         }
+
         return false;
     }
+
     public static String isDuplicateReturnWord(String newWord, List<String> database, int levenshteinThreshold) {
         for (String existingWord : database) {
             int distance = levenshteinDistance(newWord, existingWord);
@@ -214,15 +175,14 @@ public class HebrewSpellChecker {
         }
         return null;
     }
-    public static boolean isSameWordInDBInKTCLASSTable(String newWord, int levenshteinThreshold){
-        return findSameWordFromKTCLASSTable(newWord,levenshteinThreshold);
+
+    public static boolean isSameWordInDBInKTCLASSTable(String newWord, int levenshteinThreshold, Connection connection){
+        return findSameWordFromKTCLASSTable(newWord,levenshteinThreshold, connection);
     }
 
-    public static boolean isSameWordInDBInKTATTRIBUTETable(String hebrewSubject, String hebrewField, int levenshteinThreshold){
+    public static boolean isSameWordInDBInKTATTRIBUTETable(String hebrewSubject, String hebrewField, int levenshteinThreshold, Connection conn){
         //field same:
-        return findSameWordFromKTATTRIBUTETable(hebrewSubject, hebrewField, levenshteinThreshold);
-
-        //subject same:
+        return findSameWordFromKTATTRIBUTETable(hebrewSubject, hebrewField, levenshteinThreshold, conn);
     }
 
     public static void main(String[] args) {

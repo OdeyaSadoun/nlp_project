@@ -77,7 +77,7 @@ public class TestTheProject {
 
   private static void updateVARTYPETable(Connection conn, Statement stmt, ResultSet rs) {
     try {
-      GetType.deleteVARTYPETable(conn, stmt, rs);
+      GetType.deleteVARTYPETable(stmt);
       GetType.createVARTYPETableIfNotExists(conn, stmt, rs);
     } catch (SQLException e) {
       throw new RuntimeException(e);
