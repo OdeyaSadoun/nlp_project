@@ -1,7 +1,6 @@
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class HebrewSpellChecker {
     public static int levenshteinDistance(String word1, String word2) {

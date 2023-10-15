@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestTheProject {
-
   static final String JDBC_URL =
       "jdbc:sqlserver://LOCALHOST\\SQLEXPRESS:1433;databaseName=logistcourse1;SelectMethod=Cursor";
   static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
@@ -40,7 +39,7 @@ public class TestTheProject {
       updateTables(conn, stmt, rs);
 
       // Read sentences from a text file.
-      List<String> sentences = readSentences("sentencesForRULES-DEMO.txt");
+      List<String> sentences = readSentences("sentencesForDEB_RULES.txt");
       String sentenceAfterAddUnderscoreInQuotes;
       int counterForPrint = 1;
       // For each sentence, call the readTemplate function from the static class AAA and pass the
@@ -68,8 +67,8 @@ public class TestTheProject {
 
   private static void updateCopingTable(Connection conn, Statement stmt, ResultSet rs) {
     try {
-      TranslateWithoutInternet.deleteCopyingTable(conn, stmt, rs);
-      TranslateWithoutInternet.createCopyingTableIfNotExists(conn, stmt, rs);
+      TranslateWithoutInternet.deleteCopyingTable(stmt);
+      TranslateWithoutInternet.createCopyingTableIfNotExists(conn, stmt);
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }

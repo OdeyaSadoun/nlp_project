@@ -101,7 +101,6 @@ public class SaveToDatabase {
         return attributeIndex;
     }
 
-
     /**
      * Function to check if the field is existed in the DB
      *  @param ensubject the subject that match to this field
@@ -119,7 +118,6 @@ public class SaveToDatabase {
 
         return rs.next();
     }
-
 
     /**
      * Function to insert field to KTATTRIBUTE table

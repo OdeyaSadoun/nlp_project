@@ -772,16 +772,14 @@ public class ClassifySentenceWithoutInternet {
     } else {
       hebrewField = removeParenthesis(field);
       englishField =
-          TranslateWithoutInternet.retrieveEnglishValuesFromHebrewValues(
-              hebrewField, conn, stmt, rs);
+          TranslateWithoutInternet.retrieveEnglishValuesFromHebrewValues(hebrewField, conn);
     }
     if (subject.equals("mainSubject")) {
       englishSubject = "main_class";
       hebrewSubject = "נושא_ראשי";
     } else {
       englishSubject =
-          TranslateWithoutInternet.retrieveEnglishValuesFromHebrewValues(
-              hebrewSubject, conn, stmt, rs);
+          TranslateWithoutInternet.retrieveEnglishValuesFromHebrewValues(hebrewSubject, conn);
     }
     System.out.println(
         "**********subject in hebrew: "
