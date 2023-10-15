@@ -185,20 +185,5 @@ public class HebrewSpellChecker {
     }
 
     public static void main(String[] args) {
-        String newWord = "אמא"; // The word to be inserted
-        List<String> database = new ArrayList<>(); // Existing words in the database
-        database.add("אבא");
-        database.add("אמה");
-        database.add("שלום");
-
-        int levenshteinThreshold = 2; // Adjust the threshold as needed
-
-        if (isDuplicate(newWord, database, levenshteinThreshold)) {
-            System.out.println("The word is a potential duplicate.");
-        } else {
-            // Insert the word into the database
-            System.out.println("Inserting the word into the database.");
-            database.add(newWord);
-        }
     }
 }

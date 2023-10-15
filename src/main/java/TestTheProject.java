@@ -10,6 +10,7 @@ public class TestTheProject {
   static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
   static final String USERNAME = "logistcourse1";
   static final String PASSWORD = "logistcourse1";
+  static final boolean APPROVE_PRINTING = false;
 
   public static void main(String[] args) {
 
@@ -34,7 +35,7 @@ public class TestTheProject {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    // System.out.println(TranslateWithoutInternet.retrieveEnglishValuesFromHebrewValues("אחוז_בלון_ממחיר_בטוחה", conn, stmt, rs));
+
     try {
       updateTables(conn, stmt, rs);
 
@@ -46,11 +47,13 @@ public class TestTheProject {
       // sentence to the function.
       for (String sentence : sentences) {
         sentenceAfterAddUnderscoreInQuotes = replaceSpacesWithUnderscoresInQuotes(sentence);
-        System.out.println(
-            "Sentence num " + counterForPrint + " : " + sentenceAfterAddUnderscoreInQuotes);
+        if (APPROVE_PRINTING) {
+          System.out.println(
+              "Sentence num " + counterForPrint + " : " + sentenceAfterAddUnderscoreInQuotes);
+        }
         counterForPrint++;
         ClassifySentenceWithoutInternet.readTemplate(
-            sentenceAfterAddUnderscoreInQuotes, conn, stmt, rs);
+            sentenceAfterAddUnderscoreInQuotes, conn, stmt, null, APPROVE_PRINTING);
       }
     } catch (Exception e) {
       e.printStackTrace();
@@ -65,7 +68,7 @@ public class TestTheProject {
     }
   }
 
-  private static void updateCopingTable(Connection conn, Statement stmt, ResultSet rs) {
+  private static void updateCopingTable(Connection conn, Statement stmt) {
     try {
       TranslateWithoutInternet.deleteCopyingTable(stmt);
       TranslateWithoutInternet.createCopyingTableIfNotExists(conn, stmt);
@@ -84,7 +87,7 @@ public class TestTheProject {
   }
 
   private static void updateTables(Connection conn, Statement stmt, ResultSet rs) {
-    updateCopingTable(conn, stmt, rs);
+    updateCopingTable(conn, stmt);
     updateVARTYPETable(conn, stmt, rs);
   }
 
