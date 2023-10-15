@@ -40,7 +40,7 @@ public class TestTheProject {
       updateTables(conn, stmt, rs);
 
       // Read sentences from a text file.
-      List<String> sentences = readSentences("sentencesForDEB_RULES.txt");
+      List<String> sentences = readSentences("sentencesForRULES-DEMO.txt");
       String sentenceAfterAddUnderscoreInQuotes;
       int counterForPrint = 1;
       // For each sentence, call the readTemplate function from the static class AAA and pass the
