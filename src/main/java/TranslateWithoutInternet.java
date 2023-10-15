@@ -425,13 +425,13 @@ public class TranslateWithoutInternet {
             return removeUnderscore(finalWordBuilder.toString());
         }
 
-        try {
-            if (rs != null) rs.close();
-            if (stmt != null) stmt.close();
-            if (conn != null) conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            if (rs != null) rs.close();
+//            if (stmt != null) stmt.close();
+//            if (conn != null) conn.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
 
 
         return translateWord;
