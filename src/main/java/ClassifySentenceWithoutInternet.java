@@ -746,59 +746,76 @@ public class ClassifySentenceWithoutInternet {
   public static String changePluralSubjectToSingle(String pluralSubject) {
     StringBuilder finalWordBuilder = new StringBuilder();
     String[] arrString = createNewArray(pluralSubject);
-    for (String s : arrString) {
+
+    int lastIndex = arrString.length - 1;
+
+    for (int j = 0; j < arrString.length; j++) {
+      String s = arrString[j];
       StringBuilder wordBuilder = new StringBuilder();
 
 
       if (s.equals("ימים")) {
         wordBuilder.append("ימים");
       }
-      if (s.equals("שנים")) {
+      else if (s.equals("שנים")) {
         wordBuilder.append("שנה");
       }
-      if (s.equals("תאימות")) {
+      else if (s.equals("תאימות")) {
         wordBuilder.append("תאימות");
       }
-      if (s.equals("מעמ")) {
+      else if (s.equals("מעמ")) {
         wordBuilder.append("מעמ");
       }
-      if (s.equals("זכאות")) {
+      else if (s.equals("זכאות")) {
         wordBuilder.append("זכאות");
       }
+      else if (s.equals("תקינות")) {
+        wordBuilder.append("תקינות");
+      }
       // Check if the word ends with a plural suffix such as "ות" or "ים".
-      if (s.endsWith("ות") || s.endsWith("ים")) {
+      else if (s.endsWith("ות") || s.endsWith("ים")) {
+
         // If so, remove the plural suffix.
         wordBuilder.append(s.substring(0, s.length() - 2)) ;
+        if (wordBuilder.toString().endsWith("מ")
+                || wordBuilder.toString().endsWith("נ")
+                || wordBuilder.toString().endsWith("פ")
+                || wordBuilder.toString().endsWith("צ")
+                || wordBuilder.toString().endsWith("כ")) {
+
+          // If so, replace the final letter with its corresponding singular letter.
+          char lastChar = wordBuilder.charAt(wordBuilder.length() - 1);
+          wordBuilder.deleteCharAt(wordBuilder.length() - 1);
+          switch (lastChar) {
+            case 'מ':
+              wordBuilder.append('ם');
+              break;
+            case 'נ':
+              wordBuilder.append ('ן');
+              break;
+            case 'פ':
+              wordBuilder.append ('ף' );
+              break;
+            case 'צ':
+              wordBuilder.append('ץ');
+              break;
+            case 'כ':
+              wordBuilder.append ('ך');
+              break;
+          }
+        }
       }
 
       // Check if the final letter is a Hebrew final letter.
-      if (s.endsWith("מ")
-              || s.endsWith("נ")
-              || s.endsWith("פ")
-              || s.endsWith("צ")
-              || s.endsWith("כ")) {
-        // If so, replace the final letter with its corresponding singular letter.
-        char lastChar = s.charAt(s.length() - 1);
-        switch (lastChar) {
-          case 'מ':
-            wordBuilder.append(s.substring(0, s.length() - 1) + 'ם');
-            break;
-          case 'נ':
-            wordBuilder.append (s.substring(0, s.length() - 1) + 'ן');
-            break;
-          case 'פ':
-            wordBuilder.append (s.substring(0, s.length() - 1) + 'ף' );
-            break;
-          case 'צ':
-            wordBuilder.append( s.substring(0, s.length() - 1) + 'ץ');
-            break;
-          case 'כ':
-            wordBuilder.append (s.substring(0, s.length() - 1) + 'ך');
-            break;
-        }
+
+      else{
+        wordBuilder = new StringBuilder(s);
       }
       finalWordBuilder.append(wordBuilder);
-      finalWordBuilder.append('_');
+
+      if (j != lastIndex) {
+        finalWordBuilder.append('_');
+      }
     }
 
     return TranslateWithoutInternet.removeUnderscore(finalWordBuilder.toString());
