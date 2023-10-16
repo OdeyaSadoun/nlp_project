@@ -285,7 +285,7 @@ public class TranslateWithoutInternet {
           for (int i = 0; i < letters.length; i++) {
             ResultSet rs;
             if (letters[i] == 'י') {
-              if (i <= letters.length - 2) {
+              if (i <= letters.length - 1) {
                 if (i + 1 < letters.length && (letters[i + 1] == 'י')) {
                   /// מכניסים i במקום i
                   wordBuilder.append('i');
@@ -304,7 +304,7 @@ public class TranslateWithoutInternet {
                 }
               }
             } else if (letters[i] == 'פ') {
-              if (i <= letters.length - 2) {
+              if (i <= letters.length - 1) {
                 if (i + 1 < letters.length && (letters[i + 1] == 'ף')) {
                   /// מכניסים p במקום i
                   wordBuilder.append('p');
@@ -332,7 +332,7 @@ public class TranslateWithoutInternet {
               }
               //wordBuilder.append('f');
             } else if (letters[i] == 'א') {
-              if (i <= letters.length - 2) {
+              if (i <= letters.length - 1) {
                 if (i + 1 < letters.length && (letters[i + 1] == 'ו')) {
                   /// מתעלמים מ- א
                   continue;
@@ -340,7 +340,7 @@ public class TranslateWithoutInternet {
                 wordBuilder.append('a');
               }
             } else if (letters[i] == 'כ') {
-              if (i <= letters.length - 2) {
+              if (i <= letters.length - 1) {
                 if (i + 1 < letters.length ) {
                   /// מתעלמים מ- א
                   wordBuilder.append('c');
@@ -348,7 +348,7 @@ public class TranslateWithoutInternet {
 
               }
             } else if (letters[i] == 'ע') {
-              if (i <= letters.length - 2) {
+              if (i <= letters.length - 1) {
                 if (i + 1 < letters.length && (letters[i + 1] == 'ו')) {
                   /// מתעלמים מ- ע
                 }
