@@ -285,52 +285,55 @@ public class TranslateWithoutInternet {
           for (int i = 0; i < letters.length; i++) {
             ResultSet rs;
             if (letters[i] == 'י') {
-              if (i != letters.length - 2) {
+              if (i <= letters.length - 2) {
                 if (i + 1 < letters.length && (letters[i + 1] == 'י')) {
                   /// מכניסים i במקום i
                   wordBuilder.append('i');
                   ++i;
                 }
-              } else {
-                // Set the parameter value
-                preparedStatement.setString(1, String.valueOf(letters[i]));
-                // Execute the query
-                rs = preparedStatement.executeQuery();
-                // If the query returns a row, get the English value
-                if (rs.next()) {
-                  String EnglishValue = rs.getString("English");
-                  wordBuilder.append(EnglishValue);
+                else {
+                  // Set the parameter value
+                  preparedStatement.setString(1, String.valueOf(letters[i]));
+                  // Execute the query
+                  rs = preparedStatement.executeQuery();
+                  // If the query returns a row, get the English value
+                  if (rs.next()) {
+                    String EnglishValue = rs.getString("English");
+                    wordBuilder.append(EnglishValue);
+                  }
                 }
               }
             } else if (letters[i] == 'פ') {
-              if (i != letters.length - 2) {
+              if (i <= letters.length - 2) {
                 if (i + 1 < letters.length && (letters[i + 1] == 'ף')) {
                   /// מכניסים p במקום i
                   wordBuilder.append('p');
                   ++i;
-                }
-              } else {
-                // Set the parameter value
-                if (letters[i] == 'ף') {
-                  if (APPROVE_PRINTING) {
-                    System.out.println("זהים!!!");
-                  }
-                }
-                if (APPROVE_PRINTING) {
-                  System.out.println(letters[i]);
-                }
+                } else {
+                  wordBuilder.append('f');
+                  // Set the parameter value
+//                if (letters[i] == 'ף') {
+//                  if (APPROVE_PRINTING) {
+//                    System.out.println("זהים!!!");
+//                  }
+//                }
+//                if (APPROVE_PRINTING) {
+//                  System.out.println(letters[i]);
+//                }
 
-                preparedStatement.setString(1, String.valueOf(letters[i]));
-                // Execute the query
-                rs = preparedStatement.executeQuery();
-                // If the query returns a row, get the English value
-                if (rs.next()) {
-                  String EnglishValue = rs.getString("English");
-                  wordBuilder.append(EnglishValue);
+//                  preparedStatement.setString(1, String.valueOf(letters[i]));
+//                  // Execute the query
+//                  rs = preparedStatement.executeQuery();
+//                  // If the query returns a row, get the English value
+//                  if (rs.next()) {
+//                    String EnglishValue = rs.getString("English");
+//                    wordBuilder.append(EnglishValue);
+//                  }
                 }
               }
+              //wordBuilder.append('f');
             } else if (letters[i] == 'א') {
-              if (i != letters.length - 2) {
+              if (i <= letters.length - 2) {
                 if (i + 1 < letters.length && (letters[i + 1] == 'ו')) {
                   /// מתעלמים מ- א
                   continue;
@@ -338,7 +341,7 @@ public class TranslateWithoutInternet {
                 wordBuilder.append('a');
               }
             } else if (letters[i] == 'ע') {
-              if (i != letters.length - 2) {
+              if (i <= letters.length - 2) {
                 if (i + 1 < letters.length && (letters[i + 1] == 'ו')) {
                   /// מתעלמים מ- ע
                 }
