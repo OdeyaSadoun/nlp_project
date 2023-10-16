@@ -340,17 +340,29 @@ public class TranslateWithoutInternet {
                 }
                 wordBuilder.append('a');
               }
+            } else if (letters[i] == 'כ') {
+              if (i <= letters.length - 2) {
+                if (i + 1 < letters.length ) {
+                  /// מתעלמים מ- א
+                  wordBuilder.append('c');
+                }
+
+              }
             } else if (letters[i] == 'ע') {
               if (i <= letters.length - 2) {
                 if (i + 1 < letters.length && (letters[i + 1] == 'ו')) {
                   /// מתעלמים מ- ע
                 }
+                wordBuilder.append('a');
               }
             } else if (letters[i] == 'ב') {
               if (i == letters.length - 1) {
                 /// מכניסים v במקום i
                 wordBuilder.append('v');
                 ++i;
+              }
+              else{
+                wordBuilder.append('b');
               }
             } else {
               // Set the parameter value
