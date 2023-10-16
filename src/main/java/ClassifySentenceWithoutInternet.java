@@ -760,6 +760,9 @@ public class ClassifySentenceWithoutInternet {
       else if (s.equals("שנים")) {
         wordBuilder.append("שנה");
       }
+      else if (s.equals("עבירות")) {
+        wordBuilder.append("עבירה");
+      }
       else if (s.equals("תאימות")) {
         wordBuilder.append("תאימות");
       }
