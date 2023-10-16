@@ -311,7 +311,6 @@ public class TranslateWithoutInternet {
                   ++i;
                 } else {
                   wordBuilder.append('f');
-                  // Set the parameter value
 //                if (letters[i] == 'ף') {
 //                  if (APPROVE_PRINTING) {
 //                    System.out.println("זהים!!!");
