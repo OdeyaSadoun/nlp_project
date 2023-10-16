@@ -342,9 +342,13 @@ public class TranslateWithoutInternet {
             } else if (letters[i] == 'כ') {
               if (i <= letters.length - 1) {
                 if (i + 1 < letters.length ) {
-                  /// מתעלמים מ- א
                   wordBuilder.append('c');
                 }
+                else{
+                  wordBuilder.append('c');
+                  wordBuilder.append('h');
+                }
+
 
               }
             } else if (letters[i] == 'ע') {

@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -720,50 +721,87 @@ public class ClassifySentenceWithoutInternet {
     return true;
   }
 
-  public static String changePluralSubjectToSingle(String pluralSubject) {
-    if (pluralSubject.equals("ימים")) {
-      return "יום";
-    }
-    if (pluralSubject.equals("שנים")) {
-      return "שנה";
-    }
-    if (pluralSubject.equals("תאימות")) {
-      return "תאימות";
-    }
-    // Check if the word ends with a plural suffix such as "ות" or "ים".
-    if (pluralSubject.endsWith("ות") || pluralSubject.endsWith("ים")) {
-      // If so, remove the plural suffix.
-      pluralSubject = pluralSubject.substring(0, pluralSubject.length() - 2);
-    }
 
-    // Check if the final letter is a Hebrew final letter.
-    if (pluralSubject.endsWith("מ")
-        || pluralSubject.endsWith("נ")
-        || pluralSubject.endsWith("פ")
-        || pluralSubject.endsWith("צ")
-        || pluralSubject.endsWith("כ")) {
-      // If so, replace the final letter with its corresponding singular letter.
-      char lastChar = pluralSubject.charAt(pluralSubject.length() - 1);
-      switch (lastChar) {
-        case 'מ':
-          pluralSubject = pluralSubject.substring(0, pluralSubject.length() - 1) + 'ם';
-          break;
-        case 'נ':
-          pluralSubject = pluralSubject.substring(0, pluralSubject.length() - 1) + 'ן';
-          break;
-        case 'פ':
-          pluralSubject = pluralSubject.substring(0, pluralSubject.length() - 1) + 'ף';
-          break;
-        case 'צ':
-          pluralSubject = pluralSubject.substring(0, pluralSubject.length() - 1) + 'ץ';
-          break;
-        case 'כ':
-          pluralSubject = pluralSubject.substring(0, pluralSubject.length() - 1) + 'ך';
-          break;
+  public static String[] createNewArray(String inputString) {
+    List<String> outputList = new ArrayList<>();
+    StringBuilder wordBuilder = new StringBuilder();
+
+    for (char c : inputString.toCharArray()) {
+      if (c == '_') {
+        outputList.add(wordBuilder.toString());
+        wordBuilder = new StringBuilder();
+      } else {
+        wordBuilder.append(c);
       }
     }
 
-    return pluralSubject;
+    outputList.add(wordBuilder.toString()); // Add the last word after the last underscore
+    String[] outputArray = new String[outputList.size()];
+    outputArray = outputList.toArray(outputArray);
+
+    return outputArray;
+  }
+
+
+  public static String changePluralSubjectToSingle(String pluralSubject) {
+    StringBuilder finalWordBuilder = new StringBuilder();
+    String[] arrString = createNewArray(pluralSubject);
+    for (String s : arrString) {
+      StringBuilder wordBuilder = new StringBuilder();
+
+
+      if (s.equals("ימים")) {
+        wordBuilder.append("ימים");
+      }
+      if (s.equals("שנים")) {
+        wordBuilder.append("שנה");
+      }
+      if (s.equals("תאימות")) {
+        wordBuilder.append("תאימות");
+      }
+      if (s.equals("מעמ")) {
+        wordBuilder.append("מעמ");
+      }
+      if (s.equals("זכאות")) {
+        wordBuilder.append("זכאות");
+      }
+      // Check if the word ends with a plural suffix such as "ות" or "ים".
+      if (s.endsWith("ות") || s.endsWith("ים")) {
+        // If so, remove the plural suffix.
+        wordBuilder.append(s.substring(0, s.length() - 2)) ;
+      }
+
+      // Check if the final letter is a Hebrew final letter.
+      if (s.endsWith("מ")
+              || s.endsWith("נ")
+              || s.endsWith("פ")
+              || s.endsWith("צ")
+              || s.endsWith("כ")) {
+        // If so, replace the final letter with its corresponding singular letter.
+        char lastChar = s.charAt(s.length() - 1);
+        switch (lastChar) {
+          case 'מ':
+            wordBuilder.append(s.substring(0, s.length() - 1) + 'ם');
+            break;
+          case 'נ':
+            wordBuilder.append (s.substring(0, s.length() - 1) + 'ן');
+            break;
+          case 'פ':
+            wordBuilder.append (s.substring(0, s.length() - 1) + 'ף' );
+            break;
+          case 'צ':
+            wordBuilder.append( s.substring(0, s.length() - 1) + 'ץ');
+            break;
+          case 'כ':
+            wordBuilder.append (s.substring(0, s.length() - 1) + 'ך');
+            break;
+        }
+      }
+      finalWordBuilder.append(wordBuilder);
+      finalWordBuilder.append('_');
+    }
+
+    return TranslateWithoutInternet.removeUnderscore(finalWordBuilder.toString());
   }
 
   public static String reverseString(String word) {
