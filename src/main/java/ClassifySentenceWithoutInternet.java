@@ -753,7 +753,6 @@ public class ClassifySentenceWithoutInternet {
       String s = arrString[j];
       StringBuilder wordBuilder = new StringBuilder();
 
-
       if (s.equals("ימים")) {
         wordBuilder.append("ימים");
       }
@@ -777,9 +776,9 @@ public class ClassifySentenceWithoutInternet {
       }
       // Check if the word ends with a plural suffix such as "ות" or "ים".
       else if (s.endsWith("ות") || s.endsWith("ים")) {
-
         // If so, remove the plural suffix.
-        wordBuilder.append(s.substring(0, s.length() - 2)) ;
+        wordBuilder.append(s, 0, s.length() - 2) ;
+
         if (wordBuilder.toString().endsWith("מ")
                 || wordBuilder.toString().endsWith("נ")
                 || wordBuilder.toString().endsWith("פ")
