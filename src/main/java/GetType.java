@@ -1,8 +1,11 @@
 import java.sql.*;
 import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class GetType {
-  final static String DEFAULT_TYPE = "Double";
+  static final String DEFAULT_TYPE = "Double";
 
   public static String getLabel(
       String word, String sentence, Boolean pluralWord, Connection conn, boolean APPROVE_PRINTING) {
@@ -10,9 +13,18 @@ public class GetType {
     if (word == null) {
       return DEFAULT_TYPE;
     }
-    // check if the word exist in the type table:
-    if (isWordExistInVARTYPETable(word, conn, APPROVE_PRINTING) != null) {
-      return isWordExistInVARTYPETable(word, conn, APPROVE_PRINTING);
+    String[] arrString = Tools.createNewArrayFromString(word);
+    for (int j = 0; j < arrString.length; j++) {
+      // check if the word exist in the type table:
+      if (isWordExistInVARTYPETable(arrString[j], conn, APPROVE_PRINTING) != null) {
+        return isWordExistInVARTYPETable(arrString[j], conn, APPROVE_PRINTING);
+      }
+    }
+    if(Tools.stringContainsWord(word, "שדהתאריכי") || Tools.stringContainsWord(word, "שדהתאריך")){
+      return "DateTime";
+    }
+    if(Tools.stringContainsWord(word, "שדהבוליאני")){
+      return "Bool";
     }
     if (pluralWord) {
       return "Bool"; // boolean type value
@@ -40,8 +52,7 @@ public class GetType {
     return false;
   }
 
-  public static void insertToDatabase(
-      String hebrewWord, String type, Connection conn) {
+  public static void insertToDatabase(String hebrewWord, String type, Connection conn) {
     try {
       String insertQuery = "INSERT INTO VARTYPE (HEBREW_WORD, VAR_TYPE) VALUES (?, ?)";
       PreparedStatement preparedStatement = conn.prepareStatement(insertQuery);
@@ -106,13 +117,12 @@ public class GetType {
         knownWords.put("סכום", "Double");
         knownWords.put("משכורת", "Double");
         knownWords.put("תאריך", "DateTime");
-        knownWords.put("תאריך_לידה", "DateTime");
         knownWords.put("שם", "Char");
         knownWords.put("מין", "Char");
         knownWords.put("עיר", "Char");
         knownWords.put("מדינה", "Char");
         knownWords.put("טלפון", "Char");
-        knownWords.put("דואר_אלקטרוני", "Char");
+        knownWords.put("דואר", "Char");
         knownWords.put("אימייל", "Char");
         knownWords.put("מייל", "Char");
         knownWords.put("כתובת", "Char");
@@ -122,19 +132,7 @@ public class GetType {
         knownWords.put("משקל", "Double");
         knownWords.put("טמפרטורה", "Double");
         knownWords.put("זמן", "DateTime");
-        knownWords.put("מספר_טלפון", "Char");
-        knownWords.put("שם_משפחה", "Char");
-        knownWords.put("שם_פרטי", "Char");
-        knownWords.put("שם_בדוי", "Char");
-        knownWords.put("שם_חברה", "Char");
-        knownWords.put("שם_מוצר", "Char");
-        knownWords.put("שם_שירות", "Char");
-        knownWords.put("שם_מקום", "Char");
         knownWords.put("מקום", "Char");
-        knownWords.put("שם_חיה", "Char");
-        knownWords.put("שם_צמח", "Char");
-        knownWords.put("שם_עצם", "Char");
-        knownWords.put("שם_חומר", "Char");
         knownWords.put("כביש", "Char");
         knownWords.put("נהר", "Char");
         knownWords.put("הר", "Char");
@@ -144,9 +142,27 @@ public class GetType {
         knownWords.put("יבשת", "Char");
         knownWords.put("כוכב", "Char");
         knownWords.put("סטטוס", "Char");
+        knownWords.put("סטאטוס", "Char");
         knownWords.put("קריטי", "Bool");
         knownWords.put("מאושרת", "Bool");
-        knownWords.put("מספר_קטלוגי", "Long");
+        knownWords.put("תקינות", "Char");
+        knownWords.put("תאור", "Char");
+        knownWords.put("סוג", "Char");
+        knownWords.put("הגדרה", "Char");
+        knownWords.put("הגדרת", "Char");
+        knownWords.put("הערה", "Char");
+        knownWords.put("הערת", "Char");
+        knownWords.put("קובע", "Bool");
+        knownWords.put("לא", "Bool");
+        knownWords.put("עם", "Bool");
+        knownWords.put("אחוז", "Double");
+        knownWords.put("סה\"כ", "Double");
+        knownWords.put("סהכ", "Double");
+        knownWords.put("פוסלת", "Double");
+        knownWords.put("בוצע", "Bool");
+        knownWords.put("קוד", "Long");
+        knownWords.put("דירוג", "Long");
+
 
         for (Map.Entry<String, String> entry : knownWords.entrySet()) {
           String hebrewWord = entry.getKey();
