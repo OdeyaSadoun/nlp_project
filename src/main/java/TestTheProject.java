@@ -46,7 +46,7 @@ public class TestTheProject {
       // For each sentence, call the readTemplate function from the static class AAA and pass the
       // sentence to the function.
       for (String sentence : sentences) {
-        sentenceAfterAddUnderscoreInQuotes = replaceSpacesWithUnderscoresInQuotes(sentence);
+        sentenceAfterAddUnderscoreInQuotes = Tools.replaceSpacesWithUnderscoresInQuotes(sentence);
         if (APPROVE_PRINTING) {
           System.out.println(
               "Sentence num " + counterForPrint + " : " + sentenceAfterAddUnderscoreInQuotes);
@@ -89,42 +89,6 @@ public class TestTheProject {
   private static void updateTables(Connection conn, Statement stmt, ResultSet rs) {
     updateCopingTable(conn, stmt);
     updateVARTYPETable(conn, stmt, rs);
-  }
-
-  public static String replaceSpacesWithUnderscoresInQuotes(String sentence) {
-    // תחילה, נבנה מחרוזת חדשה שתתקבל את התוצאה הסופית.
-    StringBuilder result = new StringBuilder();
-
-    // נמצא את המקום הראשון שבו יש גרש פותח.
-    int startQuoteIndex = sentence.indexOf('\"');
-
-    // אם לא נמצא גרש פותח, התוצאה היא המחרוזת המקורית.
-    if (startQuoteIndex == -1) {
-      return sentence;
-    }
-
-    // נמצא את המקום האחרון שבו יש גרש סגור.
-    int endQuoteIndex = sentence.lastIndexOf('\"');
-
-    // אם לא נמצא גרש סגור, התוצאה היא המחרוזת המקורית.
-    if (endQuoteIndex == -1) {
-      return sentence;
-    }
-
-    // נבנה מחרוזת חדשה מהחלק בין הגרשיים.
-    String quotePart = sentence.substring(startQuoteIndex + 1, endQuoteIndex);
-
-    // מחליפים את כל הרווחים במחרוזת החדשה בקו תחתון.
-    quotePart = quotePart.replaceAll(" ", "_");
-
-    // מוסיפים את המחרוזת החדשה למחרוזת התוצאה הסופית.
-    result.append(sentence, 0, startQuoteIndex + 1);
-    result.append(quotePart);
-    result.append('"');
-    result.append(sentence.substring(endQuoteIndex + 1));
-
-    // נחזור את המחרוזת התוצאה הסופית.
-    return result.toString();
   }
 
   public static List<String> readSentences(String filename) {

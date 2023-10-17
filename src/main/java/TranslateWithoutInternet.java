@@ -7,62 +7,6 @@ import java.util.Map;
 public class TranslateWithoutInternet {
   public static void main(String[] args) {}
 
-  public static char[] breakWordIntoLetters(String word) {
-    char[] letters = new char[word.length()];
-    for (int i = 0; i < word.length(); i++) {
-      letters[i] = word.charAt(i);
-    }
-
-    return letters;
-  }
-
-  public static String[] createNewArray(char[] inputArray) {
-    List<String> outputList = new ArrayList<>();
-    StringBuilder wordBuilder = new StringBuilder();
-
-    for (char c : inputArray) {
-      if (c == '_') {
-        outputList.add(wordBuilder.toString());
-        wordBuilder = new StringBuilder();
-      } else {
-        wordBuilder.append(c);
-      }
-    }
-
-    outputList.add(wordBuilder.toString()); // Add the last word after the last underscore
-    String[] outputArray = new String[outputList.size()];
-    outputArray = outputList.toArray(outputArray);
-
-    return outputArray;
-  }
-
-  public static String removeUnderscore(String word) {
-    // Check if the last character is an underscore
-    if (word.endsWith("_")) {
-      // Remove the trailing underscore and return the corrected word
-      return word.substring(0, word.length() - 1);
-    } else {
-      // If the last character is not an underscore, return the word as it is
-      return word;
-    }
-  }
-
-  public static char[] removeCharAtIndex(char[] array, int index) {
-    if (index < 0 || index >= array.length) {
-      // Index is out of bounds, return the original array
-      return array;
-    }
-
-    char[] result = new char[array.length - 1];
-
-    for (int i = 0, j = 0; i < array.length; i++) {
-      if (i != index) {
-        result[j++] = array[i];
-      }
-    }
-
-    return result;
-  }
 
   public static void deleteCopyingTable(Statement stmt) throws SQLException {
     try {
@@ -250,30 +194,30 @@ public class TranslateWithoutInternet {
     }
     // if not, we use this function:
     else {
-      char[] myLetters = breakWordIntoLetters(word);
-      String[] arrString = createNewArray(myLetters);
+      char[] myLetters = Tools.breakWordIntoLetters(word);
+      String[] arrString = Tools.createNewArrayFromCharList(myLetters);
 
       for (String s : arrString) {
-        char[] letters = breakWordIntoLetters(s);
+        char[] letters = Tools.breakWordIntoLetters(s);
         StringBuilder wordBuilder = new StringBuilder();
 
         try {
 
           if (letters[0] == 'ב') {
             // b
-            letters = removeCharAtIndex(letters, 0);
+            letters = Tools.removeCharAtIndex(letters, 0);
             wordBuilder.append('b');
           } else if (letters[0] == 'כ') {
             // k
-            letters = removeCharAtIndex(letters, 0);
+            letters = Tools.removeCharAtIndex(letters, 0);
             wordBuilder.append('k');
           } else if (letters[0] == 'פ') {
             // p
-            letters = removeCharAtIndex(letters, 0);
+            letters = Tools.removeCharAtIndex(letters, 0);
             wordBuilder.append('p');
           } else if (letters[0] == 'ו') {
             // v
-            letters = removeCharAtIndex(letters, 0);
+            letters = Tools.removeCharAtIndex(letters, 0);
             wordBuilder.append('v');
           }
 
@@ -388,7 +332,7 @@ public class TranslateWithoutInternet {
         }
       }
 
-      return removeUnderscore(finalWordBuilder.toString());
+      return Tools.removeUnderscore(finalWordBuilder.toString());
     }
 
     return translateWord;
