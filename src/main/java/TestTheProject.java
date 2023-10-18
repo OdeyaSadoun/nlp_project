@@ -10,15 +10,19 @@ public class TestTheProject {
   static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
   static final String USERNAME = "logistcourse1";
   static final String PASSWORD = "logistcourse1";
-  static final boolean APPROVE_PRINTING = true;
+  static final boolean printLogs = true;
+  static final boolean withLevinshtainDistance = false;
+  static final int levinshtainDistance = 1;
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws SQLException {
 
     Connection conn = null;
     Statement stmt = null;
 
     // Connect to the database
     ResultSet rs = null;
+
+
 
     try {
       Class.forName(JDBC_DRIVER);
@@ -37,9 +41,13 @@ public class TestTheProject {
     }
 
     try {
+      String hebrewSubject = Tools.getHebrewSubject(stmt);
+      String englishSubject = Tools.getEnglishSubject(stmt);
+      //System.out.println(englishSubject + "englishSubject");
+      //System.out.println(hebrewSubject + "hebrewSubject");
       updateTables(conn, stmt, rs);
 
-      // Read sentences from a text file.
+//      // Read sentences from a text file.
       List<String> sentences = readSentences("sentencesForDEB_RULES.txt");
       String sentenceAfterAddUnderscoreInQuotes;
       int counterForPrint = 1;
@@ -47,13 +55,13 @@ public class TestTheProject {
       // sentence to the function.
       for (String sentence : sentences) {
         sentenceAfterAddUnderscoreInQuotes = Tools.replaceSpacesWithUnderscoresInQuotes(sentence);
-        if (APPROVE_PRINTING) {
+        if (printLogs) {
           System.out.println(
               "Sentence num " + counterForPrint + " : " + sentenceAfterAddUnderscoreInQuotes);
         }
         counterForPrint++;
         ClassifySentenceWithoutInternet.readTemplate(
-            sentenceAfterAddUnderscoreInQuotes, conn, stmt, null, APPROVE_PRINTING);
+            sentenceAfterAddUnderscoreInQuotes, conn, stmt, null, printLogs, englishSubject, hebrewSubject, withLevinshtainDistance, levinshtainDistance );
       }
     } catch (Exception e) {
       e.printStackTrace();

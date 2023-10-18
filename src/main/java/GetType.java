@@ -8,7 +8,7 @@ public class GetType {
   static final String DEFAULT_TYPE = "Double";
 
   public static String getLabel(
-      String word, String sentence, Boolean pluralWord, Connection conn, boolean APPROVE_PRINTING) {
+      String word, String sentence, Boolean pluralWord, Connection conn, boolean printLogs) {
 
     if (word == null) {
       return DEFAULT_TYPE;
@@ -16,8 +16,8 @@ public class GetType {
     String[] arrString = Tools.createNewArrayFromString(word);
     for (int j = 0; j < arrString.length; j++) {
       // check if the word exist in the type table:
-      if (isWordExistInVARTYPETable(arrString[j], conn, APPROVE_PRINTING) != null) {
-        return isWordExistInVARTYPETable(arrString[j], conn, APPROVE_PRINTING);
+      if (isWordExistInVARTYPETable(arrString[j], conn, printLogs) != null) {
+        return isWordExistInVARTYPETable(arrString[j], conn, printLogs);
       }
     }
     if(Tools.stringContainsWord(word, "שדהתאריכי") || Tools.stringContainsWord(word, "שדהתאריך")){
@@ -177,7 +177,7 @@ public class GetType {
   }
 
   private static String isWordExistInVARTYPETable(
-      String word, Connection conn, boolean APPROVE_PRINTING) {
+      String word, Connection conn, boolean printLogs) {
     PreparedStatement preparedStatement = null;
 
     try {
@@ -191,7 +191,7 @@ public class GetType {
       if (rs.next()) {
         // Word exists in the table
         String type = rs.getString("VAR_TYPE");
-        if (APPROVE_PRINTING) {
+        if (printLogs) {
           System.out.println("VAR_TYPE: " + type);
         }
         return type;

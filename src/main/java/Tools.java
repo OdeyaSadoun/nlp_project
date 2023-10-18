@@ -1,3 +1,6 @@
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -286,6 +289,26 @@ public class Tools {
 
         // אם המיקום הוא -1, המילה לא קיימת
         return index != -1;
+    }
+
+    public static String getHebrewSubject(Statement stmt) throws SQLException {
+        String hebrewSubject = null;
+        String queryClassIndex = "SELECT NAME FROM KTCLASS WHERE CLASS_INDEX = 1";
+        ResultSet rs = stmt.executeQuery(queryClassIndex);
+        if (rs.next()){
+            hebrewSubject = rs.getString("NAME");
+        }
+        return hebrewSubject;
+    }
+
+    public static String getEnglishSubject(Statement stmt) throws SQLException {
+        String englishSubject = null;
+        String queryClassIndex = "SELECT CLASS_CODE_NAME FROM KTCLASS WHERE CLASS_INDEX = 1";
+        ResultSet rs = stmt.executeQuery(queryClassIndex);
+        if (rs.next()){
+            englishSubject = rs.getString("CLASS_CODE_NAME");
+        }
+        return englishSubject;
     }
 
 }

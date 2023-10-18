@@ -3,10 +3,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class SaveToDatabase {
-  static final boolean WITHLEVINSHTAINDISTANCE = true;
-  static final int LEVINSHTAINDISTANCE = 1;
+  //static final boolean WITHLEVINSHTAINDISTANCE = true;
+  //static final int LEVINSHTAINDISTANCE = 1;
+  static final String PASSWORD = "logistcourse1";
 
   public static void main(String[] args) {}
+
 
   public static String getDateWithMS() {
     String date =
@@ -20,7 +22,7 @@ public class SaveToDatabase {
    *
    * @param englishSubject for check if the class index need to be 1
    */
-  private static int getClassIndex(String englishSubject, Statement stmt, boolean APPROVE_PRINTING)
+  private static int getClassIndex(String englishSubject, Statement stmt, boolean printLogs)
       throws SQLException {
     String queryClassIndex = "SELECT MAX(CLASS_INDEX) + 1 AS next_index FROM KVCLASS";
     ResultSet rs = stmt.executeQuery(queryClassIndex);
@@ -29,12 +31,12 @@ public class SaveToDatabase {
     if (rs.next()) {
       if (englishSubject.equals("mainSubject")) {
         classIndex = 1;
-        if (APPROVE_PRINTING) {
+        if (printLogs) {
           System.out.println("main class_index: " + classIndex);
         }
       } else {
         classIndex = rs.getInt("next_index");
-        if (APPROVE_PRINTING) {
+        if (printLogs) {
           System.out.println("Next class_index: " + classIndex);
         }
       }
@@ -99,7 +101,7 @@ public class SaveToDatabase {
    * @param conn           for the connection to DB
    */
   private static int getAttributeIndex(
-      String englishSubject, Connection conn, boolean APPROVE_PRINTING) throws SQLException {
+      String englishSubject, Connection conn, boolean printLogs) throws SQLException {
     String queryAttributeIndex =
         "SELECT COALESCE(MAX(ATTRIBUTE_INDEX), 0) + 1 AS next_index FROM KVATTRIBUTE WHERE CLASS_CODE_NAME = ?";
     PreparedStatement preparedStatement = conn.prepareStatement(queryAttributeIndex);
@@ -109,7 +111,7 @@ public class SaveToDatabase {
 
     if (rs.next()) {
       attributeIndex = rs.getInt("next_index");
-      if (APPROVE_PRINTING) {
+      if (printLogs) {
         System.out.println("Next attribute_index: " + attributeIndex);
       }
     }
@@ -187,7 +189,9 @@ public class SaveToDatabase {
       String type_name,
       Connection conn,
       Statement stmt,
-      boolean APPROVE_PRINTING) {
+      boolean printLogs,
+      boolean withLevinshtainDistance,
+      int levinshtainDistance) {
     // Define constants for the field names in the KTCLASS and KTATTRIBUTE tables
     final String CURRENT_DATE = getDateWithMS();
     final int ACTIVATION_ORDER = 0;
@@ -200,30 +204,30 @@ public class SaveToDatabase {
 
     try {
       // Find class index:
-      classIndex = getClassIndex(englishSubject, stmt, APPROVE_PRINTING);
+      classIndex = getClassIndex(englishSubject, stmt, printLogs);
 
       // ******************************************************************************************/
       // Check if subject is in KTCLASS table
       if (!isSubjectInKTCLASSTable(hebrewSubject, conn)) {
         if (isSubjectInKTCLASSTable(englishSubject, conn)) {
-          if (APPROVE_PRINTING) {
+          if (printLogs) {
             String ex =
                 "There is problem with english subject because there is same that saved in database with hebrew subject that not same!";
             System.out.println(ex);
             throw new SQLException(ex);
           }
         } else {
-          if (APPROVE_PRINTING) {
+          if (printLogs) {
             System.out.println("subject not in KTCLASS table - add to DB");
             System.out.println("before levinshtain distance");
           }
-          if (WITHLEVINSHTAINDISTANCE) {
-            if (APPROVE_PRINTING) {
-              System.out.println("WITHLEVINSHTAINDISTANCE- class: " + WITHLEVINSHTAINDISTANCE);
+          if (withLevinshtainDistance) {
+            if (printLogs) {
+              System.out.println("WITHLEVINSHTAINDISTANCE- class: " + withLevinshtainDistance);
             }
             if (!HebrewSpellChecker.isSameWordInDBInKTCLASSTable(
-                hebrewSubject, LEVINSHTAINDISTANCE, conn)) {
-              if (APPROVE_PRINTING) {
+                hebrewSubject, levinshtainDistance, conn)) {
+              if (printLogs) {
                 System.out.println("after levinshtain distance- not same");
               }
               insertSubject(
@@ -231,7 +235,7 @@ public class SaveToDatabase {
             }
 
           } else {
-            if (APPROVE_PRINTING) {
+            if (printLogs) {
               System.out.println("not with lev sub");
             }
             insertSubject(
@@ -242,8 +246,8 @@ public class SaveToDatabase {
       // ****************************************************************************************/
 
       // Find attribute index to sent to insert query
-      if (getAttributeIndex(englishSubject, conn, APPROVE_PRINTING) != 0) {
-        attributeIndex = getAttributeIndex(englishSubject, conn, APPROVE_PRINTING);
+      if (getAttributeIndex(englishSubject, conn, printLogs) != 0) {
+        attributeIndex = getAttributeIndex(englishSubject, conn, printLogs);
       }
       // ****************************************************************************************/
 
@@ -251,7 +255,7 @@ public class SaveToDatabase {
       if (englishField != null && hebrewField != null) {
         if (!isSubjectInKTATTRIBUTETable(englishSubject, hebrewField, conn)) {
           if (isSubjectInKTATTRIBUTETable(englishSubject, englishField, conn)) {
-            if (APPROVE_PRINTING) {
+            if (printLogs) {
               String ex =
                   "There is problem with english subject or filed because there is same that saved in database with hebrew subject or filed that not same!";
               System.out.println(ex);
@@ -259,15 +263,15 @@ public class SaveToDatabase {
               throw new SQLException(ex);
             }
           } else {
-            if (APPROVE_PRINTING) {
+            if (printLogs) {
               System.out.println("field not in KTATTRIBUT table - add to DB");
             }
-            if (WITHLEVINSHTAINDISTANCE) {
-              if (APPROVE_PRINTING) {
-                System.out.println("WITHLEVINSHTAINDISTANCE - attr: " + WITHLEVINSHTAINDISTANCE);
+            if (withLevinshtainDistance) {
+              if (printLogs) {
+                System.out.println("WITHLEVINSHTAINDISTANCE - attr: " + withLevinshtainDistance);
               }
               if (!HebrewSpellChecker.isSameWordInDBInKTATTRIBUTETable(
-                  hebrewSubject, hebrewField, LEVINSHTAINDISTANCE, conn)) {
+                  hebrewSubject, hebrewField, levinshtainDistance, conn)) {
 
                 insertAttribute(
                     englishSubject,
@@ -281,7 +285,7 @@ public class SaveToDatabase {
                     conn);
               }
             } else {
-              if (APPROVE_PRINTING) {
+              if (printLogs) {
                 System.out.println("not with lev attr");
               }
               insertAttribute(

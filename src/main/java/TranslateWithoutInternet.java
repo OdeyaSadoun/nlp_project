@@ -96,7 +96,7 @@ public class TranslateWithoutInternet {
   }
 
   private static String isWordExistInKTATTRIBUTETable(
-      String word, Connection conn, boolean APPROVE_PRINTING) {
+      String word, Connection conn, boolean printLogs) {
     PreparedStatement preparedStatement = null;
 
     try {
@@ -110,7 +110,7 @@ public class TranslateWithoutInternet {
       if (rs.next()) {
         // Word exists in the table
         String englishWord = rs.getString("ATTR_CODE_NAME");
-        if (APPROVE_PRINTING) {
+        if (printLogs) {
           System.out.println("English Word: " + englishWord);
         }
         return englishWord;
@@ -130,7 +130,7 @@ public class TranslateWithoutInternet {
     }
   }
 
-  private static String isWordExistInKTCLASSTable(String word, Connection conn, boolean APPROVE_PRINTING) {
+  private static String isWordExistInKTCLASSTable(String word, Connection conn, boolean printLogs) {
     PreparedStatement preparedStatement = null;
 
     try {
@@ -143,7 +143,7 @@ public class TranslateWithoutInternet {
       if (rs.next()) {
         // Word exists in the table
         String englishWord = rs.getString("CLASS_CODE_NAME");
-        if (APPROVE_PRINTING) {
+        if (printLogs) {
           System.out.println("English Word: " + englishWord);
         }
         return englishWord;
@@ -181,16 +181,16 @@ public class TranslateWithoutInternet {
   }
 
   public static String retrieveEnglishValuesFromHebrewValues(
-      String word, Connection conn, boolean APPROVE_PRINTING) {
+      String word, Connection conn, boolean printLogs) {
     String translateWord;
     StringBuilder finalWordBuilder = new StringBuilder();
 
     // check if the hebrew word exist in database or in ktclass or in ktattribute:
     // if yes, we take the translation from the database
-    if (isWordExistInKTCLASSTable(word, conn, APPROVE_PRINTING) != null) {
-      translateWord = isWordExistInKTCLASSTable(word, conn, APPROVE_PRINTING);
-    } else if (isWordExistInKTATTRIBUTETable(word, conn, APPROVE_PRINTING) != null) {
-      translateWord = isWordExistInKTATTRIBUTETable(word, conn, APPROVE_PRINTING);
+    if (isWordExistInKTCLASSTable(word, conn, printLogs) != null) {
+      translateWord = isWordExistInKTCLASSTable(word, conn, printLogs);
+    } else if (isWordExistInKTATTRIBUTETable(word, conn, printLogs) != null) {
+      translateWord = isWordExistInKTATTRIBUTETable(word, conn, printLogs);
     }
     // if not, we use this function:
     else {
@@ -256,11 +256,11 @@ public class TranslateWithoutInternet {
                 } else {
                   wordBuilder.append('f');
 //                if (letters[i] == 'ף') {
-//                  if (APPROVE_PRINTING) {
+//                  if (printLogs) {
 //                    System.out.println("זהים!!!");
 //                  }
 //                }
-//                if (APPROVE_PRINTING) {
+//                if (printLogs) {
 //                  System.out.println(letters[i]);
 //                }
 
