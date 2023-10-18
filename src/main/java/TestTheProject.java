@@ -35,14 +35,16 @@ public class TestTheProject {
       e.printStackTrace();
     }
     try {
+      assert conn != null;
       stmt = conn.createStatement();
     } catch (SQLException e) {
       e.printStackTrace();
     }
 
     try {
-      String hebrewSubject = Tools.getHebrewSubject(stmt);
-      String englishSubject = Tools.getEnglishSubject(stmt);
+      assert stmt != null;
+      String hebrewMainSubject = Tools.getHebrewSubject(stmt);
+      String englishMainSubject = Tools.getEnglishSubject(stmt);
       //System.out.println(englishSubject + "englishSubject");
       //System.out.println(hebrewSubject + "hebrewSubject");
       updateTables(conn, stmt, rs);
@@ -61,7 +63,7 @@ public class TestTheProject {
         }
         counterForPrint++;
         ClassifySentenceWithoutInternet.readTemplate(
-            sentenceAfterAddUnderscoreInQuotes, conn, stmt, null, printLogs, englishSubject, hebrewSubject, withLevinshtainDistance, levinshtainDistance );
+            sentenceAfterAddUnderscoreInQuotes, conn, stmt, null, printLogs, englishMainSubject, hebrewMainSubject, withLevinshtainDistance, levinshtainDistance );
       }
     } catch (Exception e) {
       e.printStackTrace();

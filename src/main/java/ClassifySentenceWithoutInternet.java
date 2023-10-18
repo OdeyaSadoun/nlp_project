@@ -717,11 +717,11 @@ public class ClassifySentenceWithoutInternet {
           Statement stmt,
           ResultSet rs,
           boolean printLogs,
-          String englishSubject,
-          String hebrewSubject, boolean withLevinshtainDistance, int levinshtainDistance) {
+          String englishMainSubject,
+          String hebrewMainSubject, boolean withLevinshtainDistance, int levinshtainDistance) {
     String hebrewField = field;
     String englishField;
-    hebrewSubject = Tools.removeParenthesis(subject);
+    String hebrewSubject = Tools.removeParenthesis(subject);
     //String englishSubject;
     if (hebrewField == null) {
       englishField = null;
@@ -731,9 +731,10 @@ public class ClassifySentenceWithoutInternet {
           TranslateWithoutInternet.retrieveEnglishValuesFromHebrewValues(
               hebrewField, conn, printLogs);
     }
+    String englishSubject;
     if (subject.equals("mainSubject")) {
-      englishSubject = "main_class";
-      hebrewSubject = "נושא_ראשי";
+      englishSubject = englishMainSubject;
+      hebrewSubject = hebrewMainSubject;
     } else {
       englishSubject =
           TranslateWithoutInternet.retrieveEnglishValuesFromHebrewValues(
