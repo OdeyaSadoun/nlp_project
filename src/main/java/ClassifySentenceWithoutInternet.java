@@ -33,6 +33,7 @@ public class ClassifySentenceWithoutInternet {
           int levinshtainDistance)
       throws SQLException {
     String dataType;
+    String begin_word = "";
 
     for (int i = 0; i < lstTemplate.size(); i++) {
 
@@ -40,6 +41,13 @@ public class ClassifySentenceWithoutInternet {
       word = Tools.removeParenthesis(word); // הסרת הסוגרים שגורמים לזיהוי לא תקין של מילים שמורות בTLX
       if (printLogs) {
         System.out.println("current word: " + word);
+      }
+
+      if(word.equals("אם")){
+        begin_word = "אם";
+      }
+      else if(word.equals("אזי")){
+        begin_word = "אזי";
       }
 
       boolean isSaveWord = isSaveWordInTLXTableORConstes(word, conn);
@@ -596,62 +604,129 @@ public class ClassifySentenceWithoutInternet {
 
       // option11
       if (i + 1 < lstTemplate.size() && (word.equals("ה-") || word.equals("ל-"))) {
-        if (word.equals("ל-")) {
-          isSaveWord =
-              isSaveWordInTLXTableORConstes(Tools.removeParenthesis(lstTemplate.get(i - 1)), conn);
-          if (!isSaveWord && lstTemplate.get(i - 2).equals("עדכן")) {
-            // update values:
-            subject = mainSubject;
-            field = Tools.changePluralWordToSingle(lstTemplate.get(i - 1));
-            dataType = GetType.getLabel(field, sentence, false, conn, printLogs);
-
-            if (printLogs) {
-              System.out.println(
-                  "----------subject: "
-                      + subject
-                      + " field: "
-                      + field
-                      + " type: "
-                      + dataType
-                      + "----------");
-            }
-            // *****************/
-
-            checkFieldAndSubjectInDB(subject, field, dataType, conn, stmt, rs, printLogs, englishSubject,hebrewSubject, withLevinshtainDistance, levinshtainDistance);
+        if (begin_word.equals("אם")) {
+          if (word.equals("ל-")) {
             isSaveWord =
-                isSaveWordInTLXTableORConstes(Tools.removeParenthesis(lstTemplate.get(i + 1)), conn);
-            if (isSaveWord) {
+                isSaveWordInTLXTableORConstes(
+                    Tools.removeParenthesis(lstTemplate.get(i - 1)), conn);
+            if (!isSaveWord && lstTemplate.get(i - 2).equals("עדכן")) {
+              // update values:
+              subject = mainSubject;
+              field = Tools.changePluralWordToSingle(lstTemplate.get(i - 1));
+              dataType = GetType.getLabel(field, sentence, false, conn, printLogs);
+
+              if (printLogs) {
+                System.out.println(
+                    "----------subject: "
+                        + subject
+                        + " field: "
+                        + field
+                        + " type: "
+                        + dataType
+                        + "----------");
+              }
+              // *****************/
+
+              checkFieldAndSubjectInDB(
+                  subject,
+                  field,
+                  dataType,
+                  conn,
+                  stmt,
+                  rs,
+                  printLogs,
+                  englishSubject,
+                  hebrewSubject,
+                  withLevinshtainDistance,
+                  levinshtainDistance);
+              isSaveWord =
+                  isSaveWordInTLXTableORConstes(
+                      Tools.removeParenthesis(lstTemplate.get(i + 1)), conn);
+              if (isSaveWord) {
+                continue;
+              }
+            }
+          }
+          if (!Tools.isNumericNumber(lstTemplate.get(i + 1))) {
+            isSaveWord =
+                isSaveWordInTLXTableORConstes(
+                    Tools.removeParenthesis(lstTemplate.get(i + 1)), conn);
+            if (!isSaveWord
+                && !lstTemplate.get(i + 1).startsWith("\"")
+                && !lstTemplate.get(i + 1).endsWith("\"")) {
+              // **update values:*/
+              subject = Tools.changePluralWordToSingle(lstTemplate.get(i + 1));
+              field = null;
+              dataType = GetType.getLabel(null, sentence, false, conn, printLogs);
+
+              if (printLogs) {
+                System.out.println(
+                    "----------subject: "
+                        + subject
+                        + " field: "
+                        + field
+                        + " type: "
+                        + dataType
+                        + "----------");
+              }
+              // *****************/
+
+              checkFieldAndSubjectInDB(
+                  subject,
+                  field,
+                  dataType,
+                  conn,
+                  stmt,
+                  rs,
+                  printLogs,
+                  englishSubject,
+                  hebrewSubject,
+                  withLevinshtainDistance,
+                  levinshtainDistance);
               continue;
             }
           }
-        }
-        if (!Tools.isNumericNumber(lstTemplate.get(i + 1))) {
-          isSaveWord =
-              isSaveWordInTLXTableORConstes(Tools.removeParenthesis(lstTemplate.get(i + 1)), conn);
-          if (!isSaveWord
-              && !lstTemplate.get(i + 1).startsWith("\"")
-              && !lstTemplate.get(i + 1).endsWith("\"")) {
-            // **update values:*/
-            subject = Tools.changePluralWordToSingle(lstTemplate.get(i + 1));
-            field = null;
-            dataType = GetType.getLabel(null, sentence, false, conn, printLogs);
+        } else if (begin_word.equals("אזי")) {
+          if (!Tools.isNumericNumber(lstTemplate.get(i + 1))) {
+            isSaveWord =
+                isSaveWordInTLXTableORConstes(
+                    Tools.removeParenthesis(lstTemplate.get(i + 1)), conn);
+            if (!isSaveWord
+                && !lstTemplate.get(i + 1).startsWith("\"")
+                && !lstTemplate.get(i + 1).endsWith("\"")) {
+              // **update values:*/
+              subject = mainSubject;
+              field = Tools.changePluralWordToSingle(lstTemplate.get(i + 1));
+              dataType = GetType.getLabel(null, sentence, false, conn, printLogs);
 
-            if (printLogs) {
-              System.out.println(
-                  "----------subject: "
-                      + subject
-                      + " field: "
-                      + field
-                      + " type: "
-                      + dataType
-                      + "----------");
+              if (printLogs) {
+                System.out.println(
+                    "----------subject: "
+                        + subject
+                        + " field: "
+                        + field
+                        + " type: "
+                        + dataType
+                        + "----------");
+              }
+              // *****************/
+
+              checkFieldAndSubjectInDB(
+                  subject,
+                  field,
+                  dataType,
+                  conn,
+                  stmt,
+                  rs,
+                  printLogs,
+                  englishSubject,
+                  hebrewSubject,
+                  withLevinshtainDistance,
+                  levinshtainDistance);
+              continue;
             }
-            // *****************/
-
-            checkFieldAndSubjectInDB(subject, field, dataType, conn, stmt, rs, printLogs, englishSubject,hebrewSubject, withLevinshtainDistance, levinshtainDistance);
-            continue;
           }
-        }
+          }
       }
 
       // option12
