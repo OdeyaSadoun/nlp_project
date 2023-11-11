@@ -1,4 +1,4 @@
-TEFFEN is a large and highly successful international company engaged in financial management.
+TEFEN - Commitigo ESI is a large and highly successful international company engaged in financial management.
 The company employs a manual rules system called Logist to define the behavior of its operations.
 This system allows rules to be articulated in a semi-natural language, without requiring a predefined order above a data dictionary.
 
@@ -29,27 +29,19 @@ To interface with the existing Logist system, the project will be developed usin
 ---------------
 
 
-## The relevant files for the final version of the project:
-
-• ClassifySentenceWithoutInternet.java
-
-• GetType.java
-
-• HebrewSpellChecker.java
-
-• SaveToDatabase.java
-
-• TestTheProject.java
-
-• TranslateWithoutInternet.java
-
-
 First, to start, the following jar must be installed for connecting to SQL: sqljdbc.jar.
 
-After that, the main functions of the files GetType and TranslateWithoutInternet must be run in order to create the relevant tables in the database.
+After that, run the project on a rules file:
+
+In the TestTheProject file, insert the updated navigation into a txt file that contains rules in the desired format, and then run the file.
 
 For the purpose of finding fields and subjects, they must be inserted into a txt file and take care of the main change in the TestTheProject file so that it contains access to the new sentences file instead of sentences1.txt.
 
 Then run the Main function in the TestTheProject.java file.
+
+---------------
+
+For any question or comment, you can contact:
+Odeya Sadoun: https://www.linkedin.com/in/odeya-sadoun/
 
 ## good luck!
